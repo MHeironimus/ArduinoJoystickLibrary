@@ -37,13 +37,13 @@ Sets the Y axis rotation value. Range 0° to 360°.
 Sets the Z axis rotation value. Range 0° to 360°.
 
 ###Joystick.setButton(byte button, byte value)
-Sets the state of the specified button. The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
+Sets the state (0 or 1) of the specified button (0 - 31). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
 
 ###Joystick.pressButton(byte button)
-Press the indicated button. The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
+Press the indicated button (0 - 31). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
 
 ###Joystick.releaseButton(byte button)
-Release the indicated button. The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
+Release the indicated button (0 - 31). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
 
 ###Joystick.setThrottle(byte value)
 Sets the throttle value. Range 0 to 255.
@@ -75,13 +75,13 @@ Sets the X axis value. Range -127 to 127 (0 is center).
 Sets the Y axis value. Range -127 to 127 (0 is center).
 
 ###Joystick[joystickIndex].setButton(byte button, byte value)
-Sets the state of the specified button. The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
+Sets the state (0 or 1) of the specified button (0 - 15). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
 
 ###Joystick[joystickIndex].pressButton(byte button)
-Press the indicated button. The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
+Press the indicated button (0 - 15). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
 
 ###Joystick[joystickIndex].releaseButton(byte button)
-Release the indicated button. The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
+Release the indicated button (0 - 15). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
 
 ###Joystick[joystickIndex].sendState()
 Sends the updated joystick state to the host computer. Only needs to be called if AutoSendState is false (see Joystick[joystickIndex].begin for more details).
