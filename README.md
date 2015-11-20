@@ -52,7 +52,7 @@ Sets the throttle value. Range 0 to 255.
 Sets the rudder value. Range 0 to 255.
 
 ###Joystick.setHatSwitch(byte hatSwitch, int value)
-Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat switch #1 is 0 and hat switch #2 is 1). The value is from 0° to 360°, but in 45° increments. Any value less than 45° will be rounded down (i.e. 44° is rounded down to 0°, 89° is rounded down to 45°, etc.).
+Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat switch #1 is 0 and hat switch #2 is 1). The value is from 0° to 360°, but in 45° increments. Any value less than 45° will be rounded down (i.e. 44° is rounded down to 0°, 89° is rounded down to 45°, etc.). Set the value to -1 to release the hat switch.
 
 ###Joystick.sendState()
 Sends the updated joystick state to the host computer. Only needs to be called if AutoSendState is false (see Joystick.begin for more details).
