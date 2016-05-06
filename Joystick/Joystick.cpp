@@ -245,6 +245,4 @@ void Joystick_::sendState()
 	HID().SendReport(JOYSTICK_REPORT_ID, data, JOYSTICK_STATE_SIZE);
 }
 
-Joystick_ Joystick;
-
 #endif

@@ -8,6 +8,12 @@
 
 #include "Joystick.h"
 
+Joystick_ JoystickArray[1] = {
+  Joystick_()
+};
+Joystick_ Joystick = JoystickArray[0];
+
+
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.
 //const bool testAutoSendMode = true;
 const bool testAutoSendMode = false;

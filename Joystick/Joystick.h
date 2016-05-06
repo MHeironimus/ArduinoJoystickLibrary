@@ -73,7 +73,6 @@ public:
 
 	void sendState();
 };
-extern Joystick_ Joystick;
 
 #endif
 #endif
