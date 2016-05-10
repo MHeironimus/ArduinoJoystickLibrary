@@ -20,7 +20,7 @@
 
 #include "Joystick.h"
 
-#if defined(_USING_HID)
+#if defined(_USING_DYNAMIC_HID)
 
 #define JOYSTICK_REPORT_ID 0x03
 #define JOYSTICK_STATE_SIZE 13
@@ -101,8 +101,8 @@ static const uint8_t _hidReportDescriptor[] PROGMEM = {
 Joystick_::Joystick_()
 {
 	// Setup HID report structure
-	static HIDSubDescriptor node(_hidReportDescriptor, sizeof(_hidReportDescriptor));
-	HID().AppendDescriptor(&node);
+	static DynamicHIDSubDescriptor node(_hidReportDescriptor, sizeof(_hidReportDescriptor));
+	DynamicHID().AppendDescriptor(&node);
 	
 	// Initalize State
 	xAxis = 0;
@@ -242,7 +242,7 @@ void Joystick_::sendState()
 	data[12] = (zAxisRotation % 360) * 0.708;
 
 	// HID().SendReport(Report number, array of values in same order as HID descriptor, length)
-	HID().SendReport(JOYSTICK_REPORT_ID, data, JOYSTICK_STATE_SIZE);
+	DynamicHID().SendReport(JOYSTICK_REPORT_ID, data, JOYSTICK_STATE_SIZE);
 }
 
 #endif
