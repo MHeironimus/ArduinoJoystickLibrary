@@ -100,9 +100,14 @@ static const uint8_t _hidReportDescriptor[] PROGMEM = {
 
 Joystick_::Joystick_()
 {
+	// Customize HID report
+	int hidReportDescriptorSize = sizeof(_hidReportDescriptor);
+	uint8_t *customHidReportDescriptor = new uint8_t[hidReportDescriptorSize];
+	memcpy_P(customHidReportDescriptor, _hidReportDescriptor, hidReportDescriptorSize);
+	
 	// Setup HID report structure
-	static DynamicHIDSubDescriptor node(_hidReportDescriptor, sizeof(_hidReportDescriptor));
-	DynamicHID().AppendDescriptor(&node);
+	node = new DynamicHIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize, false);
+	DynamicHID().AppendDescriptor(node);
 	
 	// Initalize State
 	xAxis = 0;

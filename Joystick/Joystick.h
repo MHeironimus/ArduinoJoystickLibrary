@@ -55,6 +55,7 @@ private:
 	uint8_t  throttle;
 	uint8_t  rudder;
 	int16_t	 hatSwitch[2];
+	DynamicHIDSubDescriptor *node;
 
 public:
 	Joystick_();
