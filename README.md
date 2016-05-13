@@ -9,7 +9,8 @@ The following example Arduino sketch files are included in this library:
 
 - JoystickTest - Simple test of the Joystick library. Exercises all of the Joystick library functions when pin A0 is grounded.
 - MultipleJoystickTest - Creates 4 Joysticks using the library and exercises the first 16 buttons and X and Y axis when pin A0 is grounded.
-- JoystickButton - Creates a Joystick and maps pin 9 to button 0, pin 10 to button 1, pin 11 to button 2, and pin 12 to button 3. 
+- JoystickButton - Creates a Joystick and maps pin 9 to button 0, pin 10 to button 1, pin 11 to button 2, and pin 12 to button 3.
+- JoystickKeyboard - Creates a Joystick and a Keyboard. Maps pin 9 to Joystick Button 0, pin 10 to Joystick Button 1, pin 11 to Keyboard key 1, and pin 12 to Keyboard key 2.  
 
 ###Simple example
 
@@ -46,6 +47,11 @@ The following example Arduino sketch files are included in this library:
 
 ##Joystick Library API
 The following API is available if the Joystick library in included in a sketch file.
+
+###Joystick\_.Joystick\_(...)
+Constructor used to initialize and setup the Joystick. The following optional parameters are available:
+
+- uint8\_t hidReportId - Default: 0x03 - Indicates what the joystick's HID report ID should be. This value must be unique if you are creating multiple instances of Joystick. Do not use 0x01 or 0x02 as they are used by the built-in Arduino Keyboard and Mouse libraries.
 
 ###Joystick.begin(bool initAutoSendState)
 Starts emulating a game controller connected to a computer. By default all methods update the game controller state immediately. If initAutoSendState is set to false, the Joystick.sendState method must be called to update the game controller state.
