@@ -1,11 +1,20 @@
-// Program used to test the Dual Simple USB Joystick object 
-// on the Arduino Leonardo or Arduino Micro.
+// Program used to test the Arduino Joystick Library to create 
+// multiple Joystick objects on a single Arduino Leonardo or 
+// Arduino Micro.
 //
 // Matthew Heironimus
-// 2015-04-05
+// 2016-05-13
 //------------------------------------------------------------
+#include <Joystick.h>
 
-#include "Joystick2.h"
+#define JOYSTICK_COUNT 4
+
+Joystick_ Joystick[JOYSTICK_COUNT] = {
+  Joystick_(0x03),
+  Joystick_(0x04),
+  Joystick_(0x05),
+  Joystick_(0x06)
+};
 
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.
 //const bool testAutoSendMode = true;
@@ -88,15 +97,17 @@ void testXYAxis(int joystickId, unsigned int currentStep)
 }
 
 void setup() {
-  if (testAutoSendMode)
+  
+  for (int index = 0; index < JOYSTICK_COUNT; index++)
   {
-    Joystick[0].begin();
-    Joystick[1].begin();
-  }
-  else
-  {
-    Joystick[0].begin(false);
-    Joystick[1].begin(false);
+    if (testAutoSendMode)
+    {
+      Joystick[index].begin();
+    }
+    else
+    {
+      Joystick[index].begin(false);
+    }
   }
   
   pinMode(A0, INPUT_PULLUP);
@@ -145,8 +156,10 @@ void loop() {
       gNextTime = millis() + gcCycleDelta;
       gCurrentStep = 0;
       
-      gJoystickId = (gJoystickId == 0 ? 1 : 0);
+      if (++gJoystickId >= JOYSTICK_COUNT)
+      {
+        gJoystickId = 0;
+      }
     }
   }
 }
-

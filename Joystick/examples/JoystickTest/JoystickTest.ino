@@ -2,17 +2,17 @@
 // Arduino Leonardo or Arduino Micro.
 //
 // Matthew Heironimus
-// 2015-03-28
-// Updated on 2015-11-18 to use the new Joystick library written for version 1.6.6.
+// 2015-03-28 - Original Version
+// 2015-11-18 - Updated to use the new Joystick library 
+//              written for Arduino IDE Version 1.6.6 and
+//              above.
+// 2016-05-13   Updated to use new dynamic Joystick library
+//              that can be customized.
 //------------------------------------------------------------
 
 #include "Joystick.h"
 
-Joystick_ JoystickArray[1] = {
-  Joystick_()
-};
-Joystick_ Joystick = JoystickArray[0];
-
+Joystick_ Joystick;
 
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.
 //const bool testAutoSendMode = true;

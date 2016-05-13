@@ -1,13 +1,48 @@
 # Arduino Joystick Library
-Arduino IDE 1.6.6 (or above) library that add a joystick to the list of HID devices an Arduino Leonardo or Arduino Micro (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below).
-##Support for one, two, or three joysticks
-This library comes in three flavors:
-- Joystick - adds a single joystick that contains an X, Y, and Z axis (including rotation), 32 buttons, 2 hat switches, a throttle, and a rudder.
-- Joystick2 - adds two simple joysticks that contain an X and Y axis and 16 buttons.
-- Joystick3 - adds three simple joysticks that contain an X and Y axis and 16 buttons.
+This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an Arduino Leonardo or Arduino Micro (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below).
 
 ##Installation Instructions
-Copy one or more of the folders (Joystick, Joystick2, and Joystick3) to the Arduino libraries folder (typically %userprofile%\Documents\Arduino\libraries). The library (or libraries) should now appear in the Arduino IDE list of libraries.
+Copy the Joystick folder to the Arduino libraries folder (typically %userprofile%\Documents\Arduino\libraries). The library (or libraries) should now appear in the Arduino IDE list of libraries.
+
+##Examples
+The following example Arduino sketch files are included in this library:
+
+- JoystickTest - Simple test of the Joystick library. Exercises all of the Joystick library functions when pin A0 is grounded.
+- MultipleJoystickTest - Creates 4 Joysticks using the library and exercises the first 16 buttons and X and Y axis when pin A0 is grounded.
+- JoystickButton - Creates a Joystick and maps pin 9 to button 0, pin 10 to button 1, pin 11 to button 2, and pin 12 to button 3. 
+
+###Simple example
+
+	#include <Joystick.h>
+	
+	Joystick_ Joystick;
+	
+	void setup() {
+	  // Initialize Button Pins
+	  pinMode(9, INPUT_PULLUP);
+	
+	  // Initialize Joystick Library
+	  Joystick.begin();
+	}
+	
+	// Constant that maps the phyical pin to the joystick button.
+	const int pinToButtonMap = 9;
+	
+	// Last state of the button
+	int lastButtonState = 0;
+	
+	void loop() {
+	
+	  // Read pin values
+      int currentButtonState = !digitalRead(pinToButtonMap);
+	  if (currentButtonState != lastButtonState)
+	  {
+	    Joystick.setButton(0, currentButtonState);
+	    lastButtonState = currentButtonState;
+	  }
+	
+	  delay(50);
+	}
 
 ##Joystick Library API
 The following API is available if the Joystick library in included in a sketch file.
@@ -57,31 +92,18 @@ Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat s
 ###Joystick.sendState()
 Sends the updated joystick state to the host computer. Only needs to be called if AutoSendState is false (see Joystick.begin for more details).
 
-##Joystick2 and Joystick3 Library API
-The following API is available if the Joystick2 or Joystick3 library in included in a sketch file.
+##Testing Details
+I used this library to make an Arduino appear as 1, 2, 3, and 4 joysticks / gamepads.  
 
-The joystickIndex is 0-based (i.e. the first game controller has a joystickIndex of 0, the second has a joystickIndex of 1, and the third has a joystickIndex of 2).
+I have tested this library using the following Arduino IDE Versions:
 
-###Joystick[joystickIndex].begin(bool initAutoSendState)
-Starts emulating a game controller connected to a computer. By default all methods update the game controller state immediately. If initAutoSendState is set to false, the Joystick[joystickIndex].sendState method must be called to update the game controller state.
+- 1.6.6
+- 1.6.7
+- 1.6.8
 
-###Joystick[joystickIndex].end()
-Stops the game controller emulation to a connected computer.
+I have tested this library with the following boards:
 
-###Joystick[joystickIndex].setXAxis(byte value)
-Sets the X axis value. Range -127 to 127 (0 is center).
+- Arduino Leonardo
+- Arduino Micro
 
-###Joystick[joystickIndex].setYAxis(byte value)
-Sets the Y axis value. Range -127 to 127 (0 is center).
-
-###Joystick[joystickIndex].setButton(byte button, byte value)
-Sets the state (0 or 1) of the specified button (0 - 15). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
-
-###Joystick[joystickIndex].pressButton(byte button)
-Press the indicated button (0 - 15). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
-
-###Joystick[joystickIndex].releaseButton(byte button)
-Release the indicated button (0 - 15). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
-
-###Joystick[joystickIndex].sendState()
-Sends the updated joystick state to the host computer. Only needs to be called if AutoSendState is false (see Joystick[joystickIndex].begin for more details).
+(as of 2016-05-13)

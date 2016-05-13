@@ -41,6 +41,8 @@
 //================================================================================
 //  Joystick (Gamepad)
 
+#define JOYSTICK_DEFAULT_REPORT_ID 0x03
+
 class Joystick_
 {
 private:
@@ -55,10 +57,12 @@ private:
 	uint8_t  throttle;
 	uint8_t  rudder;
 	int16_t	 hatSwitch[2];
-	DynamicHIDSubDescriptor *node;
+	
+	DynamicHIDSubDescriptor *_node;
+	uint8_t                  _hidReportId;
 
 public:
-	Joystick_();
+	Joystick_(uint8_t hidReportId = JOYSTICK_DEFAULT_REPORT_ID);
 
 	void begin(bool initAutoSendState = true);
 	void end();

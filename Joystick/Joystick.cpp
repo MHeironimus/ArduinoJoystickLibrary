@@ -22,16 +22,17 @@
 
 #if defined(_USING_DYNAMIC_HID)
 
-#define JOYSTICK_REPORT_ID 0x03
 #define JOYSTICK_STATE_SIZE 13
+
+#define JOYSTICK_REPORT_ID_INDEX 7
 
 static const uint8_t _hidReportDescriptor[] PROGMEM = {
   
 	// Joystick
-	0x05, 0x01,			      // USAGE_PAGE (Generic Desktop)
-	0x09, 0x04,			      // USAGE (Joystick)
-	0xa1, 0x01,			      // COLLECTION (Application)
-	0x85, JOYSTICK_REPORT_ID, //   REPORT_ID (3)
+	0x05, 0x01,			              // USAGE_PAGE (Generic Desktop)
+	0x09, 0x04,			              // USAGE (Joystick)
+	0xa1, 0x01,			              // COLLECTION (Application)
+	0x85, JOYSTICK_DEFAULT_REPORT_ID, //   REPORT_ID (Default: 3)
 
 	// 32 Buttons
 	0x05, 0x09,			      //   USAGE_PAGE (Button)
@@ -98,16 +99,22 @@ static const uint8_t _hidReportDescriptor[] PROGMEM = {
 	0xc0				      // END_COLLECTION
 };
 
-Joystick_::Joystick_()
+Joystick_::Joystick_(uint8_t hidReportId)
 {
 	// Customize HID report
 	int hidReportDescriptorSize = sizeof(_hidReportDescriptor);
+	
+	// Create a copy of the HID Report Descriptor template
 	uint8_t *customHidReportDescriptor = new uint8_t[hidReportDescriptorSize];
 	memcpy_P(customHidReportDescriptor, _hidReportDescriptor, hidReportDescriptorSize);
 	
+	// Set the USB HID Report ID
+	_hidReportId = hidReportId;
+	customHidReportDescriptor[JOYSTICK_REPORT_ID_INDEX] = _hidReportId;
+	
 	// Setup HID report structure
-	node = new DynamicHIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize, false);
-	DynamicHID().AppendDescriptor(node);
+	_node = new DynamicHIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize, false);
+	DynamicHID().AppendDescriptor(_node);
 	
 	// Initalize State
 	xAxis = 0;
@@ -247,7 +254,7 @@ void Joystick_::sendState()
 	data[12] = (zAxisRotation % 360) * 0.708;
 
 	// HID().SendReport(Report number, array of values in same order as HID descriptor, length)
-	DynamicHID().SendReport(JOYSTICK_REPORT_ID, data, JOYSTICK_STATE_SIZE);
+	DynamicHID().SendReport(_hidReportId, data, JOYSTICK_STATE_SIZE);
 }
 
 #endif
