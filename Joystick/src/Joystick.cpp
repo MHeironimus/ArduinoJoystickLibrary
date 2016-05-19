@@ -117,22 +117,22 @@ Joystick_::Joystick_(uint8_t hidReportId)
 	DynamicHID().AppendDescriptor(_node);
 	
 	// Initalize State
-	xAxis = 0;
-	yAxis = 0;
-	zAxis = 0;
-	xAxisRotation = 0;
-	yAxisRotation = 0;
-	zAxisRotation = 0;
-	buttons = 0;
-	throttle = 0;
-	rudder = 0;
-	hatSwitch[0] = -1;
-	hatSwitch[1] = -1;
+	_xAxis = 0;
+	_yAxis = 0;
+	_zAxis = 0;
+	_xAxisRotation = 0;
+	_yAxisRotation = 0;
+	_zAxisRotation = 0;
+	_buttons = 0;
+	_throttle = 0;
+	_rudder = 0;
+	_hatSwitch[0] = -1;
+	_hatSwitch[1] = -1;
 }
 
 void Joystick_::begin(bool initAutoSendState)
 {
-	autoSendState = initAutoSendState;
+	_autoSendState = initAutoSendState;
 	sendState();
 }
 
@@ -153,68 +153,68 @@ void Joystick_::setButton(uint8_t button, uint8_t value)
 }
 void Joystick_::pressButton(uint8_t button)
 {
-	bitSet(buttons, button);
-	if (autoSendState) sendState();
+	bitSet(_buttons, button);
+	if (_autoSendState) sendState();
 }
 void Joystick_::releaseButton(uint8_t button)
 {
-	bitClear(buttons, button);
-	if (autoSendState) sendState();
+	bitClear(_buttons, button);
+	if (_autoSendState) sendState();
 }
 
-void Joystick_::setThrottle(uint8_t value)
+void Joystick_::setThrottle(int16_t value)
 {
-	throttle = value;
-	if (autoSendState) sendState();
+	_throttle = value;
+	if (_autoSendState) sendState();
 }
-void Joystick_::setRudder(uint8_t value)
+void Joystick_::setRudder(int16_t value)
 {
-	rudder = value;
-	if (autoSendState) sendState();
+	_rudder = value;
+	if (_autoSendState) sendState();
 }
 
-void Joystick_::setXAxis(int8_t value)
+void Joystick_::setXAxis(int16_t value)
 {
-	xAxis = value;
-	if (autoSendState) sendState();
+	_xAxis = value;
+	if (_autoSendState) sendState();
 }
-void Joystick_::setYAxis(int8_t value)
+void Joystick_::setYAxis(int16_t value)
 {
-	yAxis = value;
-	if (autoSendState) sendState();
+	_yAxis = value;
+	if (_autoSendState) sendState();
 }
-void Joystick_::setZAxis(int8_t value)
+void Joystick_::setZAxis(int16_t value)
 {
-	zAxis = value;
-	if (autoSendState) sendState();
+	_zAxis = value;
+	if (_autoSendState) sendState();
 }
 
 void Joystick_::setXAxisRotation(int16_t value)
 {
-	xAxisRotation = value;
-	if (autoSendState) sendState();
+	_xAxisRotation = value;
+	if (_autoSendState) sendState();
 }
 void Joystick_::setYAxisRotation(int16_t value)
 {
-	yAxisRotation = value;
-	if (autoSendState) sendState();
+	_yAxisRotation = value;
+	if (_autoSendState) sendState();
 }
 void Joystick_::setZAxisRotation(int16_t value)
 {
-	zAxisRotation = value;
-	if (autoSendState) sendState();
+	_zAxisRotation = value;
+	if (_autoSendState) sendState();
 }
 
 void Joystick_::setHatSwitch(int8_t hatSwitchIndex, int16_t value)
 {
-	hatSwitch[hatSwitchIndex % 2] = value;
-	if (autoSendState) sendState();
+	_hatSwitch[hatSwitchIndex % 2] = value;
+	if (_autoSendState) sendState();
 }
 
 void Joystick_::sendState()
 {
 	uint8_t data[JOYSTICK_STATE_SIZE];
-	uint32_t buttonTmp = buttons;
+	uint32_t buttonTmp = _buttons;
 
 	// Split 32 bit button-state into 4 bytes
 	data[0] = buttonTmp & 0xFF;		
@@ -225,33 +225,33 @@ void Joystick_::sendState()
 	buttonTmp >>= 8;
 	data[3] = buttonTmp & 0xFF;
 
-	data[4] = throttle;
-	data[5] = rudder;
+	data[4] = _throttle;
+	data[5] = _rudder;
 
 	// Calculate hat-switch values
 	uint8_t convertedHatSwitch[2];
 	for (int hatSwitchIndex = 0; hatSwitchIndex < 2; hatSwitchIndex++)
 	{
-		if (hatSwitch[hatSwitchIndex] < 0)
+		if (_hatSwitch[hatSwitchIndex] < 0)
 		{
 			convertedHatSwitch[hatSwitchIndex] = 8;
 		}
 		else
 		{
-			convertedHatSwitch[hatSwitchIndex] = (hatSwitch[hatSwitchIndex] % 360) / 45;
+			convertedHatSwitch[hatSwitchIndex] = (_hatSwitch[hatSwitchIndex] % 360) / 45;
 		}
 	}
 
 	// Pack hat-switch states into a single byte
 	data[6] = (convertedHatSwitch[1] << 4) | (B00001111 & convertedHatSwitch[0]);
 
-	data[7] = xAxis + 127;
-	data[8] = yAxis + 127;
-	data[9] = zAxis + 127;
+	data[7] = _xAxis + 127;
+	data[8] = _yAxis + 127;
+	data[9] = _zAxis + 127;
 
-	data[10] = (xAxisRotation % 360) * 0.708;
-	data[11] = (yAxisRotation % 360) * 0.708;
-	data[12] = (zAxisRotation % 360) * 0.708;
+	data[10] = (_xAxisRotation % 360) * 0.708;
+	data[11] = (_yAxisRotation % 360) * 0.708;
+	data[12] = (_zAxisRotation % 360) * 0.708;
 
 	// HID().SendReport(Report number, array of values in same order as HID descriptor, length)
 	DynamicHID().SendReport(_hidReportId, data, JOYSTICK_STATE_SIZE);

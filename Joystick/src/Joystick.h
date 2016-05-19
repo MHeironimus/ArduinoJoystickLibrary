@@ -46,17 +46,17 @@
 class Joystick_
 {
 private:
-	bool     autoSendState;
-	int8_t	 xAxis;
-	int8_t	 yAxis;
-	int8_t	 zAxis;
-	int16_t	 xAxisRotation;
-	int16_t	 yAxisRotation;
-	int16_t	 zAxisRotation;
-	uint32_t buttons;
-	uint8_t  throttle;
-	uint8_t  rudder;
-	int16_t	 hatSwitch[2];
+	bool                     _autoSendState;
+	int16_t	                 _xAxis;
+	int16_t	                 _yAxis;
+	int16_t	                 _zAxis;
+	int16_t	                 _xAxisRotation;
+	int16_t	                 _yAxisRotation;
+	int16_t	                 _zAxisRotation;
+	uint32_t                 _buttons;
+	int16_t                  _throttle;
+	int16_t                  _rudder;
+	int16_t	                 _hatSwitch[2];
 	
 	DynamicHIDSubDescriptor *_node;
 	uint8_t                  _hidReportId;
@@ -67,9 +67,9 @@ public:
 	void begin(bool initAutoSendState = true);
 	void end();
 
-	void setXAxis(int8_t value);
-	void setYAxis(int8_t value);
-	void setZAxis(int8_t value);
+	void setXAxis(int16_t value);
+	void setYAxis(int16_t value);
+	void setZAxis(int16_t value);
 
 	void setXAxisRotation(int16_t value);
 	void setYAxisRotation(int16_t value);
@@ -79,8 +79,8 @@ public:
 	void pressButton(uint8_t button);
 	void releaseButton(uint8_t button);
 
-	void setThrottle(uint8_t value);
-	void setRudder(uint8_t value);
+	void setThrottle(int16_t value);
+	void setRudder(int16_t value);
 
 	void setHatSwitch(int8_t hatSwitch, int16_t value);
 
