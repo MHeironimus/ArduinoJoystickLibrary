@@ -22,7 +22,8 @@
 
 #if defined(_USING_DYNAMIC_HID)
 
-#define JOYSTICK_STATE_SIZE 13
+//#define JOYSTICK_STATE_SIZE 13
+#define JOYSTICK_STATE_SIZE 4
 
 #define JOYSTICK_REPORT_ID_INDEX 7
 
@@ -101,16 +102,76 @@ static const uint8_t _hidReportDescriptor[] PROGMEM = {
 
 Joystick_::Joystick_(uint8_t hidReportId)
 {
-	// Customize HID report
-	int hidReportDescriptorSize = sizeof(_hidReportDescriptor);
-	
+    // Set the USB HID Report ID
+    _hidReportId = hidReportId;
+    
+    // Customize HID report
+	//int hidReportDescriptorSize = sizeof(_hidReportDescriptor);
+
+    int hidReportDescriptorSize = 29;
+    uint8_t *customHidReportDescriptor = new uint8_t[hidReportDescriptorSize];
+
+    // USAGE_PAGE (Generic Desktop)
+    customHidReportDescriptor[0] = 0x05;
+    customHidReportDescriptor[1] = 0x01;
+
+    // USAGE (Joystick)
+    customHidReportDescriptor[2] = 0x09;
+    customHidReportDescriptor[3] = 0x04;
+
+    // COLLECTION (Application)
+    customHidReportDescriptor[4] = 0xa1;
+    customHidReportDescriptor[5] = 0x01;
+
+    // REPORT_ID (Default: 3)
+    customHidReportDescriptor[6] = 0x85;
+    customHidReportDescriptor[7] = _hidReportId;
+
+    // USAGE_PAGE (Button)
+    customHidReportDescriptor[8] = 0x05;
+    customHidReportDescriptor[9] = 0x09;
+
+    // USAGE_MINIMUM (Button 1)
+    customHidReportDescriptor[10] = 0x19;
+    customHidReportDescriptor[11] = 0x01;
+
+    // USAGE_MAXIMUM (Button 32)            
+    customHidReportDescriptor[12] = 0x29;
+    customHidReportDescriptor[13] = 0x20;
+
+    // LOGICAL_MINIMUM (0)
+    customHidReportDescriptor[14] = 0x15;
+    customHidReportDescriptor[15] = 0x00;
+
+    // LOGICAL_MAXIMUM (1)
+    customHidReportDescriptor[16] = 0x25;
+    customHidReportDescriptor[17] = 0x01;
+
+    // REPORT_SIZE (1)
+    customHidReportDescriptor[18] = 0x75;
+    customHidReportDescriptor[19] = 0x01;
+
+    // REPORT_COUNT (32)
+    customHidReportDescriptor[20] = 0x95;
+    customHidReportDescriptor[21] = 0x20;
+
+    // UNIT_EXPONENT (0)
+    customHidReportDescriptor[22] = 0x55;
+    customHidReportDescriptor[23] = 0x00;
+
+    // UNIT (None)
+    customHidReportDescriptor[24] = 0x65;
+    customHidReportDescriptor[25] = 0x00;
+
+    // INPUT (Data,Var,Abs)
+    customHidReportDescriptor[26] = 0x81;
+    customHidReportDescriptor[27] = 0x02;
+
+    // END_COLLECTION
+    customHidReportDescriptor[28] = 0xc0;
+
 	// Create a copy of the HID Report Descriptor template
-	uint8_t *customHidReportDescriptor = new uint8_t[hidReportDescriptorSize];
-	memcpy_P(customHidReportDescriptor, _hidReportDescriptor, hidReportDescriptorSize);
-	
-	// Set the USB HID Report ID
-	_hidReportId = hidReportId;
-	customHidReportDescriptor[JOYSTICK_REPORT_ID_INDEX] = _hidReportId;
+//	memcpy_P(customHidReportDescriptor, _hidReportDescriptor, hidReportDescriptorSize);
 	
 	// Setup HID report structure
 	_node = new DynamicHIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize, false);
@@ -225,10 +286,11 @@ void Joystick_::sendState()
 	buttonTmp >>= 8;
 	data[3] = buttonTmp & 0xFF;
 
-	data[4] = _throttle;
-	data[5] = _rudder;
+//	data[4] = _throttle;
+//	data[5] = _rudder;
 
 	// Calculate hat-switch values
+    /*
 	uint8_t convertedHatSwitch[2];
 	for (int hatSwitchIndex = 0; hatSwitchIndex < 2; hatSwitchIndex++)
 	{
@@ -241,17 +303,18 @@ void Joystick_::sendState()
 			convertedHatSwitch[hatSwitchIndex] = (_hatSwitch[hatSwitchIndex] % 360) / 45;
 		}
 	}
+    */
 
 	// Pack hat-switch states into a single byte
-	data[6] = (convertedHatSwitch[1] << 4) | (B00001111 & convertedHatSwitch[0]);
+	//data[6] = (convertedHatSwitch[1] << 4) | (B00001111 & convertedHatSwitch[0]);
 
-	data[7] = _xAxis + 127;
-	data[8] = _yAxis + 127;
-	data[9] = _zAxis + 127;
+	//data[7] = _xAxis + 127;
+	//data[8] = _yAxis + 127;
+	//data[9] = _zAxis + 127;
 
-	data[10] = (_xAxisRotation % 360) * 0.708;
-	data[11] = (_yAxisRotation % 360) * 0.708;
-	data[12] = (_zAxisRotation % 360) * 0.708;
+	//data[10] = (_xAxisRotation % 360) * 0.708;
+	//data[11] = (_yAxisRotation % 360) * 0.708;
+	//data[12] = (_zAxisRotation % 360) * 0.708;
 
 	// HID().SendReport(Report number, array of values in same order as HID descriptor, length)
 	DynamicHID().SendReport(_hidReportId, data, JOYSTICK_STATE_SIZE);
