@@ -51,8 +51,8 @@ The following API is available if the Joystick library in included in a sketch f
 ###Joystick\_.Joystick\_(...)
 Constructor used to initialize and setup the Joystick. The following optional parameters are available:
 
-- uint8\_t hidReportId - Default: 0x03 - Indicates what the joystick's HID report ID should be. This value must be unique if you are creating multiple instances of Joystick. Do not use 0x01 or 0x02 as they are used by the built-in Arduino Keyboard and Mouse libraries.
-- uint8\_t buttonCount - Default: 32 - Indicates how many buttons will be available on the joystick.
+- `uint8_t hidReportId` - Default: `0x03` - Indicates what the joystick's HID report ID should be. This value must be unique if you are creating multiple instances of Joystick. Do not use `0x01` or `0x02` as they are used by the built-in Arduino Keyboard and Mouse libraries.
+- `uint8_t buttonCount` - Default: `32` - Indicates how many buttons will be available on the joystick.
 
 ###Joystick.begin(bool initAutoSendState)
 Starts emulating a game controller connected to a computer. By default all methods update the game controller state immediately. If initAutoSendState is set to false, the Joystick.sendState method must be called to update the game controller state.
@@ -79,13 +79,13 @@ Sets the Y axis rotation value. Range 0° to 360°.
 Sets the Z axis rotation value. Range 0° to 360°.
 
 ###Joystick.setButton(byte button, byte value)
-Sets the state (0 or 1) of the specified button (0 - 31). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
+Sets the state (0 or 1) of the specified button (range: 0 - (buttonCount - 1)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
 
 ###Joystick.pressButton(byte button)
-Press the indicated button (0 - 31). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
+Press the indicated button (range: 0 - (buttonCount - 1)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
 
 ###Joystick.releaseButton(byte button)
-Release the indicated button (0 - 31). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
+Release the indicated button (range: 0 - (buttonCount - 1)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
 
 ###Joystick.setThrottle(byte value)
 Sets the throttle value. Range 0 to 255.
@@ -100,7 +100,8 @@ Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat s
 Sends the updated joystick state to the host computer. Only needs to be called if AutoSendState is false (see Joystick.begin for more details).
 
 ##Testing Details
-I used this library to make an Arduino appear as 1, 2, 3, and 4 joysticks / gamepads.  
+I used this library to make an Arduino appear as 1, 2, 3, and 4 joysticks / gamepads.
+I have tested with 1 - 32 buttons.
 
 I have tested this library using the following Arduino IDE Versions:
 
@@ -113,4 +114,4 @@ I have tested this library with the following boards:
 - Arduino Leonardo
 - Arduino Micro
 
-(as of 2016-05-13)
+(as of 2016-05-20)
