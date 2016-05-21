@@ -1,3 +1,5 @@
+### WARNING: This branch is currently in development and is not stable at this time.
+
 # Arduino Joystick Library
 This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an Arduino Leonardo or Arduino Micro (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below).
 
