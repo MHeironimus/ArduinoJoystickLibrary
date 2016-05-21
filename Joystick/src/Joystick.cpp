@@ -23,7 +23,7 @@
 #if defined(_USING_DYNAMIC_HID)
 
 //#define JOYSTICK_STATE_SIZE 13
-#define JOYSTICK_STATE_SIZE 4
+//#define JOYSTICK_STATE_SIZE 4
 
 #define JOYSTICK_REPORT_ID_INDEX 7
 
@@ -100,95 +100,133 @@ static const uint8_t _hidReportDescriptor[] PROGMEM = {
 	0xc0				      // END_COLLECTION
 };
 
-Joystick_::Joystick_(uint8_t hidReportId)
+Joystick_::Joystick_(uint8_t hidReportId,
+    uint8_t buttonCount)
 {
     // Set the USB HID Report ID
     _hidReportId = hidReportId;
-    
-    // Customize HID report
-	//int hidReportDescriptorSize = sizeof(_hidReportDescriptor);
 
-    int hidReportDescriptorSize = 29;
-    uint8_t *customHidReportDescriptor = new uint8_t[hidReportDescriptorSize];
+    // Save Joystick Settings
+    _buttonCount = buttonCount;
+
+    // Build Joystick HID Report Description
+	uint8_t buttonsInLastByte = _buttonCount % 8;
+	uint8_t buttonPaddingBits = 0;
+	if (buttonsInLastByte > 0)
+	{
+		buttonPaddingBits = 8 - buttonsInLastByte;
+	}
+
+	// TODO: Figure out what the max for this could be and set it here...
+    uint8_t *customHidReportDescriptor = new uint8_t[100];
+    int hidReportDescriptorSize = 0;
 
     // USAGE_PAGE (Generic Desktop)
-    customHidReportDescriptor[0] = 0x05;
-    customHidReportDescriptor[1] = 0x01;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x05;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
 
     // USAGE (Joystick)
-    customHidReportDescriptor[2] = 0x09;
-    customHidReportDescriptor[3] = 0x04;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
 
     // COLLECTION (Application)
-    customHidReportDescriptor[4] = 0xa1;
-    customHidReportDescriptor[5] = 0x01;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0xa1;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
 
     // REPORT_ID (Default: 3)
-    customHidReportDescriptor[6] = 0x85;
-    customHidReportDescriptor[7] = _hidReportId;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x85;
+    customHidReportDescriptor[hidReportDescriptorSize++] = _hidReportId;
 
     // USAGE_PAGE (Button)
-    customHidReportDescriptor[8] = 0x05;
-    customHidReportDescriptor[9] = 0x09;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x05;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
 
     // USAGE_MINIMUM (Button 1)
-    customHidReportDescriptor[10] = 0x19;
-    customHidReportDescriptor[11] = 0x01;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x19;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
 
     // USAGE_MAXIMUM (Button 32)            
-    customHidReportDescriptor[12] = 0x29;
-    customHidReportDescriptor[13] = 0x20;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x29;
+    customHidReportDescriptor[hidReportDescriptorSize++] = _buttonCount;
 
     // LOGICAL_MINIMUM (0)
-    customHidReportDescriptor[14] = 0x15;
-    customHidReportDescriptor[15] = 0x00;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x15;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
 
     // LOGICAL_MAXIMUM (1)
-    customHidReportDescriptor[16] = 0x25;
-    customHidReportDescriptor[17] = 0x01;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x25;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
 
     // REPORT_SIZE (1)
-    customHidReportDescriptor[18] = 0x75;
-    customHidReportDescriptor[19] = 0x01;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x75;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
 
-    // REPORT_COUNT (32)
-    customHidReportDescriptor[20] = 0x95;
-    customHidReportDescriptor[21] = 0x20;
+    // REPORT_COUNT (# of buttons)
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x95;
+    customHidReportDescriptor[hidReportDescriptorSize++] = _buttonCount;
 
     // UNIT_EXPONENT (0)
-    customHidReportDescriptor[22] = 0x55;
-    customHidReportDescriptor[23] = 0x00;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x55;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
 
     // UNIT (None)
-    customHidReportDescriptor[24] = 0x65;
-    customHidReportDescriptor[25] = 0x00;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x65;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
 
     // INPUT (Data,Var,Abs)
-    customHidReportDescriptor[26] = 0x81;
-    customHidReportDescriptor[27] = 0x02;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x81;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0x02;
+
+	if (buttonPaddingBits > 0) {
+		
+		// REPORT_SIZE (1)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x75;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
+
+		// REPORT_COUNT (# of padding bits)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x95;
+		customHidReportDescriptor[hidReportDescriptorSize++] = buttonPaddingBits;
+				
+		// INPUT (Const,Var,Abs)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x81;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x03;
+	}
 
     // END_COLLECTION
-    customHidReportDescriptor[28] = 0xc0;
+    customHidReportDescriptor[hidReportDescriptorSize++] = 0xc0;
 
 	// Create a copy of the HID Report Descriptor template
 //	memcpy_P(customHidReportDescriptor, _hidReportDescriptor, hidReportDescriptorSize);
 	
-	// Setup HID report structure
+	// Register HID Report Description
 	_node = new DynamicHIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize, false);
 	DynamicHID().AppendDescriptor(_node);
 	
-	// Initalize State
+    // Setup Joystick State
+    _buttonValuesArraySize = _buttonCount / 8;
+    if ((_buttonCount % 8) > 0) {
+        _buttonValuesArraySize++;
+    }
+    _buttonValues = new uint8_t[_buttonValuesArraySize];
+
+	// Calculate HID Report Size
+	_hidReportSize = _buttonValuesArraySize;
+
+	// Initalize Joystick State
 	_xAxis = 0;
 	_yAxis = 0;
 	_zAxis = 0;
 	_xAxisRotation = 0;
 	_yAxisRotation = 0;
 	_zAxisRotation = 0;
-	_buttons = 0;
 	_throttle = 0;
 	_rudder = 0;
 	_hatSwitch[0] = -1;
 	_hatSwitch[1] = -1;
+    for (int index = 0; index < _buttonValuesArraySize; index++)
+    {
+        _buttonValues[index] = 0;
+    }
 }
 
 void Joystick_::begin(bool initAutoSendState)
@@ -214,12 +252,22 @@ void Joystick_::setButton(uint8_t button, uint8_t value)
 }
 void Joystick_::pressButton(uint8_t button)
 {
-	bitSet(_buttons, button);
+    if (button >= _buttonCount) return;
+
+    int index = button / 8;
+    int bit = button % 8;
+
+	bitSet(_buttonValues[index], bit);
 	if (_autoSendState) sendState();
 }
 void Joystick_::releaseButton(uint8_t button)
 {
-	bitClear(_buttons, button);
+    if (button >= _buttonCount) return;
+
+    int index = button / 8;
+    int bit = button % 8;
+
+    bitClear(_buttonValues[index], bit);
 	if (_autoSendState) sendState();
 }
 
@@ -274,17 +322,13 @@ void Joystick_::setHatSwitch(int8_t hatSwitchIndex, int16_t value)
 
 void Joystick_::sendState()
 {
-	uint8_t data[JOYSTICK_STATE_SIZE];
-	uint32_t buttonTmp = _buttons;
+	uint8_t data[_hidReportSize];
 
-	// Split 32 bit button-state into 4 bytes
-	data[0] = buttonTmp & 0xFF;		
-	buttonTmp >>= 8;
-	data[1] = buttonTmp & 0xFF;
-	buttonTmp >>= 8;
-	data[2] = buttonTmp & 0xFF;
-	buttonTmp >>= 8;
-	data[3] = buttonTmp & 0xFF;
+	// Load Button State
+	for (int index = 0; index < _hidReportSize; index++)
+	{
+		data[index] = _buttonValues[index];		
+	}
 
 //	data[4] = _throttle;
 //	data[5] = _rudder;
@@ -317,7 +361,7 @@ void Joystick_::sendState()
 	//data[12] = (_zAxisRotation % 360) * 0.708;
 
 	// HID().SendReport(Report number, array of values in same order as HID descriptor, length)
-	DynamicHID().SendReport(_hidReportId, data, JOYSTICK_STATE_SIZE);
+	DynamicHID().SendReport(_hidReportId, data, _hidReportSize);
 }
 
 #endif

@@ -10,10 +10,10 @@
 #define JOYSTICK_COUNT 4
 
 Joystick_ Joystick[JOYSTICK_COUNT] = {
-  Joystick_(0x03),
-  Joystick_(0x04),
-  Joystick_(0x05),
-  Joystick_(0x06)
+  Joystick_(0x03, 4),
+  Joystick_(0x04, 8),
+  Joystick_(0x05, 16),
+  Joystick_(0x06, 32)
 };
 
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.

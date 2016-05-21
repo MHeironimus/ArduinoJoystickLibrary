@@ -41,28 +41,37 @@
 //================================================================================
 //  Joystick (Gamepad)
 
-#define JOYSTICK_DEFAULT_REPORT_ID 0x03
+#define JOYSTICK_DEFAULT_REPORT_ID    0x03
+#define JOYSTICK_DEFAULT_BUTTON_COUNT   32
 
 class Joystick_
 {
 private:
-	bool                     _autoSendState;
+
+    // Joystick State
 	int16_t	                 _xAxis;
 	int16_t	                 _yAxis;
 	int16_t	                 _zAxis;
 	int16_t	                 _xAxisRotation;
 	int16_t	                 _yAxisRotation;
 	int16_t	                 _zAxisRotation;
-	uint32_t                 _buttons;
 	int16_t                  _throttle;
 	int16_t                  _rudder;
 	int16_t	                 _hatSwitch[2];
-	
+    uint8_t                 *_buttonValues;
+
+    // Joystick Settings
+    bool                     _autoSendState;
+    uint8_t                  _buttonCount;
+    int                      _buttonValuesArraySize;
+
 	DynamicHIDSubDescriptor *_node;
 	uint8_t                  _hidReportId;
+	int                      _hidReportSize; 
 
 public:
-	Joystick_(uint8_t hidReportId = JOYSTICK_DEFAULT_REPORT_ID);
+	Joystick_(uint8_t hidReportId = JOYSTICK_DEFAULT_REPORT_ID,
+        uint8_t buttonCount = JOYSTICK_DEFAULT_BUTTON_COUNT);
 
 	void begin(bool initAutoSendState = true);
 	void end();
