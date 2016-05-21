@@ -101,6 +101,7 @@ Sends the updated joystick state to the host computer. Only needs to be called i
 
 ##Testing Details
 I used this library to make an Arduino appear as 1, 2, 3, and 4 joysticks / gamepads.
+
 I have tested with 1 - 32 buttons.
 
 I have tested this library using the following Arduino IDE Versions:
