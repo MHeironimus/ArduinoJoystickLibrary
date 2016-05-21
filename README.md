@@ -52,6 +52,7 @@ The following API is available if the Joystick library in included in a sketch f
 Constructor used to initialize and setup the Joystick. The following optional parameters are available:
 
 - uint8\_t hidReportId - Default: 0x03 - Indicates what the joystick's HID report ID should be. This value must be unique if you are creating multiple instances of Joystick. Do not use 0x01 or 0x02 as they are used by the built-in Arduino Keyboard and Mouse libraries.
+- uint8\_t buttonCount - Default: 32 - Indicates how many buttons will be available on the joystick.
 
 ###Joystick.begin(bool initAutoSendState)
 Starts emulating a game controller connected to a computer. By default all methods update the game controller state immediately. If initAutoSendState is set to false, the Joystick.sendState method must be called to update the game controller state.
