@@ -81,13 +81,13 @@ Sets the Y axis rotation value. Range 0° to 360°.
 Sets the Z axis rotation value. Range 0° to 360°.
 
 ###Joystick.setButton(byte button, byte value)
-Sets the state (0 or 1) of the specified button (range: 0 - (buttonCount - 1)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
+Sets the state (`0` or `1`) of the specified button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
 
 ###Joystick.pressButton(byte button)
-Press the indicated button (range: 0 - (buttonCount - 1)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
+Press the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
 
 ###Joystick.releaseButton(byte button)
-Release the indicated button (range: 0 - (buttonCount - 1)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
+Release the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
 
 ###Joystick.setThrottle(byte value)
 Sets the throttle value. Range 0 to 255.
@@ -102,7 +102,12 @@ Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat s
 Sends the updated joystick state to the host computer. Only needs to be called if AutoSendState is false (see Joystick.begin for more details).
 
 ##Testing Details
-I used this library to make an Arduino appear as 1, 2, 3, and 4 joysticks / gamepads.
+I have used this library to make an Arduino appear as the following:
+
+- 1 joystick / gamepad
+- 2 joysticks / gamepads
+- 3 joysticks / gamepads
+- 4 joysticks / gamepads
 
 I have tested with 1 - 32 buttons.
 
@@ -117,4 +122,4 @@ I have tested this library with the following boards:
 - Arduino Leonardo
 - Arduino Micro
 
-(as of 2016-05-20)
+(as of 2016-05-22)
