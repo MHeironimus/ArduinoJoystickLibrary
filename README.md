@@ -122,4 +122,8 @@ I have tested this library with the following boards:
 - Arduino Leonardo
 - Arduino Micro
 
-(as of 2016-05-22)
+Others have tested this library with the following boards:
+- Arduino Due
+- SparkFun Pro Micro
+
+(as of 2016-05-23)
