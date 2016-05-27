@@ -51,7 +51,7 @@ The following example Arduino sketch files are included in this library:
 ##Joystick Library API
 The following API is available if the Joystick library in included in a sketch file.
 
-###Joystick\_.Joystick\_(...)
+### Joystick\_(...)
 Constructor used to initialize and setup the Joystick. The following optional parameters are available:
 
 - `uint8_t hidReportId` - Default: `0x03` - Indicates what the joystick's HID report ID should be. This value must be unique if you are creating multiple instances of Joystick. Do not use `0x01` or `0x02` as they are used by the built-in Arduino Keyboard and Mouse libraries.
