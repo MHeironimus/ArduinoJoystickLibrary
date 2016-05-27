@@ -1,4 +1,6 @@
 # Arduino Joystick Library
+#### Version 1.0.1
+
 Arduino IDE 1.6.6 (or above) library that adds a joystick to the list of HID devices an Arduino Leonardo or Arduino Micro (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below).
 ##Support for one, two, or three joysticks
 This library comes in three flavors:
