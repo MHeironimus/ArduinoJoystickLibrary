@@ -55,30 +55,54 @@ Constructor used to initialize and setup the Joystick. The following optional pa
 
 - `uint8_t hidReportId` - Default: `0x03` - Indicates what the joystick's HID report ID should be. This value must be unique if you are creating multiple instances of Joystick. Do not use `0x01` or `0x02` as they are used by the built-in Arduino Keyboard and Mouse libraries.
 - `uint8_t buttonCount` - Default: `32` - Indicates how many buttons will be available on the joystick.
-
-###Joystick.begin(bool initAutoSendState)
+- `bool includeXAxis` - Default: `true` - Indicates if the X Axis is available on the joystick.
+- `bool includeYAxis` - Default: `true` - Indicates if the Y Axis is available on the joystick.
+- `bool includeZAxis` - Default: `true` - Indicates if the Z Axis (in some situations this is the right X Axis) is available on the joystick.
+- `bool includeRxAxis` - Default: `true` - Indicates if the X Axis Rotation (in some situations this is the right Y Axis) is available on the joystick.
+- `bool includeRyAxis` - Default: `true` - Indicates if the Y Axis Rotation is available on the joystick.
+- `bool includeRzAxis` - Default: `true` - Indicates if the Z Axis Rotation is available on the joystick.
+		
+### Joystick.begin(bool initAutoSendState)
 Starts emulating a game controller connected to a computer. By default all methods update the game controller state immediately. If initAutoSendState is set to false, the Joystick.sendState method must be called to update the game controller state.
 
-###Joystick.end()
+### Joystick.end()
 Stops the game controller emulation to a connected computer.
 
-###Joystick.setXAxis(byte value)
-Sets the X axis value. Range -127 to 127 (0 is center).
+### Joystick.setXAxisRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the X axis. Default: `0` to `1023`
 
-###Joystick.setYAxis(byte value)
-Sets the Y axis value. Range -127 to 127 (0 is center).
+### Joystick.setXAxis(byte value)
+Sets the X axis value. See `setXAxisRange` for the range.
 
-###Joystick.setZAxis(byte value)
-Sets the Z axis value. Range -127 to 127 (0 is center).
+### Joystick.setYAxisRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the Y axis. Default: `0` to `1023`
 
-###Joystick.setXAxisRotation(int value)
-Sets the X axis rotation value. Range 0° to 360°.
+### Joystick.setYAxis(byte value)
+Sets the Y axis value. See `setYAxisRange` for the range.
 
-###Joystick.setyAxisRotation(int value)
-Sets the Y axis rotation value. Range 0° to 360°.
+### Joystick.setZAxisRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the Z axis. Default: `0` to `1023`
 
-###Joystick.setZAxisRotation(int value)
-Sets the Z axis rotation value. Range 0° to 360°.
+### Joystick.setZAxis(byte value)
+Sets the Z axis value. See `setZAxisRange` for the range.
+
+### Joystick.setRxAxisRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the X axis rotation. Default: `0` to `1023`
+
+### Joystick.setRxAxis(int value)
+Sets the X axis rotation value. See `setRxAxisRange` for the range.
+
+### Joystick.setRyAxisRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the Y axis rotation. Default: `0` to `1023`
+
+### Joystick.setRyAxis(int value)
+Sets the Y axis rotation value. See `setRyAxisRange` for the range.
+
+### Joystick.setRzAxisRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the Z axis rotation. Default: `0` to `1023`
+
+### Joystick.setRzAxis(int value)
+Sets the Z axis rotation value. See `setRzAxisRange` for the range.
 
 ###Joystick.setButton(byte button, byte value)
 Sets the state (`0` or `1`) of the specified button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.

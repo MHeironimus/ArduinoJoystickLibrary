@@ -1,0 +1,1 @@
+copy /Y Joystick\src\*.* %HOMEDRIVE%%HOMEPATH%\Documents\Arduino\libraries\Joystick\src

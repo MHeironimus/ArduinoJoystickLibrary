@@ -1,6 +1,6 @@
-// Program used to test the Arduino Joystick Library to create 
-// multiple Joystick objects on a single Arduino Leonardo or 
-// Arduino Micro.
+// Program used to test using the Arduino Joystick Library 
+// to create multiple Joystick objects on a single Arduino 
+// Leonardo or Arduino Micro.
 //
 // Matthew Heironimus
 // 2016-05-13
@@ -10,9 +10,9 @@
 #define JOYSTICK_COUNT 4
 
 Joystick_ Joystick[JOYSTICK_COUNT] = {
-  Joystick_(0x03, 4),
-  Joystick_(0x04, 8),
-  Joystick_(0x05, 16),
+  Joystick_(0x03, 4, true, true, false, false, false, false),
+  Joystick_(0x04, 8, true, true, true, true, false, false),
+  Joystick_(0x05, 16, false, true, false, true, false, false),
   Joystick_(0x06, 32)
 };
 
@@ -97,9 +97,18 @@ void testXYAxis(int joystickId, unsigned int currentStep)
 }
 
 void setup() {
+
+/* Uncomment this out for debugging...
+  Serial.begin(9600);
+  while (!Serial) {
+      ; // wait for serial port to connect. Needed for native USB
+  }
+*/
   
   for (int index = 0; index < JOYSTICK_COUNT; index++)
   {
+    Joystick[index].setXAxisRange(-127, 127);
+  
     if (testAutoSendMode)
     {
       Joystick[index].begin();

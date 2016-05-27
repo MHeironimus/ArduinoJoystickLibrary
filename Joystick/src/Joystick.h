@@ -43,6 +43,8 @@
 
 #define JOYSTICK_DEFAULT_REPORT_ID    0x03
 #define JOYSTICK_DEFAULT_BUTTON_COUNT   32
+#define JOYSTICK_DEFAULT_AXIS_MINIMUM    0
+#define JOYSTICK_DEFAULT_AXIS_MAXIMUM 1023
 
 class Joystick_
 {
@@ -64,6 +66,24 @@ private:
     bool                     _autoSendState;
     uint8_t                  _buttonCount;
     int                      _buttonValuesArraySize;
+	bool                     _includeXAxis;
+	bool                     _includeYAxis;
+	bool                     _includeZAxis;
+	bool                     _includeRxAxis;
+	bool                     _includeRyAxis;
+	bool                     _includeRzAxis;
+	int16_t                  _xAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+	int16_t                  _xAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+	int16_t                  _yAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+	int16_t                  _yAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+	int16_t                  _zAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+	int16_t                  _zAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+	int16_t                  _rxAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+	int16_t                  _rxAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+	int16_t                  _ryAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+	int16_t                  _ryAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+	int16_t                  _rzAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+	int16_t                  _rzAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
 
 	DynamicHIDSubDescriptor *_node;
 	uint8_t                  _hidReportId;
@@ -71,18 +91,30 @@ private:
 
 public:
 	Joystick_(uint8_t hidReportId = JOYSTICK_DEFAULT_REPORT_ID,
-        uint8_t buttonCount = JOYSTICK_DEFAULT_BUTTON_COUNT);
+        uint8_t buttonCount = JOYSTICK_DEFAULT_BUTTON_COUNT,
+		bool includeXAxis = true,
+		bool includeYAxis = true,
+		bool includeZAxis = true,
+		bool includeRxAxis = true,
+		bool includeRyAxis = true,
+		bool includeRzAxis = true);
 
 	void begin(bool initAutoSendState = true);
 	void end();
+	
+	void setXAxisRange(int16_t minimum, int16_t maximum);
+	void setYAxisRange(int16_t minimum, int16_t maximum);
+	void setZAxisRange(int16_t minimum, int16_t maximum);
+	void setRxAxisRange(int16_t minimum, int16_t maximum);
+	void setRyAxisRange(int16_t minimum, int16_t maximum);
+	void setRzAxisRange(int16_t minimum, int16_t maximum);
 
 	void setXAxis(int16_t value);
 	void setYAxis(int16_t value);
 	void setZAxis(int16_t value);
-
-	void setXAxisRotation(int16_t value);
-	void setYAxisRotation(int16_t value);
-	void setZAxisRotation(int16_t value);
+	void setRxAxis(int16_t value);
+	void setRyAxis(int16_t value);
+	void setRzAxis(int16_t value);
 
 	void setButton(uint8_t button, uint8_t value);
 	void pressButton(uint8_t button);
