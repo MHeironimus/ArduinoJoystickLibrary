@@ -108,6 +108,7 @@ void setup() {
   for (int index = 0; index < JOYSTICK_COUNT; index++)
   {
     Joystick[index].setXAxisRange(-127, 127);
+    Joystick[index].setYAxisRange(-127, 127);
   
     if (testAutoSendMode)
     {

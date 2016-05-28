@@ -62,6 +62,11 @@ Constructor used to initialize and setup the Joystick. The following optional pa
 - `bool includeRxAxis` - Default: `true` - Indicates if the X Axis Rotation (in some situations this is the right Y Axis) is available on the joystick.
 - `bool includeRyAxis` - Default: `true` - Indicates if the Y Axis Rotation is available on the joystick.
 - `bool includeRzAxis` - Default: `true` - Indicates if the Z Axis Rotation is available on the joystick.
+
+The following constants define the default values for the constructor parameter's listed above:
+
+- `JOYSTICK_DEFAULT_REPORT_ID` is set to `0x03`
+- `JOYSTICK_DEFAULT_BUTTON_COUNT` is set to `32`. 
 		
 ### Joystick.begin(bool initAutoSendState)
 Starts emulating a game controller connected to a computer. By default all methods update the game controller state immediately. If initAutoSendState is set to false, the Joystick.sendState method must be called to update the game controller state.
