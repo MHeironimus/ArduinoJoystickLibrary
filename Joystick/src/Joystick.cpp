@@ -25,6 +25,8 @@
 #define JOYSTICK_REPORT_ID_INDEX 7
 #define JOYSTICK_AXIS_MINIMUM -32767
 #define JOYSTICK_AXIS_MAXIMUM 32767
+#define JOYSTICK_SIMULATOR_MINIMUM -32767
+#define JOYSTICK_SIMULATOR_MAXIMUM 32767
 
 /*
 static const uint8_t _hidReportDescriptor[] PROGMEM = {
@@ -108,7 +110,12 @@ Joystick_::Joystick_(uint8_t hidReportId,
 	bool includeZAxis,
 	bool includeRxAxis,
 	bool includeRyAxis,
-	bool includeRzAxis)
+	bool includeRzAxis,
+	bool includeRudder,
+	bool includeThrottle,
+	bool includeAccelerator,
+	bool includeBrake,
+	bool includeSteering)
 {
     // Set the USB HID Report ID
     _hidReportId = hidReportId;
@@ -121,6 +128,11 @@ Joystick_::Joystick_(uint8_t hidReportId,
 	_includeRxAxis = includeRxAxis;
 	_includeRyAxis = includeRyAxis;
 	_includeRzAxis = includeRzAxis;
+	_includeRudder = includeRudder;
+	_includeThrottle = includeThrottle;
+	_includeAccelerator = includeAccelerator;
+	_includeBrake = includeBrake;
+	_includeSteering = includeSteering;
 
     // Build Joystick HID Report Description
 	
@@ -139,6 +151,12 @@ Joystick_::Joystick_(uint8_t hidReportId,
 		+  (_includeRxAxis == true)
 		+  (_includeRyAxis == true)
 		+  (_includeRzAxis == true);
+		
+	uint8_t simulationCount = (includeRudder == true)
+		+ (includeThrottle == true)
+		+ (includeAccelerator == true)
+		+ (includeBrake == true)
+		+ (includeSteering == true); 
 		
 	// TODO: Figure out what the max for this could be and set it here...
     uint8_t *customHidReportDescriptor = new uint8_t[100];
@@ -297,6 +315,73 @@ Joystick_::Joystick_(uint8_t hidReportId,
 		
 	} // X, Y, Z, Rx, Ry, and Rz Axis	
 	
+	if (simulationCount > 0) {
+	
+		// USAGE_PAGE (Simulation Controls)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x05;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x02;
+		
+		// LOGICAL_MINIMUM (-32767)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x16;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x80;
+
+		// LOGICAL_MAXIMUM (+32767)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x26;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0xFF;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x7F;
+
+		// REPORT_SIZE (16)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x75;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x10;
+
+		// REPORT_COUNT (simulationCount)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x95;
+		customHidReportDescriptor[hidReportDescriptorSize++] = simulationCount;
+
+		// COLLECTION (Physical)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0xA1;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
+
+		if (_includeRudder == true) {
+			// USAGE (Rudder)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0xBA;
+		}
+
+		if (_includeThrottle == true) {
+			// USAGE (Throttle)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0xBB;
+		}
+
+		if (_includeAccelerator == true) {
+			// USAGE (Accelerator)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0xC4;
+		}
+
+		if (_includeBrake == true) {
+			// USAGE (Brake)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0xC5;
+		}
+
+		if (_includeSteering == true) {
+			// USAGE (Steering)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0xC8;
+		}
+
+		// INPUT (Data,Var,Abs)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x81;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x02;
+		
+		// END_COLLECTION (Physical)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0xc0;
+	
+	} // Simulation Controls
+
     // END_COLLECTION
     customHidReportDescriptor[hidReportDescriptorSize++] = 0xc0;
 
@@ -317,6 +402,7 @@ Joystick_::Joystick_(uint8_t hidReportId,
 	// Calculate HID Report Size
 	_hidReportSize = _buttonValuesArraySize;
 	_hidReportSize += (axisCount * 2);
+	_hidReportSize += (simulationCount * 2);
 
 	Serial.print("_hidReportSize: ");
 	Serial.println(_hidReportSize);
@@ -330,6 +416,9 @@ Joystick_::Joystick_(uint8_t hidReportId,
 	_zAxisRotation = 0;
 	_throttle = 0;
 	_rudder = 0;
+	_accelerator = 0;
+	_brake = 0;
+	_steering = 0;
 	_hatSwitch[0] = -1;
 	_hatSwitch[1] = -1;
     for (int index = 0; index < _buttonValuesArraySize; index++)
@@ -384,6 +473,36 @@ void Joystick_::setRzAxisRange(int16_t minimum, int16_t maximum)
 	_rzAxisMaximum = maximum;
 }
 
+void Joystick_::setRudderRange(int16_t minimum, int16_t maximum)
+{
+	_rudderMinimum = minimum;
+	_rudderMaximum = maximum;
+}
+
+void Joystick_::setThrottleRange(int16_t minimum, int16_t maximum)
+{
+	_throttleMinimum = minimum;
+	_throttleMaximum = maximum;
+}
+
+void Joystick_::setAcceleratorRange(int16_t minimum, int16_t maximum)
+{
+	_acceleratorMinimum = minimum;
+	_acceleratorMaximum = maximum;
+}
+
+void Joystick_::setBrakeRange(int16_t minimum, int16_t maximum)
+{
+	_brakeMinimum = minimum;
+	_brakeMaximum = maximum;
+}
+
+void Joystick_::setSteeringRange(int16_t minimum, int16_t maximum)
+{
+	_steeringMinimum = minimum;
+	_steeringMaximum = maximum;
+}
+
 void Joystick_::setButton(uint8_t button, uint8_t value)
 {
 	if (value == 0)
@@ -413,17 +532,6 @@ void Joystick_::releaseButton(uint8_t button)
     int bit = button % 8;
 
     bitClear(_buttonValues[index], bit);
-	if (_autoSendState) sendState();
-}
-
-void Joystick_::setThrottle(int16_t value)
-{
-	_throttle = value;
-	if (_autoSendState) sendState();
-}
-void Joystick_::setRudder(int16_t value)
-{
-	_rudder = value;
 	if (_autoSendState) sendState();
 }
 
@@ -471,6 +579,42 @@ void Joystick_::setRzAxis(int16_t value)
 	if (_autoSendState) sendState();
 }
 
+void Joystick_::setRudder(int16_t value)
+{
+	if ((value < _rudderMinimum) || (value > _rudderMaximum)) return;
+	
+	_rudder = value;
+	if (_autoSendState) sendState();
+}
+void Joystick_::setThrottle(int16_t value)
+{
+	if ((value < _throttleMinimum) || (value > _throttleMaximum)) return;
+	
+	_throttle = value;
+	if (_autoSendState) sendState();
+}
+void Joystick_::setAccelerator(int16_t value)
+{
+	if ((value < _acceleratorMinimum) || (value > _acceleratorMaximum)) return;
+
+	_accelerator = value;
+	if (_autoSendState) sendState();
+}
+void Joystick_::setBrake(int16_t value)
+{
+	if ((value < _brakeMinimum) || (value > _brakeMaximum)) return;
+
+	_brake = value;
+	if (_autoSendState) sendState();
+}
+void Joystick_::setSteering(int16_t value)
+{
+	if ((value < _steeringMinimum) || (value > _steeringMaximum)) return;
+
+	_steering = value;
+	if (_autoSendState) sendState();
+}
+
 void Joystick_::setHatSwitch(int8_t hatSwitchIndex, int16_t value)
 {
 	_hatSwitch[hatSwitchIndex % 2] = value;
@@ -488,8 +632,110 @@ void Joystick_::sendState()
 		data[index] = _buttonValues[index];		
 	}
 
-//	data[4] = _throttle;
-//	data[5] = _rudder;
+	// Set Axis Values
+	int16_t convertedValue;
+	uint8_t highByte;
+	uint8_t lowByte;
+	if (_includeXAxis == true) {
+		convertedValue = map(_xAxis, _xAxisMinimum, _xAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+	if (_includeYAxis == true) {
+		convertedValue = map(_yAxis, _yAxisMinimum, _yAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+	if (_includeZAxis == true) {
+		convertedValue = map(_zAxis, _zAxisMinimum, _zAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+	if (_includeRxAxis == true) {
+		convertedValue = map(_xAxisRotation, _rxAxisMinimum, _rxAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+	if (_includeRyAxis == true) {
+		convertedValue = map(_yAxisRotation, _ryAxisMinimum, _ryAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+	if (_includeRzAxis == true) {
+		convertedValue = map(_zAxisRotation, _rzAxisMinimum, _rzAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+	if (_includeRudder == true) {
+		convertedValue = map(_rudder, _rudderMinimum, _rudderMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+	if (_includeThrottle == true) {
+		convertedValue = map(_throttle, _throttleMinimum, _throttleMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+	if (_includeAccelerator == true) {
+		convertedValue = map(_accelerator, _acceleratorMinimum, _acceleratorMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+	if (_includeBrake == true) {
+		convertedValue = map(_brake, _brakeMinimum, _brakeMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+	if (_includeSteering == true) {
+		convertedValue = map(_steering, _steeringMinimum, _steeringMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		data[index++] = lowByte;
+		data[index++] = highByte;
+	}
+
 
 	// Calculate hat-switch values
     /*
@@ -509,65 +755,6 @@ void Joystick_::sendState()
 
 	// Pack hat-switch states into a single byte
 	//data[6] = (convertedHatSwitch[1] << 4) | (B00001111 & convertedHatSwitch[0]);
-
-	// Set Axis Values
-	int16_t axisValue;
-	uint8_t highByte;
-	uint8_t lowByte;
-	if (_includeXAxis == true) {
-		axisValue = map(_xAxis, _xAxisMinimum, _xAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(axisValue >> 8);
-		lowByte = (uint8_t)(axisValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeYAxis == true) {
-		axisValue = map(_yAxis, _yAxisMinimum, _yAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(axisValue >> 8);
-		lowByte = (uint8_t)(axisValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeZAxis == true) {
-		axisValue = map(_zAxis, _zAxisMinimum, _zAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(axisValue >> 8);
-		lowByte = (uint8_t)(axisValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeRxAxis == true) {
-		axisValue = map(_xAxisRotation, _rxAxisMinimum, _rxAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(axisValue >> 8);
-		lowByte = (uint8_t)(axisValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeRyAxis == true) {
-		axisValue = map(_yAxisRotation, _ryAxisMinimum, _ryAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(axisValue >> 8);
-		lowByte = (uint8_t)(axisValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeRzAxis == true) {
-		axisValue = map(_zAxisRotation, _rzAxisMinimum, _rzAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(axisValue >> 8);
-		lowByte = (uint8_t)(axisValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
 
 	DynamicHID().SendReport(_hidReportId, data, _hidReportSize);
 }

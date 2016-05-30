@@ -10,10 +10,12 @@ Copy the Joystick folder to the Arduino libraries folder (typically %userprofile
 ##Examples
 The following example Arduino sketch files are included in this library:
 
-- JoystickTest - Simple test of the Joystick library. Exercises all of the Joystick library functions when pin A0 is grounded.
+- JoystickTest - Simple test of the Joystick library. Exercises many of the Joystick library functions when pin A0 is grounded.
 - MultipleJoystickTest - Creates 4 Joysticks using the library and exercises the first 16 buttons and X and Y axis when pin A0 is grounded.
 - JoystickButton - Creates a Joystick and maps pin 9 to button 0, pin 10 to button 1, pin 11 to button 2, and pin 12 to button 3.
-- JoystickKeyboard - Creates a Joystick and a Keyboard. Maps pin 9 to Joystick Button 0, pin 10 to Joystick Button 1, pin 11 to Keyboard key 1, and pin 12 to Keyboard key 2.  
+- JoystickKeyboard - Creates a Joystick and a Keyboard. Maps pin 9 to Joystick Button 0, pin 10 to Joystick Button 1, pin 11 to Keyboard key 1, and pin 12 to Keyboard key 2.
+- DrivingControllerTest - Creates a Driving Controller and tests 4 buttons, the Steering, Brake, and Accelerator when pin A0 is grounded.  
+- FlightControllerTest - Creates a Flight Controller and tests 32 buttons, the X and Y axis, the Throttle, and the Rudder when pin A0 is grounded.  
 
 ###Simple example
 
@@ -62,6 +64,11 @@ Constructor used to initialize and setup the Joystick. The following optional pa
 - `bool includeRxAxis` - Default: `true` - Indicates if the X Axis Rotation (in some situations this is the right Y Axis) is available on the joystick.
 - `bool includeRyAxis` - Default: `true` - Indicates if the Y Axis Rotation is available on the joystick.
 - `bool includeRzAxis` - Default: `true` - Indicates if the Z Axis Rotation is available on the joystick.
+- `bool includeRudder` - Default: `true` - Indicates if the Rudder is available on the joystick.
+- `bool includeThrottle` - Default: `true` - Indicates if the Throttle is available on the joystick.
+- `bool includeAccelerator` - Default: `true` - Indicates if the Accelerator is available on the joystick.
+- `bool includeBrake` - Default: `true` - Indicates if the Brake is available on the joystick.
+- `bool includeSteering` - Default: `true` - Indicates if the Steering is available on the joystick.
 
 The following constants define the default values for the constructor parameter's listed above:
 
@@ -110,6 +117,36 @@ Sets the range of values that will be used for the Z axis rotation. Default: `0`
 ### Joystick.setRzAxis(int value)
 Sets the Z axis rotation value. See `setRzAxisRange` for the range.
 
+### Joystick.setRudderRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the Rudder. Default: `0` to `1023`
+
+### Joystick.setRudder(byte value)
+Sets the Rudder value. See `setRudderRange` for the range.
+
+### Joystick.setThrottleRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the Throttle. Default: `0` to `1023`
+
+### Joystick.setThrottle(byte value)
+Sets the Throttle value. See `setThrottleRange` for the range.
+
+### Joystick.setAcceleratorRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the Accelerator. Default: `0` to `1023`
+
+### Joystick.setAccelerator(byte value)
+Sets the Accelerator value. See `setAcceleratorRange` for the range.
+
+### Joystick.setBrakeRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the Brake. Default: `0` to `1023`
+
+### Joystick.setBrake(byte value)
+Sets the Brake value. See `setBrakeRange` for the range.
+
+### Joystick.setSteeringRange(int16_t minimum, int16_t maximum)
+Sets the range of values that will be used for the Steering. Default: `0` to `1023`
+
+### Joystick.setSteering(byte value)
+Sets the Steering value. See `setSteeringRange` for the range.
+
 ###Joystick.setButton(byte button, byte value)
 Sets the state (`0` or `1`) of the specified button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
 
@@ -118,12 +155,6 @@ Press the indicated button (range: `0` - (`buttonCount - 1`)). The button is the
 
 ###Joystick.releaseButton(byte button)
 Release the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
-
-###Joystick.setThrottle(byte value)
-Sets the throttle value. Range 0 to 255.
-
-###Joystick.setRudder(byte value)
-Sets the rudder value. Range 0 to 255.
 
 ###Joystick.setHatSwitch(byte hatSwitch, int value)
 Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat switch #1 is 0 and hat switch #2 is 1). The value is from 0° to 360°, but in 45° increments. Any value less than 45° will be rounded down (i.e. 44° is rounded down to 0°, 89° is rounded down to 45°, etc.). Set the value to -1 to release the hat switch.

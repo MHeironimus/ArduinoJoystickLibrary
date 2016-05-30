@@ -41,10 +41,12 @@
 //================================================================================
 //  Joystick (Gamepad)
 
-#define JOYSTICK_DEFAULT_REPORT_ID    0x03
-#define JOYSTICK_DEFAULT_BUTTON_COUNT   32
-#define JOYSTICK_DEFAULT_AXIS_MINIMUM    0
-#define JOYSTICK_DEFAULT_AXIS_MAXIMUM 1023
+#define JOYSTICK_DEFAULT_REPORT_ID         0x03
+#define JOYSTICK_DEFAULT_BUTTON_COUNT        32
+#define JOYSTICK_DEFAULT_AXIS_MINIMUM         0
+#define JOYSTICK_DEFAULT_AXIS_MAXIMUM      1023
+#define JOYSTICK_DEFAULT_SIMULATOR_MINIMUM    0
+#define JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM 1023
 
 class Joystick_
 {
@@ -59,6 +61,9 @@ private:
 	int16_t	                 _zAxisRotation;
 	int16_t                  _throttle;
 	int16_t                  _rudder;
+	int16_t					 _accelerator;
+	int16_t					 _brake;
+	int16_t					 _steering;
 	int16_t	                 _hatSwitch[2];
     uint8_t                 *_buttonValues;
 
@@ -72,6 +77,11 @@ private:
 	bool                     _includeRxAxis;
 	bool                     _includeRyAxis;
 	bool                     _includeRzAxis;
+	bool                     _includeRudder;
+	bool                     _includeThrottle;
+	bool                     _includeAccelerator;
+	bool                     _includeBrake;
+	bool                     _includeSteering;
 	int16_t                  _xAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
 	int16_t                  _xAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
 	int16_t                  _yAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
@@ -84,6 +94,16 @@ private:
 	int16_t                  _ryAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
 	int16_t                  _rzAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
 	int16_t                  _rzAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+	int16_t                  _rudderMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
+	int16_t                  _rudderMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
+	int16_t                  _throttleMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
+	int16_t                  _throttleMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
+	int16_t                  _acceleratorMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
+	int16_t                  _acceleratorMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
+	int16_t                  _brakeMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
+	int16_t                  _brakeMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
+	int16_t                  _steeringMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
+	int16_t                  _steeringMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
 
 	DynamicHIDSubDescriptor *_node;
 	uint8_t                  _hidReportId;
@@ -97,7 +117,12 @@ public:
 		bool includeZAxis = true,
 		bool includeRxAxis = true,
 		bool includeRyAxis = true,
-		bool includeRzAxis = true);
+		bool includeRzAxis = true,
+		bool includeRudder = true,
+		bool includeThrottle = true,
+		bool includeAccelerator = true,
+		bool includeBrake = true,
+		bool includeSteering = true);
 
 	void begin(bool initAutoSendState = true);
 	void end();
@@ -116,12 +141,21 @@ public:
 	void setRyAxis(int16_t value);
 	void setRzAxis(int16_t value);
 
+	void setRudderRange(int16_t minimum, int16_t maximum);
+	void setThrottleRange(int16_t minimum, int16_t maximum);
+	void setAcceleratorRange(int16_t minimum, int16_t maximum);
+	void setBrakeRange(int16_t minimum, int16_t maximum);
+	void setSteeringRange(int16_t minimum, int16_t maximum);
+
+	void setRudder(int16_t value);
+	void setThrottle(int16_t value);
+	void setAccelerator(int16_t value);
+	void setBrake(int16_t value);
+	void setSteering(int16_t value);
+
 	void setButton(uint8_t button, uint8_t value);
 	void pressButton(uint8_t button);
 	void releaseButton(uint8_t button);
-
-	void setThrottle(int16_t value);
-	void setRudder(int16_t value);
 
 	void setHatSwitch(int8_t hatSwitch, int16_t value);
 
