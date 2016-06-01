@@ -103,8 +103,10 @@ static const uint8_t _hidReportDescriptor[] PROGMEM = {
 };
 */
 
-Joystick_::Joystick_(uint8_t hidReportId,
+Joystick_::Joystick_(
+	uint8_t hidReportId,
     uint8_t buttonCount,
+	uint8_t hatSwitchCount,
 	bool includeXAxis,
 	bool includeYAxis,
 	bool includeZAxis,
@@ -122,6 +124,7 @@ Joystick_::Joystick_(uint8_t hidReportId,
 
     // Save Joystick Settings
     _buttonCount = buttonCount;
+	_hatSwitchCount = hatSwitchCount;
 	_includeXAxis = includeXAxis;
 	_includeYAxis = includeYAxis;
 	_includeZAxis = includeZAxis;
@@ -159,7 +162,7 @@ Joystick_::Joystick_(uint8_t hidReportId,
 		+ (includeSteering == true); 
 		
 	// TODO: Figure out what the max for this could be and set it here...
-    uint8_t *customHidReportDescriptor = new uint8_t[100];
+    uint8_t *customHidReportDescriptor = new uint8_t[150];
     int hidReportDescriptorSize = 0;
 
     // USAGE_PAGE (Generic Desktop)
@@ -237,13 +240,115 @@ Joystick_::Joystick_(uint8_t hidReportId,
 		} // Padding Bits Needed
 
 	} // Buttons
-	
-	if (axisCount > 0) {
+
+	if ((axisCount > 0) || (_hatSwitchCount > 0)) {
 	
 		// USAGE_PAGE (Generic Desktop)
 		customHidReportDescriptor[hidReportDescriptorSize++] = 0x05;
 		customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
+		
+	}
 
+	if (_hatSwitchCount > 0) {
+
+		// USAGE (Hat Switch)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x39;
+
+		// LOGICAL_MINIMUM (0)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x15;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
+
+		// LOGICAL_MAXIMUM (7)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x25;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x07;
+
+		// PHYSICAL_MINIMUM (0)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x35;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
+
+		// PHYSICAL_MAXIMUM (315)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x46;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x3B;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
+
+		// UNIT (Eng Rot:Angular Pos)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x65;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x14;
+
+		// REPORT_SIZE (4)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x75;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
+
+		// REPORT_COUNT (1)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x95;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
+						
+		// INPUT (Data,Var,Abs)
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x81;
+		customHidReportDescriptor[hidReportDescriptorSize++] = 0x02;
+		
+		if (_hatSwitchCount > 1) {
+			
+			// USAGE (Hat Switch)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x39;
+
+			// LOGICAL_MINIMUM (0)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x15;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
+
+			// LOGICAL_MAXIMUM (7)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x25;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x07;
+
+			// PHYSICAL_MINIMUM (0)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x35;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
+
+			// PHYSICAL_MAXIMUM (315)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x46;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x3B;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
+
+			// UNIT (Eng Rot:Angular Pos)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x65;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x14;
+
+			// REPORT_SIZE (4)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x75;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
+
+			// REPORT_COUNT (1)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x95;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
+							
+			// INPUT (Data,Var,Abs)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x81;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x02;
+		
+		} else {
+		
+			// Use Padding Bits
+		
+			// REPORT_SIZE (1)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x75;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
+
+			// REPORT_COUNT (4)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x95;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
+					
+			// INPUT (Const,Var,Abs)
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x81;
+			customHidReportDescriptor[hidReportDescriptorSize++] = 0x03;
+			
+		} // One or Two Hat Switches?
+
+	} // Hat Switches
+
+	if (axisCount > 0) {
+	
 		// USAGE (Pointer)
 		customHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
 		customHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
@@ -393,20 +498,20 @@ Joystick_::Joystick_(uint8_t hidReportId,
 	DynamicHID().AppendDescriptor(_node);
 	
     // Setup Joystick State
-    _buttonValuesArraySize = _buttonCount / 8;
-    if ((_buttonCount % 8) > 0) {
-        _buttonValuesArraySize++;
-    }
-    _buttonValues = new uint8_t[_buttonValuesArraySize];
-
+	if (buttonCount > 0) {
+		_buttonValuesArraySize = _buttonCount / 8;
+		if ((_buttonCount % 8) > 0) {
+			_buttonValuesArraySize++;
+		}
+		_buttonValues = new uint8_t[_buttonValuesArraySize];
+	}
+	
 	// Calculate HID Report Size
 	_hidReportSize = _buttonValuesArraySize;
+	_hidReportSize += (_hatSwitchCount > 0);
 	_hidReportSize += (axisCount * 2);
 	_hidReportSize += (simulationCount * 2);
-
-	Serial.print("_hidReportSize: ");
-	Serial.println(_hidReportSize);
-
+	
 	// Initalize Joystick State
 	_xAxis = 0;
 	_yAxis = 0;
@@ -419,12 +524,21 @@ Joystick_::Joystick_(uint8_t hidReportId,
 	_accelerator = 0;
 	_brake = 0;
 	_steering = 0;
-	_hatSwitch[0] = -1;
-	_hatSwitch[1] = -1;
+	for (int index = 0; index < JOYSTICK_HATSWITCH_COUNT_MAXIMUM; index++)
+	{
+		_hatSwitchValues[index] = -1;
+	}
     for (int index = 0; index < _buttonValuesArraySize; index++)
     {
         _buttonValues[index] = 0;
     }
+}
+
+Joystick_::~Joystick_() {
+	if (_buttonValues != NULL) {
+		delete[] _buttonValues;
+		_buttonValues = NULL;
+	}
 }
 
 void Joystick_::begin(bool initAutoSendState)
@@ -617,7 +731,9 @@ void Joystick_::setSteering(int16_t value)
 
 void Joystick_::setHatSwitch(int8_t hatSwitchIndex, int16_t value)
 {
-	_hatSwitch[hatSwitchIndex % 2] = value;
+	if (hatSwitchIndex >= _hatSwitchCount) return;
+	
+	_hatSwitchValues[hatSwitchIndex] = value;
 	if (_autoSendState) sendState();
 }
 
@@ -631,6 +747,28 @@ void Joystick_::sendState()
 	{
 		data[index] = _buttonValues[index];		
 	}
+
+	// Set Hat Switch Values
+	if (_hatSwitchCount > 0) {
+		
+		// Calculate hat-switch values
+		uint8_t convertedHatSwitch[JOYSTICK_HATSWITCH_COUNT_MAXIMUM];
+		for (int hatSwitchIndex = 0; hatSwitchIndex < JOYSTICK_HATSWITCH_COUNT_MAXIMUM; hatSwitchIndex++)
+		{
+			if (_hatSwitchValues[hatSwitchIndex] < 0)
+			{
+				convertedHatSwitch[hatSwitchIndex] = 8;
+			}
+			else
+			{
+				convertedHatSwitch[hatSwitchIndex] = (_hatSwitchValues[hatSwitchIndex] % 360) / 45;
+			}			
+		}
+
+		// Pack hat-switch states into a single byte
+		data[index++] = (convertedHatSwitch[1] << 4) | (B00001111 & convertedHatSwitch[0]);
+	
+	} // Hat Switches
 
 	// Set Axis Values
 	int16_t convertedValue;
@@ -735,26 +873,6 @@ void Joystick_::sendState()
 		data[index++] = lowByte;
 		data[index++] = highByte;
 	}
-
-
-	// Calculate hat-switch values
-    /*
-	uint8_t convertedHatSwitch[2];
-	for (int hatSwitchIndex = 0; hatSwitchIndex < 2; hatSwitchIndex++)
-	{
-		if (_hatSwitch[hatSwitchIndex] < 0)
-		{
-			convertedHatSwitch[hatSwitchIndex] = 8;
-		}
-		else
-		{
-			convertedHatSwitch[hatSwitchIndex] = (_hatSwitch[hatSwitchIndex] % 360) / 45;
-		}
-	}
-    */
-
-	// Pack hat-switch states into a single byte
-	//data[6] = (convertedHatSwitch[1] << 4) | (B00001111 & convertedHatSwitch[0]);
 
 	DynamicHID().SendReport(_hidReportId, data, _hidReportSize);
 }

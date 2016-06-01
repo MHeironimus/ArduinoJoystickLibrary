@@ -168,20 +168,14 @@ void testXYZAxisRotation(unsigned int degree)
 
 void setup() {
 
-/*
- * Uncomment this out for debugging...
-  Serial.begin(9600);
-  while (!Serial) {
-      ; // wait for serial port to connect. Needed for native USB
-  }
- */
-  
   Joystick.setXAxisRange(-127, 127);
   Joystick.setYAxisRange(-127, 127);
   Joystick.setZAxisRange(-127, 127);
   Joystick.setRxAxisRange(0, 360);
   Joystick.setRyAxisRange(0, 360);
   Joystick.setRzAxisRange(0, 720);
+  Joystick.setThrottleRange(0, 255);
+  Joystick.setRudderRange(0, 255);
   
   if (testAutoSendMode)
   {

@@ -47,6 +47,8 @@
 #define JOYSTICK_DEFAULT_AXIS_MAXIMUM      1023
 #define JOYSTICK_DEFAULT_SIMULATOR_MINIMUM    0
 #define JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM 1023
+#define JOYSTICK_DEFAULT_HATSWITCH_COUNT      2
+#define JOYSTICK_HATSWITCH_COUNT_MAXIMUM      2
 
 class Joystick_
 {
@@ -64,13 +66,14 @@ private:
 	int16_t					 _accelerator;
 	int16_t					 _brake;
 	int16_t					 _steering;
-	int16_t	                 _hatSwitch[2];
-    uint8_t                 *_buttonValues;
+	int16_t	                 _hatSwitchValues[JOYSTICK_HATSWITCH_COUNT_MAXIMUM];
+    uint8_t                 *_buttonValues = NULL;
 
     // Joystick Settings
     bool                     _autoSendState;
     uint8_t                  _buttonCount;
-    int                      _buttonValuesArraySize;
+    int                      _buttonValuesArraySize = 0;
+	uint8_t					 _hatSwitchCount;
 	bool                     _includeXAxis;
 	bool                     _includeYAxis;
 	bool                     _includeZAxis;
@@ -110,8 +113,10 @@ private:
 	int                      _hidReportSize; 
 
 public:
-	Joystick_(uint8_t hidReportId = JOYSTICK_DEFAULT_REPORT_ID,
+	Joystick_(
+		uint8_t hidReportId = JOYSTICK_DEFAULT_REPORT_ID,
         uint8_t buttonCount = JOYSTICK_DEFAULT_BUTTON_COUNT,
+		uint8_t hatSwitchCount = JOYSTICK_DEFAULT_HATSWITCH_COUNT,
 		bool includeXAxis = true,
 		bool includeYAxis = true,
 		bool includeZAxis = true,
@@ -123,6 +128,7 @@ public:
 		bool includeAccelerator = true,
 		bool includeBrake = true,
 		bool includeSteering = true);
+	~Joystick_();
 
 	void begin(bool initAutoSendState = true);
 	void end();

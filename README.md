@@ -58,6 +58,7 @@ Constructor used to initialize and setup the Joystick. The following optional pa
 
 - `uint8_t hidReportId` - Default: `0x03` - Indicates what the joystick's HID report ID should be. This value must be unique if you are creating multiple instances of Joystick. Do not use `0x01` or `0x02` as they are used by the built-in Arduino Keyboard and Mouse libraries.
 - `uint8_t buttonCount` - Default: `32` - Indicates how many buttons will be available on the joystick.
+- `uint8_t hatSwitchCount` - Default: `2` - Indicates how many hat switches will be available on the joystick. Range: `0` - `2`
 - `bool includeXAxis` - Default: `true` - Indicates if the X Axis is available on the joystick.
 - `bool includeYAxis` - Default: `true` - Indicates if the Y Axis is available on the joystick.
 - `bool includeZAxis` - Default: `true` - Indicates if the Z Axis (in some situations this is the right X Axis) is available on the joystick.
@@ -73,7 +74,8 @@ Constructor used to initialize and setup the Joystick. The following optional pa
 The following constants define the default values for the constructor parameter's listed above:
 
 - `JOYSTICK_DEFAULT_REPORT_ID` is set to `0x03`
-- `JOYSTICK_DEFAULT_BUTTON_COUNT` is set to `32`. 
+- `JOYSTICK_DEFAULT_BUTTON_COUNT` is set to `32`
+- `JOYSTICK_DEFAULT_HATSWITCH_COUNT` is set to `2`
 		
 ### Joystick.begin(bool initAutoSendState)
 Starts emulating a game controller connected to a computer. By default all methods update the game controller state immediately. If initAutoSendState is set to false, the Joystick.sendState method must be called to update the game controller state.
@@ -172,11 +174,14 @@ I have used this library to make an Arduino appear as the following:
 
 I have tested with 1 - 32 buttons.
 
+I have tested with 0, 1, and 2 hat switches.
+
 I have tested this library using the following Arduino IDE Versions:
 
 - 1.6.6
 - 1.6.7
 - 1.6.8
+- 1.6.9
 
 I have tested this library with the following boards:
 
