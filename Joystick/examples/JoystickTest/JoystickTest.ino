@@ -12,6 +12,7 @@
 
 #include "Joystick.h"
 
+// Create Joystick
 Joystick_ Joystick;
 
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.
@@ -168,6 +169,7 @@ void testXYZAxisRotation(unsigned int degree)
 
 void setup() {
 
+  // Set Range Values
   Joystick.setXAxisRange(-127, 127);
   Joystick.setYAxisRange(-127, 127);
   Joystick.setZAxisRange(-127, 127);
@@ -255,4 +257,3 @@ void loop() {
     }
   }
 }
-

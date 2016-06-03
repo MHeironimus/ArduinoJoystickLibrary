@@ -38,7 +38,6 @@
 #else
 
 //================================================================================
-//================================================================================
 //  Joystick (Gamepad)
 
 #define JOYSTICK_DEFAULT_REPORT_ID         0x03
@@ -108,7 +107,8 @@ private:
 	int16_t                  _steeringMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
 	int16_t                  _steeringMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
 
-	DynamicHIDSubDescriptor *_node;
+	uint8_t					*_customHidReportDescriptor = NULL;
+	DynamicHIDSubDescriptor *_node = NULL;
 	uint8_t                  _hidReportId;
 	int                      _hidReportSize; 
 
@@ -128,7 +128,6 @@ public:
 		bool includeAccelerator = true,
 		bool includeBrake = true,
 		bool includeSteering = true);
-	~Joystick_();
 
 	void begin(bool initAutoSendState = true);
 	void end();
