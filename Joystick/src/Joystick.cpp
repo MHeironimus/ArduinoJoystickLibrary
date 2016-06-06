@@ -655,6 +655,37 @@ void Joystick_::setHatSwitch(int8_t hatSwitchIndex, int16_t value)
 	if (_autoSendState) sendState();
 }
 
+int Joystick_::buildAndSet16BitValue(bool includeValue, int16_t value, int16_t valueMinimum, int16_t valueMaximum, int16_t actualMinimum, int16_t actualMaximum, uint8_t dataLocation[]) 
+{
+	int16_t convertedValue;
+	uint8_t highByte;
+	uint8_t lowByte;
+
+	if (includeValue == true) {
+		convertedValue = map(value, valueMinimum, valueMaximum, actualMinimum, actualMaximum);
+				
+		highByte = (uint8_t)(convertedValue >> 8);
+		lowByte = (uint8_t)(convertedValue & 0x00FF);
+		
+		dataLocation[0] = lowByte;
+		dataLocation[1] = highByte;
+		
+		return 2;
+	}
+	
+	return 0;
+}
+
+int Joystick_::buildAndSetAxisValue(bool includeAxis, int16_t axisValue, int16_t axisMinimum, int16_t axisMaximum, uint8_t dataLocation[]) 
+{
+	return buildAndSet16BitValue(includeAxis, axisValue, axisMinimum, axisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM, dataLocation);
+}
+
+int Joystick_::buildAndSetSimulationValue(bool includeValue, int16_t value, int16_t valueMinimum, int16_t valueMaximum, uint8_t dataLocation[]) 
+{
+	return buildAndSet16BitValue(includeValue, value, valueMinimum, valueMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM, dataLocation);
+}
+
 void Joystick_::sendState()
 {
 	uint8_t data[_hidReportSize];
@@ -689,108 +720,19 @@ void Joystick_::sendState()
 	} // Hat Switches
 
 	// Set Axis Values
-	int16_t convertedValue;
-	uint8_t highByte;
-	uint8_t lowByte;
-	if (_includeXAxis == true) {
-		convertedValue = map(_xAxis, _xAxisMinimum, _xAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeYAxis == true) {
-		convertedValue = map(_yAxis, _yAxisMinimum, _yAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeZAxis == true) {
-		convertedValue = map(_zAxis, _zAxisMinimum, _zAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeRxAxis == true) {
-		convertedValue = map(_xAxisRotation, _rxAxisMinimum, _rxAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeRyAxis == true) {
-		convertedValue = map(_yAxisRotation, _ryAxisMinimum, _ryAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeRzAxis == true) {
-		convertedValue = map(_zAxisRotation, _rzAxisMinimum, _rzAxisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeRudder == true) {
-		convertedValue = map(_rudder, _rudderMinimum, _rudderMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeThrottle == true) {
-		convertedValue = map(_throttle, _throttleMinimum, _throttleMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeAccelerator == true) {
-		convertedValue = map(_accelerator, _acceleratorMinimum, _acceleratorMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeBrake == true) {
-		convertedValue = map(_brake, _brakeMinimum, _brakeMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
-	if (_includeSteering == true) {
-		convertedValue = map(_steering, _steeringMinimum, _steeringMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM);
-				
-		highByte = (uint8_t)(convertedValue >> 8);
-		lowByte = (uint8_t)(convertedValue & 0x00FF);
-		
-		data[index++] = lowByte;
-		data[index++] = highByte;
-	}
+	index += buildAndSetAxisValue(_includeXAxis, _xAxis, _xAxisMinimum, _xAxisMaximum, &(data[index]));
+	index += buildAndSetAxisValue(_includeYAxis, _yAxis, _yAxisMinimum, _yAxisMaximum, &(data[index]));
+	index += buildAndSetAxisValue(_includeZAxis, _zAxis, _zAxisMinimum, _zAxisMaximum, &(data[index]));
+	index += buildAndSetAxisValue(_includeRxAxis, _xAxisRotation, _rxAxisMinimum, _rxAxisMaximum, &(data[index]));
+	index += buildAndSetAxisValue(_includeRyAxis, _yAxisRotation, _ryAxisMinimum, _ryAxisMaximum, &(data[index]));
+	index += buildAndSetAxisValue(_includeRzAxis, _zAxisRotation, _rzAxisMinimum, _rzAxisMaximum, &(data[index]));
+	
+	// Set Simulation Values
+	index += buildAndSetSimulationValue(_includeRudder, _rudder, _rudderMinimum, _rudderMaximum, &(data[index]));
+	index += buildAndSetSimulationValue(_includeThrottle, _throttle, _throttleMinimum, _throttleMaximum, &(data[index]));
+	index += buildAndSetSimulationValue(_includeAccelerator, _accelerator, _acceleratorMinimum, _acceleratorMaximum, &(data[index]));
+	index += buildAndSetSimulationValue(_includeBrake, _brake, _brakeMinimum, _brakeMaximum, &(data[index]));
+	index += buildAndSetSimulationValue(_includeSteering, _steering, _steeringMinimum, _steeringMaximum, &(data[index]));
 
 	DynamicHID().SendReport(_hidReportId, data, _hidReportSize);
 }
