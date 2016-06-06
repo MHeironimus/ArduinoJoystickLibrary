@@ -137,13 +137,64 @@ public:
 	void begin(bool initAutoSendState = true);
 	void end();
 	
-	void setXAxisRange(int16_t minimum, int16_t maximum);
-	void setYAxisRange(int16_t minimum, int16_t maximum);
-	void setZAxisRange(int16_t minimum, int16_t maximum);
-	void setRxAxisRange(int16_t minimum, int16_t maximum);
-	void setRyAxisRange(int16_t minimum, int16_t maximum);
-	void setRzAxisRange(int16_t minimum, int16_t maximum);
+	// Set Range Functions
+	inline void setXAxisRange(int16_t minimum, int16_t maximum)
+	{
+		_xAxisMinimum = minimum;
+		_xAxisMaximum = maximum;
+	}
+	inline void setYAxisRange(int16_t minimum, int16_t maximum)
+	{
+		_yAxisMinimum = minimum;
+		_yAxisMaximum = maximum;
+	}
+	inline void setZAxisRange(int16_t minimum, int16_t maximum)
+	{
+		_zAxisMinimum = minimum;
+		_zAxisMaximum = maximum;
+	}
+	inline void setRxAxisRange(int16_t minimum, int16_t maximum)
+	{
+		_rxAxisMinimum = minimum;
+		_rxAxisMaximum = maximum;
+	}
+	inline void setRyAxisRange(int16_t minimum, int16_t maximum)
+	{
+		_ryAxisMinimum = minimum;
+		_ryAxisMaximum = maximum;
+	}
+	inline void setRzAxisRange(int16_t minimum, int16_t maximum)
+	{
+		_rzAxisMinimum = minimum;
+		_rzAxisMaximum = maximum;
+	}
+	inline void setRudderRange(int16_t minimum, int16_t maximum)
+	{
+		_rudderMinimum = minimum;
+		_rudderMaximum = maximum;
+	}
+	inline void setThrottleRange(int16_t minimum, int16_t maximum)
+	{
+		_throttleMinimum = minimum;
+		_throttleMaximum = maximum;
+	}
+	inline void setAcceleratorRange(int16_t minimum, int16_t maximum)
+	{
+		_acceleratorMinimum = minimum;
+		_acceleratorMaximum = maximum;
+	}
+	inline void setBrakeRange(int16_t minimum, int16_t maximum)
+	{
+		_brakeMinimum = minimum;
+		_brakeMaximum = maximum;
+	}
+	inline void setSteeringRange(int16_t minimum, int16_t maximum)
+	{
+		_steeringMinimum = minimum;
+		_steeringMaximum = maximum;
+	}
 
+	// Set Axis Values
 	void setXAxis(int16_t value);
 	void setYAxis(int16_t value);
 	void setZAxis(int16_t value);
@@ -151,12 +202,7 @@ public:
 	void setRyAxis(int16_t value);
 	void setRzAxis(int16_t value);
 
-	void setRudderRange(int16_t minimum, int16_t maximum);
-	void setThrottleRange(int16_t minimum, int16_t maximum);
-	void setAcceleratorRange(int16_t minimum, int16_t maximum);
-	void setBrakeRange(int16_t minimum, int16_t maximum);
-	void setSteeringRange(int16_t minimum, int16_t maximum);
-
+	// Set Simuation Values
 	void setRudder(int16_t value);
 	void setThrottle(int16_t value);
 	void setAccelerator(int16_t value);
