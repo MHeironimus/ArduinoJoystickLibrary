@@ -8,7 +8,8 @@
 
 #include "Joystick.h"
 
-Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID, 32,
+Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID, 
+  32, 0,
   true, true, false, false, false, false,
   true, true, false, false, false);
 
