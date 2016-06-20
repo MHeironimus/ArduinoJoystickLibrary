@@ -1,11 +1,11 @@
-### ALPHA Testing: This branch is currently in development. All functions have been implemented, but not optimized at this time. Feel free to try it out and let me know if you have any issues. The examples are not 100% up-to-date yet.
+### BETA Testing: This branch is currently being tested. All functions have been implemented and optimized. Feel free to try it out and let me know if you have any issues. The examples are not 100% up-to-date yet.
 
 # Arduino Joystick Library
-#### Version 2.0.0 (in Alpha Testing)
+#### Version 2.0.0 (in Beta Testing)
 This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an Arduino Leonardo or Arduino Micro (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below).
 
 ##Installation Instructions
-Copy the Joystick folder to the Arduino libraries folder (typically %userprofile%\Documents\Arduino\libraries). The library should now appear in the Arduino IDE list of libraries. The examples should also appear in the examples menu.
+Copy the Joystick folder to the Arduino libraries folder (typically `%userprofile%\Documents\Arduino\libraries`). On Microsoft Windows machines, the `deploy.bat` file can be executed to install the Joystick folder (assuming a default Arduino installation). The library should now appear in the Arduino IDE list of libraries. The examples should also appear in the examples menu in the Arduino IDE.
 
 ##Examples
 The following example Arduino sketch files are included in this library:
@@ -22,18 +22,19 @@ The following example Arduino sketch files are included in this library:
 
 	#include <Joystick.h>
 	
+	// Create the Joystick
 	Joystick_ Joystick;
+	
+	// Constant that maps the phyical pin to the joystick button.
+	const int pinToButtonMap = 9;
 	
 	void setup() {
 	  // Initialize Button Pins
-	  pinMode(9, INPUT_PULLUP);
+	  pinMode(pinToButtonMap, INPUT_PULLUP);
 	
 	  // Initialize Joystick Library
 	  Joystick.begin();
 	}
-	
-	// Constant that maps the phyical pin to the joystick button.
-	const int pinToButtonMap = 9;
 	
 	// Last state of the button
 	int lastButtonState = 0;
@@ -151,19 +152,19 @@ Sets the range of values that will be used for the Steering. Default: `0` to `10
 Sets the Steering value. See `setSteeringRange` for the range.
 
 ###Joystick.setButton(byte button, byte value)
-Sets the state (`0` or `1`) of the specified button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.). The value is 1 if the button is pressed and 0 if the button is released.
+Sets the state (`0` or `1`) of the specified button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is `0`, button #2 is `1`, etc.). The value is `1` if the button is pressed and `0` if the button is released.
 
 ###Joystick.pressButton(byte button)
-Press the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
+Press the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is `0`, button #2 is `1`, etc.).
 
 ###Joystick.releaseButton(byte button)
-Release the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is 0, button #2 is 1, etc.).
+Release the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is `0`, button #2 is `1`, etc.).
 
 ###Joystick.setHatSwitch(byte hatSwitch, int value)
-Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat switch #1 is 0 and hat switch #2 is 1). The value is from 0° to 360°, but in 45° increments. Any value less than 45° will be rounded down (i.e. 44° is rounded down to 0°, 89° is rounded down to 45°, etc.). Set the value to -1 to release the hat switch.
+Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat switch #1 is `0` and hat switch #2 is `1`). The value is from 0° to 360°, but in 45° increments. Any value less than 45° will be rounded down (i.e. 44° is rounded down to 0°, 89° is rounded down to 45°, etc.). Set the value to `-1` to release the hat switch.
 
 ###Joystick.sendState()
-Sends the updated joystick state to the host computer. Only needs to be called if `AutoSendState` is false (see `Joystick.begin` for more details).
+Sends the updated joystick state to the host computer. Only needs to be called if `AutoSendState` is `false` (see `Joystick.begin` for more details).
 
 ##Testing Details
 I have used this library to make an Arduino appear as the following:
@@ -193,4 +194,4 @@ Others have tested this library with the following boards:
 - Arduino Due
 - SparkFun Pro Micro
 
-(as of 2016-06-09)
+(as of 2016-06-20)
