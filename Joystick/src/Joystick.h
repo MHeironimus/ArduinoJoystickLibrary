@@ -71,7 +71,7 @@ private:
     // Joystick Settings
     bool                     _autoSendState;
     uint8_t                  _buttonCount;
-    int                      _buttonValuesArraySize = 0;
+    uint8_t                  _buttonValuesArraySize = 0;
 	uint8_t					 _hatSwitchCount;
 	bool                     _includeXAxis;
 	bool                     _includeYAxis;
@@ -107,10 +107,8 @@ private:
 	int16_t                  _steeringMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
 	int16_t                  _steeringMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
 
-	uint8_t					*_customHidReportDescriptor = NULL;
-	DynamicHIDSubDescriptor *_node = NULL;
 	uint8_t                  _hidReportId;
-	int                      _hidReportSize; 
+	uint8_t                  _hidReportSize; 
 
 protected:
 	int buildAndSet16BitValue(bool includeValue, int16_t value, int16_t valueMinimum, int16_t valueMaximum, int16_t actualMinimum, int16_t actualMaximum, uint8_t dataLocation[]);

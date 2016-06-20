@@ -415,12 +415,12 @@ Joystick_::Joystick_(
     tempHidReportDescriptor[hidReportDescriptorSize++] = 0xc0;
 
 	// Create a copy of the HID Report Descriptor template that is just the right size
-	_customHidReportDescriptor = new uint8_t[hidReportDescriptorSize];
-	memcpy(_customHidReportDescriptor, tempHidReportDescriptor, hidReportDescriptorSize);
+	uint8_t *customHidReportDescriptor = new uint8_t[hidReportDescriptorSize];
+	memcpy(customHidReportDescriptor, tempHidReportDescriptor, hidReportDescriptorSize);
 	
 	// Register HID Report Description
-	_node = new DynamicHIDSubDescriptor(_customHidReportDescriptor, hidReportDescriptorSize, false);
-	DynamicHID().AppendDescriptor(_node);
+	DynamicHIDSubDescriptor *node = new DynamicHIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize, false);
+	DynamicHID().AppendDescriptor(node);
 	
     // Setup Joystick State
 	if (buttonCount > 0) {
