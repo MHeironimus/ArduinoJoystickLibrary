@@ -466,7 +466,7 @@ Joystick_::Joystick_(
 	_steering = 0;
 	for (int index = 0; index < JOYSTICK_HATSWITCH_COUNT_MAXIMUM; index++)
 	{
-		_hatSwitchValues[index] = -1;
+		_hatSwitchValues[index] = JOYSTICK_HATSWITCH_RELEASE;
 	}
     for (int index = 0; index < _buttonValuesArraySize; index++)
     {
