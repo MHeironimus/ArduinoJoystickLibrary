@@ -191,7 +191,7 @@ I have tested this library with the following boards:
 - Arduino Micro
 
 Others have tested this library with the following boards:
-- Arduino Due
+- Arduino Due (version 1.x only, version 2.x not confirmed at this time)
 - SparkFun Pro Micro
 
-(as of 2016-06-20)
+(as of 2016-06-23)
