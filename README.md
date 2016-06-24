@@ -2,7 +2,7 @@
 
 # Arduino Joystick Library
 #### Version 2.0.0 (in Beta Testing)
-This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an Arduino Leonardo or Arduino Micro (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below).
+This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below).
 
 ##Installation Instructions
 Copy the Joystick folder to the Arduino libraries folder (typically `%userprofile%\Documents\Arduino\libraries`). On Microsoft Windows machines, the `deploy.bat` file can be executed to install the Joystick folder (assuming a default Arduino installation). The library should now appear in the Arduino IDE list of libraries. The examples should also appear in the examples menu in the Arduino IDE.
@@ -187,11 +187,16 @@ I have tested this library using the following Arduino IDE Versions:
 
 I have tested this library with the following boards:
 
-- Arduino Leonardo
-- Arduino Micro
+- [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo)
+- [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro)
 
 Others have tested this library with the following boards:
-- Arduino Due (version 1.x only, version 2.x not confirmed at this time)
-- SparkFun Pro Micro
+- [SparkFun Pro Micro](https://www.sparkfun.com/products/12640)
 
-(as of 2016-06-23)
+Other board notes:
+- [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) - I am told that the Arduino IDE 1.6.5 (and below) version of this library (see [Add USB Game Controller to Arduino Leonardo or Micro](http://mheironimus.blogspot.com/2015/03/add-usb-game-controller-to-arduino.html)) worked with the Arduino Due, but the new Arduino Joystick Library (i.e. both version 1.x and version 2.x) does not work with Arduino Due at this time.
+- [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
+- [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
+
+
+(as of 2016-06-24)
