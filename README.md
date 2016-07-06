@@ -2,7 +2,7 @@
 
 # Arduino Joystick Library
 #### Version 2.0.0 (in Beta Testing)
-This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below).
+This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
 
 ##Installation Instructions
 Copy the Joystick folder to the Arduino libraries folder (typically `%userprofile%\Documents\Arduino\libraries`). On Microsoft Windows machines, the `deploy.bat` file can be executed to install the Joystick folder (assuming a default Arduino installation). The library should now appear in the Arduino IDE list of libraries. The examples should also appear in the examples menu in the Arduino IDE.
