@@ -184,6 +184,7 @@ I have tested this library using the following Arduino IDE Versions:
 - 1.6.7
 - 1.6.8
 - 1.6.9
+- 1.6.10
 
 I have tested this library with the following boards:
 
@@ -194,9 +195,8 @@ Others have tested this library with the following boards:
 - [SparkFun Pro Micro](https://www.sparkfun.com/products/12640)
 
 Other board notes:
-- [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) - I am told that the Arduino IDE 1.6.5 (and below) version of this library (see [Add USB Game Controller to Arduino Leonardo or Micro](http://mheironimus.blogspot.com/2015/03/add-usb-game-controller-to-arduino.html)) worked with the Arduino Due, but the new Arduino Joystick Library (i.e. both version 1.x and version 2.x) does not work with Arduino Due at this time.
+- [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) - The old Arduino IDE 1.6.5 (and below) version of this library (see [Add USB Game Controller to Arduino Leonardo or Micro](http://mheironimus.blogspot.com/2015/03/add-usb-game-controller-to-arduino.html)) should work with the Arduino Due, and Version 1.x of the new Arduino Joystick Library will work with the Arduino Duo, but Version 2.x of the Arduino Joystick Library does not work with Arduino Due at this time.
 - [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 - [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 
-
-(as of 2016-06-24)
+(as of 2016-08-09)
