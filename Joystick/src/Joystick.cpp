@@ -43,6 +43,7 @@
 
 Joystick_::Joystick_(
 	uint8_t hidReportId,
+	uint8_t joystickType,
     uint8_t buttonCount,
 	uint8_t hatSwitchCount,
 	bool includeXAxis,
@@ -108,9 +109,9 @@ Joystick_::Joystick_(
     tempHidReportDescriptor[hidReportDescriptorSize++] = 0x05;
     tempHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
 
-    // USAGE (Joystick)
+    // USAGE (Joystick - 0x04; Gamepad - 0x05; Multi-axis Controller - 0x08)
     tempHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
-    tempHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
+    tempHidReportDescriptor[hidReportDescriptorSize++] = joystickType;
 
     // COLLECTION (Application)
     tempHidReportDescriptor[hidReportDescriptorSize++] = 0xa1;

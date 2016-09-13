@@ -49,6 +49,9 @@
 #define JOYSTICK_DEFAULT_HATSWITCH_COUNT      2
 #define JOYSTICK_HATSWITCH_COUNT_MAXIMUM      2
 #define JOYSTICK_HATSWITCH_RELEASE           -1
+#define JOYSTICK_TYPE_JOYSTICK             0x04
+#define JOYSTICK_TYPE_GAMEPAD              0x05
+#define JOYSTICK_TYPE_MULTI_AXIS           0x08
 
 class Joystick_
 {
@@ -110,6 +113,7 @@ protected:
 public:
 	Joystick_(
 		uint8_t hidReportId = JOYSTICK_DEFAULT_REPORT_ID,
+		uint8_t joystickType = JOYSTICK_TYPE_JOYSTICK,
         uint8_t buttonCount = JOYSTICK_DEFAULT_BUTTON_COUNT,
 		uint8_t hatSwitchCount = JOYSTICK_DEFAULT_HATSWITCH_COUNT,
 		bool includeXAxis = true,

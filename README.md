@@ -1,7 +1,7 @@
 ### BETA Testing: This branch is currently being tested. All functions have been implemented and optimized. Feel free to try it out and let me know if you have any issues. The examples are not 100% up-to-date yet.
 
 # Arduino Joystick Library
-#### Version 2.0.0 (in Beta Testing)
+#### Version 2.0.1 (in Beta Testing)
 This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
 
 ##Installation Instructions
@@ -58,7 +58,8 @@ The following API is available if the Joystick library in included in a sketch f
 ### Joystick\_(...)
 Constructor used to initialize and setup the Joystick. The following optional parameters are available:
 
-- `uint8_t hidReportId` - Default: `0x03` - Indicates what the joystick's HID report ID should be. This value must be unique if you are creating multiple instances of Joystick. Do not use `0x01` or `0x02` as they are used by the built-in Arduino Keyboard and Mouse libraries.
+- `uint8_t hidReportId` - Default: `0x03` - Indicates the joystick's HID report ID. This value must be unique if you are creating multiple instances of Joystick. Do not use `0x01` or `0x02` as they are used by the built-in Arduino Keyboard and Mouse libraries.
+- `uint8_t joystickType` - Default: `0x04` - Indicates they HID input device type. Supported values: 0x04 - Joystick; 0x05 - Gamepad; 0x08 - Multi-axis Controller 
 - `uint8_t buttonCount` - Default: `32` - Indicates how many buttons will be available on the joystick.
 - `uint8_t hatSwitchCount` - Default: `2` - Indicates how many hat switches will be available on the joystick. Range: `0` - `2`
 - `bool includeXAxis` - Default: `true` - Indicates if the X Axis is available on the joystick.
@@ -78,7 +79,10 @@ The following constants define the default values for the constructor parameter'
 - `JOYSTICK_DEFAULT_REPORT_ID` is set to `0x03`
 - `JOYSTICK_DEFAULT_BUTTON_COUNT` is set to `32`
 - `JOYSTICK_DEFAULT_HATSWITCH_COUNT` is set to `2`
-		
+- `JOYSTICK_TYPE_JOYSTICK` is set to `0x04`
+- `JOYSTICK_TYPE_GAMEPAD` is set to `0x05`
+- `JOYSTICK_TYPE_MULTI_AXIS` is set to `0x08`
+
 ### Joystick.begin(bool initAutoSendState)
 Starts emulating a game controller connected to a computer. By default all methods update the game controller state immediately. If `initAutoSendState` is set to `false`, the `Joystick.sendState` method must be called to update the game controller state.
 
@@ -174,7 +178,9 @@ I have used this library to make an Arduino appear as the following:
 - 3 joysticks / gamepads
 - 4 joysticks / gamepads
 
-I have tested with 1 - 32 buttons.
+I have tested with 1 - 32 buttons. I have also tested this with 1 - 64 buttons. 
+The standard Microsoft Windows Game Controller Test dialog only supports 32 buttons.
+To test a joystick with over 32 buttons, a third-party testing tool will need to be used (e.g. http://www.planetpointy.co.uk/joystick-test-application/).
 
 I have tested with 0, 1, and 2 hat switches.
 
@@ -199,4 +205,4 @@ Other board notes:
 - [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 - [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 
-(as of 2016-08-09)
+(as of 2016-09-12)
