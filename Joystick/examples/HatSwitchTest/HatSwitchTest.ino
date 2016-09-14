@@ -23,7 +23,8 @@
 
 #include <Joystick.h>
 
-Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID, 0,
+Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID, 
+  JOYSTICK_TYPE_GAMEPAD, 0,
   JOYSTICK_DEFAULT_HATSWITCH_COUNT,
   false, false, false, false, false, false,
   false, false, false, false, false);
