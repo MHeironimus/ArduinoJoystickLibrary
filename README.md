@@ -59,7 +59,10 @@ The following API is available if the Joystick library in included in a sketch f
 Constructor used to initialize and setup the Joystick. The following optional parameters are available:
 
 - `uint8_t hidReportId` - Default: `0x03` - Indicates the joystick's HID report ID. This value must be unique if you are creating multiple instances of Joystick. Do not use `0x01` or `0x02` as they are used by the built-in Arduino Keyboard and Mouse libraries.
-- `uint8_t joystickType` - Default: `0x04` - Indicates they HID input device type. Supported values: 0x04 - Joystick; 0x05 - Gamepad; 0x08 - Multi-axis Controller 
+- `uint8_t joystickType` - Default: `JOYSTICK_TYPE_JOYSTICK` or `0x04` - Indicates the HID input device type. Supported values:
+  - `JOYSTICK_TYPE_JOYSTICK` or `0x04` - Joystick 
+  - `JOYSTICK_TYPE_GAMEPAD` or `0x05` - Gamepad
+  - `JOYSTICK_TYPE_MULTI_AXIS` or `0x08` - Multi-axis Controller 
 - `uint8_t buttonCount` - Default: `32` - Indicates how many buttons will be available on the joystick.
 - `uint8_t hatSwitchCount` - Default: `2` - Indicates how many hat switches will be available on the joystick. Range: `0` - `2`
 - `bool includeXAxis` - Default: `true` - Indicates if the X Axis is available on the joystick.
@@ -79,9 +82,6 @@ The following constants define the default values for the constructor parameter'
 - `JOYSTICK_DEFAULT_REPORT_ID` is set to `0x03`
 - `JOYSTICK_DEFAULT_BUTTON_COUNT` is set to `32`
 - `JOYSTICK_DEFAULT_HATSWITCH_COUNT` is set to `2`
-- `JOYSTICK_TYPE_JOYSTICK` is set to `0x04`
-- `JOYSTICK_TYPE_GAMEPAD` is set to `0x05`
-- `JOYSTICK_TYPE_MULTI_AXIS` is set to `0x08`
 
 ### Joystick.begin(bool initAutoSendState)
 Starts emulating a game controller connected to a computer. By default all methods update the game controller state immediately. If `initAutoSendState` is set to `false`, the `Joystick.sendState` method must be called to update the game controller state.
