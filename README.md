@@ -1,13 +1,27 @@
-### BETA Testing: This branch is currently being tested. All functions have been implemented and optimized. Feel free to try it out and let me know if you have any issues. The examples are not 100% up-to-date yet.
+### BETA Testing
+This branch is currently being tested. All functions have been implemented and optimized. 
+Feel free to try it out and let me know if you have any issues. The examples are not 100% up-to-date yet.
 
 # Arduino Joystick Library
 #### Version 2.0.1 (in Beta Testing)
 This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
 
-##Installation Instructions
+## Features
+The joystick or gamepad can have the following features:
+- Buttons (default: 32)
+- Up to 2 Hat Switches
+- X, Y, and/or Z Axis (up to 16-bit precision)
+- X, Y, and/or Z Axis Rotation (up to 16-bit precision)
+- Rudder (up to 16-bit precision)
+- Throttle (up to 16-bit precision)
+- Accelerator (up to 16-bit precision)
+- Brake (up to 16-bit precision)
+- Steering (up to 16-bit precision)
+
+## Installation Instructions
 Copy the Joystick folder to the Arduino libraries folder (typically `%userprofile%\Documents\Arduino\libraries`). On Microsoft Windows machines, the `deploy.bat` file can be executed to install the Joystick folder (assuming a default Arduino installation). The library should now appear in the Arduino IDE list of libraries. The examples should also appear in the examples menu in the Arduino IDE.
 
-##Examples
+## Examples
 The following example Arduino sketch files are included in this library:
 
 - `JoystickTest` - Simple test of the Joystick library. Exercises many of the Joystick library functions when pin A0 is grounded.
@@ -18,7 +32,7 @@ The following example Arduino sketch files are included in this library:
 - `FlightControllerTest` - Creates a Flight Controller and tests 32 buttons, the X and Y axis, the Throttle, and the Rudder when pin A0 is grounded.
 - `HatSwitchTest` - Creates a joystick with two hat switches. Grounding pins 4 - 11 cause the hat switches to change position.  
 
-###Simple example
+### Simple example
 
 	#include <Joystick.h>
 	
@@ -52,7 +66,7 @@ The following example Arduino sketch files are included in this library:
 	  delay(50);
 	}
 
-##Joystick Library API
+## Joystick Library API
 The following API is available if the Joystick library in included in a sketch file.
 
 ### Joystick\_(...)
@@ -155,22 +169,22 @@ Sets the range of values that will be used for the Steering. Default: `0` to `10
 ### Joystick.setSteering(byte value)
 Sets the Steering value. See `setSteeringRange` for the range.
 
-###Joystick.setButton(byte button, byte value)
+### Joystick.setButton(byte button, byte value)
 Sets the state (`0` or `1`) of the specified button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is `0`, button #2 is `1`, etc.). The value is `1` if the button is pressed and `0` if the button is released.
 
-###Joystick.pressButton(byte button)
+### Joystick.pressButton(byte button)
 Press the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is `0`, button #2 is `1`, etc.).
 
-###Joystick.releaseButton(byte button)
+### Joystick.releaseButton(byte button)
 Release the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is `0`, button #2 is `1`, etc.).
 
-###Joystick.setHatSwitch(byte hatSwitch, int value)
+### Joystick.setHatSwitch(byte hatSwitch, int value)
 Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat switch #1 is `0` and hat switch #2 is `1`). The value is from 0° to 360°, but in 45° increments. Any value less than 45° will be rounded down (i.e. 44° is rounded down to 0°, 89° is rounded down to 45°, etc.). Set the value to `JOYSTICK_HATSWITCH_RELEASE` or `-1` to release the hat switch.
 
-###Joystick.sendState()
+### Joystick.sendState()
 Sends the updated joystick state to the host computer. Only needs to be called if `AutoSendState` is `false` (see `Joystick.begin` for more details).
 
-##Testing Details
+## Testing Details
 I have used this library to make an Arduino appear as the following:
 
 - 1 joystick / gamepad
@@ -178,8 +192,8 @@ I have used this library to make an Arduino appear as the following:
 - 3 joysticks / gamepads
 - 4 joysticks / gamepads
 
-I have tested with 1 - 32 buttons. I have also tested this with 1 - 64 buttons. 
-The standard Microsoft Windows Game Controller Test dialog only supports 32 buttons.
+I have tested with 1 - 32 buttons using the standard Microsoft Windows Game Controller Test dialog. 
+I have also tested this with 1 - 64 buttons. 
 To test a joystick with over 32 buttons, a third-party testing tool will need to be used (e.g. http://www.planetpointy.co.uk/joystick-test-application/).
 
 I have tested with 0, 1, and 2 hat switches.
@@ -191,6 +205,8 @@ I have tested this library using the following Arduino IDE Versions:
 - 1.6.8
 - 1.6.9
 - 1.6.10
+- 1.6.11
+- 1.6.12
 
 I have tested this library with the following boards:
 
@@ -201,8 +217,9 @@ Others have tested this library with the following boards:
 - [SparkFun Pro Micro](https://www.sparkfun.com/products/12640)
 
 Other board notes:
-- [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) - The old Arduino IDE 1.6.5 (and below) version of this library (see [Add USB Game Controller to Arduino Leonardo or Micro](http://mheironimus.blogspot.com/2015/03/add-usb-game-controller-to-arduino.html)) should work with the Arduino Due, and Version 1.x of the new Arduino Joystick Library will work with the Arduino Duo, but Version 2.x of the Arduino Joystick Library does not work with Arduino Due at this time.
+- [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) - NOT Supported - I have been told that the old Arduino IDE 1.6.5 (and below) version of this library (see [Add USB Game Controller to Arduino Leonardo or Micro](http://mheironimus.blogspot.com/2015/03/add-usb-game-controller-to-arduino.html))
+works with the Arduino Due. I have also been told Version 1.x of the the Arduino Joystick Library will work with the Arduino Duo. However, Version 2.x of the Arduino Joystick Library does not work with Arduino Due at this time.
 - [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 - [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 
-(as of 2016-09-12)
+(as of 2016-10-17)
