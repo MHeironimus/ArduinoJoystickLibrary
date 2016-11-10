@@ -5,12 +5,12 @@
 // they are pressed.
 //
 // Pin Mappings:
-//  4 - Hat Switch #0 UP
-//  5 - Hat Switch #0 RIGHT
-//  6 - Hat Switch #0 DOWN
-//  7 - Hat Switch #0 LEFT
-//  8 - Hat Switch #1 UP
-//  9 - Hat Switch #1 RIGHT
+//   4 - Hat Switch #0 UP
+//   5 - Hat Switch #0 RIGHT
+//   6 - Hat Switch #0 DOWN
+//   7 - Hat Switch #0 LEFT
+//   8 - Hat Switch #1 UP
+//   9 - Hat Switch #1 RIGHT
 //  10 - Hat Switch #1 DOWN
 //  11 - Hat Switch #1 LEFT
 //
