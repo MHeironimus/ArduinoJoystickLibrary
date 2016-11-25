@@ -27,8 +27,10 @@
 #error The Joystick3 library requires Arduino IDE 1.6.6 or greater. Please update your IDE.
 #endif
 
+#if ARDUINO > 10606
 #if !defined(USBCON)
 #error The Joystick3 library can only be used with a USB MCU (e.g. Arduino Leonardo, Arduino Micro, etc.).
+#endif
 #endif
 
 #if !defined(_USING_HID)
