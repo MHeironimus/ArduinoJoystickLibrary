@@ -28,6 +28,7 @@ The following example Arduino sketch files are included in this library:
 - `MultipleJoystickTest` - Creates 4 Joysticks using the library and exercises the first 16 buttons, the X axis, and the Y axis of each joystick when pin A0 is grounded.
 - `JoystickButton` - Creates a Joystick and maps pin 9 to button 0 of the joystick, pin 10 to button 1, pin 11 to button 2, and pin 12 to button 3.
 - `JoystickKeyboard` - Creates a Joystick and a Keyboard. Maps pin 9 to Joystick Button 0, pin 10 to Joystick Button 1, pin 11 to Keyboard key 1, and pin 12 to Keyboard key 2.
+- `GamepadExample` - Creates a simple Gamepad with an Up, Down, Left, Right, and Fire button.
 - `DrivingControllerTest` - Creates a Driving Controller and tests 4 buttons, the Steering, Brake, and Accelerator when pin A0 is grounded.  
 - `FlightControllerTest` - Creates a Flight Controller and tests 32 buttons, the X and Y axis, the Throttle, and the Rudder when pin A0 is grounded.
 - `HatSwitchTest` - Creates a joystick with two hat switches. Grounding pins 4 - 11 cause the hat switches to change position.  
@@ -106,79 +107,79 @@ Stops the game controller emulation to a connected computer.
 ### Joystick.setXAxisRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the X axis. Default: `0` to `1023`
 
-### Joystick.setXAxis(byte value)
+### Joystick.setXAxis(int16_t value)
 Sets the X axis value. See `setXAxisRange` for the range.
 
 ### Joystick.setYAxisRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the Y axis. Default: `0` to `1023`
 
-### Joystick.setYAxis(byte value)
+### Joystick.setYAxis(int16_t value)
 Sets the Y axis value. See `setYAxisRange` for the range.
 
 ### Joystick.setZAxisRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the Z axis. Default: `0` to `1023`
 
-### Joystick.setZAxis(byte value)
+### Joystick.setZAxis(int16_t value)
 Sets the Z axis value. See `setZAxisRange` for the range.
 
 ### Joystick.setRxAxisRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the X axis rotation. Default: `0` to `1023`
 
-### Joystick.setRxAxis(int value)
+### Joystick.setRxAxis(int16_t value)
 Sets the X axis rotation value. See `setRxAxisRange` for the range.
 
 ### Joystick.setRyAxisRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the Y axis rotation. Default: `0` to `1023`
 
-### Joystick.setRyAxis(int value)
+### Joystick.setRyAxis(int16_t value)
 Sets the Y axis rotation value. See `setRyAxisRange` for the range.
 
 ### Joystick.setRzAxisRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the Z axis rotation. Default: `0` to `1023`
 
-### Joystick.setRzAxis(int value)
+### Joystick.setRzAxis(int16_t value)
 Sets the Z axis rotation value. See `setRzAxisRange` for the range.
 
 ### Joystick.setRudderRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the Rudder. Default: `0` to `1023`
 
-### Joystick.setRudder(byte value)
+### Joystick.setRudder(int16_t value)
 Sets the Rudder value. See `setRudderRange` for the range.
 
 ### Joystick.setThrottleRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the Throttle. Default: `0` to `1023`
 
-### Joystick.setThrottle(byte value)
+### Joystick.setThrottle(int16_t value)
 Sets the Throttle value. See `setThrottleRange` for the range.
 
 ### Joystick.setAcceleratorRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the Accelerator. Default: `0` to `1023`
 
-### Joystick.setAccelerator(byte value)
+### Joystick.setAccelerator(int16_t value)
 Sets the Accelerator value. See `setAcceleratorRange` for the range.
 
 ### Joystick.setBrakeRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the Brake. Default: `0` to `1023`
 
-### Joystick.setBrake(byte value)
+### Joystick.setBrake(int16_t value)
 Sets the Brake value. See `setBrakeRange` for the range.
 
 ### Joystick.setSteeringRange(int16_t minimum, int16_t maximum)
 Sets the range of values that will be used for the Steering. Default: `0` to `1023`
 
-### Joystick.setSteering(byte value)
+### Joystick.setSteering(int16_t value)
 Sets the Steering value. See `setSteeringRange` for the range.
 
-### Joystick.setButton(byte button, byte value)
+### Joystick.setButton(uint8_t button, uint8_t value)
 Sets the state (`0` or `1`) of the specified button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is `0`, button #2 is `1`, etc.). The value is `1` if the button is pressed and `0` if the button is released.
 
-### Joystick.pressButton(byte button)
+### Joystick.pressButton(uint8_t button)
 Press the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is `0`, button #2 is `1`, etc.).
 
-### Joystick.releaseButton(byte button)
+### Joystick.releaseButton(uint8_t button)
 Release the indicated button (range: `0` - (`buttonCount - 1`)). The button is the 0-based button number (i.e. button #1 is `0`, button #2 is `1`, etc.).
 
-### Joystick.setHatSwitch(byte hatSwitch, int value)
+### Joystick.setHatSwitch(int8_t hatSwitch, int16_t value)
 Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat switch #1 is `0` and hat switch #2 is `1`). The value is from 0° to 360°, but in 45° increments. Any value less than 45° will be rounded down (i.e. 44° is rounded down to 0°, 89° is rounded down to 45°, etc.). Set the value to `JOYSTICK_HATSWITCH_RELEASE` or `-1` to release the hat switch.
 
 ### Joystick.sendState()
