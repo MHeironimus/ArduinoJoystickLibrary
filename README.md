@@ -208,6 +208,7 @@ I have tested this library using the following Arduino IDE Versions:
 - 1.6.10
 - 1.6.11
 - 1.6.12
+- 1.6.13
 
 I have tested this library with the following boards:
 
@@ -223,4 +224,4 @@ works with the Arduino Due. I have also been told Version 1.x of the the Arduino
 - [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 - [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 
-(as of 2016-10-17)
+(as of 2016-11-25)
