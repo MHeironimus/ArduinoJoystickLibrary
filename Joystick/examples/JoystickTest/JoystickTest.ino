@@ -2,11 +2,18 @@
 // Arduino Leonardo or Arduino Micro.
 //
 // Matthew Heironimus
-// 2015-03-28
-// Updated on 2015-11-18 to use the new Joystick library written for version 1.6.6.
+// 2015-03-28 - Original Version
+// 2015-11-18 - Updated to use the new Joystick library 
+//              written for Arduino IDE Version 1.6.6 and
+//              above.
+// 2016-05-13   Updated to use new dynamic Joystick library
+//              that can be customized.
 //------------------------------------------------------------
 
 #include "Joystick.h"
+
+// Create Joystick
+Joystick_ Joystick;
 
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.
 //const bool testAutoSendMode = true;
@@ -63,27 +70,36 @@ void testMultiButtonPush(unsigned int currentStep)
 
 void testXYAxis(unsigned int currentStep)
 {
+  int xAxis;
+  int yAxis;
+  
   if (currentStep < 256)
   {
-    Joystick.setXAxis(currentStep - 127);
-    Joystick.setYAxis(-127);
+    xAxis = currentStep - 127;
+    yAxis = -127;
+    Joystick.setXAxis(xAxis);
+    Joystick.setYAxis(yAxis);
   } 
   else if (currentStep < 512)
   {
-    Joystick.setYAxis(currentStep - 256 - 127);
+    yAxis = currentStep - 256 - 127;
+    Joystick.setYAxis(yAxis);
   }
   else if (currentStep < 768)
   {
-    Joystick.setXAxis(128 - (currentStep - 512));
+    xAxis = 128 - (currentStep - 512);
+    Joystick.setXAxis(xAxis);
   }
   else if (currentStep < 1024)
   {
-    Joystick.setYAxis(128 - (currentStep - 768));
+    yAxis = 128 - (currentStep - 768);
+    Joystick.setYAxis(yAxis);
   }
   else if (currentStep < 1024 + 128)
   {
-    Joystick.setXAxis(currentStep - 1024 - 127);
-    Joystick.setYAxis(currentStep - 1024 - 127);
+    xAxis = currentStep - 1024 - 127;
+    Joystick.setXAxis(xAxis);
+    Joystick.setYAxis(xAxis);
   }
 }
 
@@ -144,13 +160,25 @@ void testThrottleRudder(unsigned int value)
   Joystick.setRudder(255 - value);
 }
 
-void testXYAxisRotation(unsigned int degree)
+void testXYZAxisRotation(unsigned int degree)
 {
-  Joystick.setXAxisRotation(degree);
-  Joystick.setYAxisRotation(360 - degree);
+  Joystick.setRxAxis(degree);
+  Joystick.setRyAxis(360 - degree);
+  Joystick.setRzAxis(degree * 2);
 }
 
 void setup() {
+
+  // Set Range Values
+  Joystick.setXAxisRange(-127, 127);
+  Joystick.setYAxisRange(-127, 127);
+  Joystick.setZAxisRange(-127, 127);
+  Joystick.setRxAxisRange(0, 360);
+  Joystick.setRyAxisRange(0, 360);
+  Joystick.setRzAxisRange(0, 720);
+  Joystick.setThrottleRange(0, 255);
+  Joystick.setRudderRange(0, 255);
+  
   if (testAutoSendMode)
   {
     Joystick.begin();
@@ -169,6 +197,7 @@ void loop() {
   // System Disabled
   if (digitalRead(A0) != 0)
   {
+    // Turn indicator light off.
     digitalWrite(13, 0);
     return;
   }
@@ -212,7 +241,7 @@ void loop() {
     else if (gCurrentStep < (37 + 256 + 1024 + 128 + 510 + 28 + 360))
     {
       gNextTime = millis() + gcAnalogDelta;
-      testXYAxisRotation(gCurrentStep - (37 + 256 + 1024 + 128 + 510 + 28));
+      testXYZAxisRotation(gCurrentStep - (37 + 256 + 1024 + 128 + 510 + 28));
     }
     
     if (testAutoSendMode == false)
@@ -228,4 +257,3 @@ void loop() {
     }
   }
 }
-

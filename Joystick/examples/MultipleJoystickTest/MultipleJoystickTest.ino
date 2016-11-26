@@ -1,11 +1,22 @@
-// Program used to test the Dual Simple USB Joystick object 
-// on the Arduino Leonardo or Arduino Micro.
+// Program used to test using the Arduino Joystick Library 
+// to create multiple Joystick objects on a single Arduino 
+// Leonardo or Arduino Micro.
+//
+// Each joystick has a unique configuration.
 //
 // Matthew Heironimus
-// 2015-04-05
+// 2016-05-13
 //------------------------------------------------------------
+#include <Joystick.h>
 
-#include "Joystick2.h"
+#define JOYSTICK_COUNT 4
+
+Joystick_ Joystick[JOYSTICK_COUNT] = {
+  Joystick_(0x03, JOYSTICK_TYPE_GAMEPAD, 4, 2, true, true, false, false, false, false, false, false, false, false, false),
+  Joystick_(0x04, JOYSTICK_TYPE_JOYSTICK, 8, 1, true, true, true, true, false, false, false, false, false, false, false),
+  Joystick_(0x05, JOYSTICK_TYPE_MULTI_AXIS, 16, 0, false, true, false, true, false, false, true, true, false, false, false),
+  Joystick_(0x06, JOYSTICK_TYPE_MULTI_AXIS, 32, 1, true, true, false, true, true, false, false, false, true, true, true)
+};
 
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.
 //const bool testAutoSendMode = true;
@@ -88,15 +99,20 @@ void testXYAxis(int joystickId, unsigned int currentStep)
 }
 
 void setup() {
-  if (testAutoSendMode)
+
+  for (int index = 0; index < JOYSTICK_COUNT; index++)
   {
-    Joystick[0].begin();
-    Joystick[1].begin();
-  }
-  else
-  {
-    Joystick[0].begin(false);
-    Joystick[1].begin(false);
+    Joystick[index].setXAxisRange(-127, 127);
+    Joystick[index].setYAxisRange(-127, 127);
+  
+    if (testAutoSendMode)
+    {
+      Joystick[index].begin();
+    }
+    else
+    {
+      Joystick[index].begin(false);
+    }
   }
   
   pinMode(A0, INPUT_PULLUP);
@@ -145,8 +161,10 @@ void loop() {
       gNextTime = millis() + gcCycleDelta;
       gCurrentStep = 0;
       
-      gJoystickId = (gJoystickId == 0 ? 1 : 0);
+      if (++gJoystickId >= JOYSTICK_COUNT)
+      {
+        gJoystickId = 0;
+      }
     }
   }
 }
-
