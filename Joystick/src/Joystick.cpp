@@ -41,6 +41,8 @@
 #define JOYSTICK_INCLUDE_BRAKE       B00001000
 #define JOYSTICK_INCLUDE_STEERING    B00010000
 
+#define JOYSTICK_VALUE_RANGE_CHECK(value, l, g) if (((value) < min((l), (g))) || ((value) > max((l), (g)))) return
+
 Joystick_::Joystick_(
 	uint8_t hidReportId,
 	uint8_t joystickType,
@@ -519,21 +521,21 @@ void Joystick_::releaseButton(uint8_t button)
 
 void Joystick_::setXAxis(int16_t value)
 {
-	if ((value < _xAxisMinimum) || (value > _xAxisMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _xAxisMinimum, _xAxisMaximum);
 	
 	_xAxis = value;
 	if (_autoSendState) sendState();
 }
 void Joystick_::setYAxis(int16_t value)
 {
-	if ((value < _yAxisMinimum) || (value > _yAxisMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _yAxisMinimum, _yAxisMaximum);
 	
 	_yAxis = value;
 	if (_autoSendState) sendState();
 }
 void Joystick_::setZAxis(int16_t value)
 {
-	if ((value < _zAxisMinimum) || (value > _zAxisMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _zAxisMinimum, _zAxisMaximum);
 
 	_zAxis = value;
 	if (_autoSendState) sendState();
@@ -541,21 +543,21 @@ void Joystick_::setZAxis(int16_t value)
 
 void Joystick_::setRxAxis(int16_t value)
 {
-	if ((value < _rxAxisMinimum) || (value > _rxAxisMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _rxAxisMinimum, _rxAxisMaximum);
 
 	_xAxisRotation = value;
 	if (_autoSendState) sendState();
 }
 void Joystick_::setRyAxis(int16_t value)
 {
-	if ((value < _ryAxisMinimum) || (value > _ryAxisMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _ryAxisMinimum, _ryAxisMaximum);
 
 	_yAxisRotation = value;
 	if (_autoSendState) sendState();
 }
 void Joystick_::setRzAxis(int16_t value)
 {
-	if ((value < _rzAxisMinimum) || (value > _rzAxisMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _rzAxisMinimum, _rzAxisMaximum);
 
 	_zAxisRotation = value;
 	if (_autoSendState) sendState();
@@ -563,35 +565,35 @@ void Joystick_::setRzAxis(int16_t value)
 
 void Joystick_::setRudder(int16_t value)
 {
-	if ((value < _rudderMinimum) || (value > _rudderMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _rudderMinimum, _rudderMaximum);
 	
 	_rudder = value;
 	if (_autoSendState) sendState();
 }
 void Joystick_::setThrottle(int16_t value)
 {
-	if ((value < _throttleMinimum) || (value > _throttleMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _throttleMinimum, _throttleMaximum);
 	
 	_throttle = value;
 	if (_autoSendState) sendState();
 }
 void Joystick_::setAccelerator(int16_t value)
 {
-	if ((value < _acceleratorMinimum) || (value > _acceleratorMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _acceleratorMinimum, _acceleratorMaximum);
 
 	_accelerator = value;
 	if (_autoSendState) sendState();
 }
 void Joystick_::setBrake(int16_t value)
 {
-	if ((value < _brakeMinimum) || (value > _brakeMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _brakeMinimum, _brakeMaximum);
 
 	_brake = value;
 	if (_autoSendState) sendState();
 }
 void Joystick_::setSteering(int16_t value)
 {
-	if ((value < _steeringMinimum) || (value > _steeringMaximum)) return;
+	JOYSTICK_VALUE_RANGE_CHECK(value, _steeringMinimum, _steeringMaximum);
 
 	_steering = value;
 	if (_autoSendState) sendState();
@@ -612,7 +614,14 @@ int Joystick_::buildAndSet16BitValue(bool includeValue, int16_t value, int16_t v
 	uint8_t lowByte;
 
 	if (includeValue == true) {
-		convertedValue = map(value, valueMinimum, valueMaximum, actualMinimum, actualMaximum);
+
+		if (valueMinimum > valueMaximum) {
+			// Values go from a larger number to a smaller number (e.g. 1024 to 0)
+			convertedValue = map(valueMinimum - value, valueMaximum, valueMinimum, actualMinimum, actualMaximum);
+		} else {
+			// Values go from a smaller number to a larger number (e.g. 0 to 1024)
+			convertedValue = map(value, valueMinimum, valueMaximum, actualMinimum, actualMaximum);
+		}
 				
 		highByte = (uint8_t)(convertedValue >> 8);
 		lowByte = (uint8_t)(convertedValue & 0x00FF);
