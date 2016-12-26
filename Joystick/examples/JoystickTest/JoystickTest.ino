@@ -157,13 +157,13 @@ void testHatSwitch(unsigned int currentStep)
 void testThrottleRudder(unsigned int value)
 {
   Joystick.setThrottle(value);
-  Joystick.setRudder(255 - value);
+  Joystick.setRudder(value);
 }
 
 void testXYZAxisRotation(unsigned int degree)
 {
   Joystick.setRxAxis(degree);
-  Joystick.setRyAxis(360 - degree);
+  Joystick.setRyAxis(degree);
   Joystick.setRzAxis(degree * 2);
 }
 
@@ -174,10 +174,10 @@ void setup() {
   Joystick.setYAxisRange(-127, 127);
   Joystick.setZAxisRange(-127, 127);
   Joystick.setRxAxisRange(0, 360);
-  Joystick.setRyAxisRange(0, 360);
+  Joystick.setRyAxisRange(360, 0);
   Joystick.setRzAxisRange(0, 720);
   Joystick.setThrottleRange(0, 255);
-  Joystick.setRudderRange(0, 255);
+  Joystick.setRudderRange(255, 0);
   
   if (testAutoSendMode)
   {
