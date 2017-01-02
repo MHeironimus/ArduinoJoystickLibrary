@@ -10,4 +10,5 @@ if [ ! -d "$INSTALLPATH/examples" ]; then
 fi
 
 cp "Joystick/"* "$INSTALLPATH"
+cp "Joystick/src"* "$INSTALLPATH"
 cp -r "Joystick/examples" "$INSTALLPATH"
