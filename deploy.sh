@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-INSTALLPATH="$HOME/Documents/Arduino/libraries/Joystick"
+INSTALLPATH="$HOME/Arduino/libraries/Joystick"
 
 if [ ! -d "$INSTALLPATH" ]; then
     mkdir "$INSTALLPATH"
