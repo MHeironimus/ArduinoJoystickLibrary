@@ -21,7 +21,7 @@
 #ifndef JOYSTICK_h
 #define JOYSTICK_h
 
-#include <DynamicHID.h>
+#include <DynamicHID/DynamicHID.h>
 
 #if ARDUINO < 10606
 #error The Joystick library requires Arduino IDE 1.6.6 or greater. Please update your IDE.
