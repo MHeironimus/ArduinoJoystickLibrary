@@ -19,7 +19,7 @@ Copy the `Joystick` folder to the Arduino libraries folder. Once the folder has 
 ### Microsoft Windows
 On Microsoft Windows machines, this is typically `%userprofile%\Documents\Arduino\libraries`. The `deploy.bat` file can be executed to install the Joystick folder on Microsoft Windows machines (assuming a default Arduino installation).
 ### Linux
-On Linux machines, this is typically `$HOME/Arduino/libraries`. The `deploy.sh` file can be executed to install the Joystick folder on Linux machines (assuming a default Arduino installation).
+On Linux machines, this is typically `$HOME/Arduino/libraries`. The `deploy.sh` file can be executed to install the Joystick folder on Linux machines (assuming a default Arduino installation). [Thanks to @Nihlus (Jarl Gullberg) for his help with this.]
 
 ## Examples
 The following example Arduino sketch files are included in this library:
