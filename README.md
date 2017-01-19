@@ -35,7 +35,7 @@ Sets the Z axis value. Range -127 to 127 (0 is center).
 ###Joystick.setXAxisRotation(int value)
 Sets the X axis rotation value. Range 0° to 360°.
 
-###Joystick.setyAxisRotation(int value)
+###Joystick.setYAxisRotation(int value)
 Sets the Y axis rotation value. Range 0° to 360°.
 
 ###Joystick.setZAxisRotation(int value)
