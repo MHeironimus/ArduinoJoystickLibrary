@@ -1,5 +1,5 @@
 # Arduino Joystick Library
-#### Version 2.0.2
+#### Version 2.0.3
 This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
 
 ## Features
@@ -15,7 +15,11 @@ The joystick or gamepad can have the following features:
 - Steering (up to 16-bit precision)
 
 ## Installation Instructions
-Copy the Joystick folder to the Arduino libraries folder (typically `%userprofile%\Documents\Arduino\libraries`). On Microsoft Windows machines, the `deploy.bat` file can be executed to install the Joystick folder (assuming a default Arduino installation). The library should now appear in the Arduino IDE list of libraries. The examples should also appear in the examples menu in the Arduino IDE.
+Copy the `Joystick` folder to the Arduino libraries folder. Once the folder has been copied, the Joystick library should appear in the Arduino IDE list of libraries. The examples should also appear in the examples menu in the Arduino IDE.
+### Microsoft Windows
+On Microsoft Windows machines, this is typically `%userprofile%\Documents\Arduino\libraries`. The `deploy.bat` file can be executed to install the Joystick folder on Microsoft Windows machines (assuming a default Arduino installation).
+### Linux
+On Linux machines, this is typically `$HOME/Arduino/libraries`. The `deploy.sh` file can be executed to install the Joystick folder on Linux machines (assuming a default Arduino installation). [Thanks to @Nihlus (Jarl Gullberg) for his help with this.]
 
 ## Examples
 The following example Arduino sketch files are included in this library:
@@ -206,6 +210,7 @@ I have tested this library using the following Arduino IDE Versions:
 - 1.6.12
 - 1.6.13
 - 1.8.0
+- 1.8.1
 
 I have tested this library with the following boards:
 
@@ -221,4 +226,4 @@ works with the Arduino Due. I have also been told Version 1.x of the the Arduino
 - [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 - [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 
-(as of 2016-12-24)
+(as of 2017-01-14)
