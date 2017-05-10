@@ -219,7 +219,9 @@ I have tested this library with the following boards:
 - [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro)
 
 Others have tested this library with the following boards:
+
 - [SparkFun Pro Micro](https://www.sparkfun.com/products/12640)
+- [RobotDyn Micro ATmega32U4-MU](http://robotdyn.com/catalog/boards/micro_atmega32u4_mu/) by [@Sylverzerom](https://github.com/Sylverzerom)
 
 Other board notes:
 - [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) - NOT Supported - I have been told that the old Arduino IDE 1.6.5 (and below) version of this library (see [Add USB Game Controller to Arduino Leonardo or Micro](http://mheironimus.blogspot.com/2015/03/add-usb-game-controller-to-arduino.html))
@@ -227,4 +229,4 @@ works with the Arduino Due. I have also been told Version 1.x of the the Arduino
 - [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 - [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 
-(as of 2017-04-29)
+(as of 2017-05-10)
