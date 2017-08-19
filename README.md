@@ -92,14 +92,14 @@ Constructor used to initialize and setup the Joystick. The following optional pa
 - `bool includeBrake` - Default: `true` - Indicates if the Brake is available on the joystick.
 - `bool includeSteering` - Default: `true` - Indicates if the Steering is available on the joystick.
 
-The following constants define the default values for the constructor parameter's listed above:
+The following constants define the default values for the constructor parameters listed above:
 
 - `JOYSTICK_DEFAULT_REPORT_ID` is set to `0x03`
 - `JOYSTICK_DEFAULT_BUTTON_COUNT` is set to `32`
 - `JOYSTICK_DEFAULT_HATSWITCH_COUNT` is set to `2`
 
 ### Joystick.begin(bool initAutoSendState)
-Starts emulating a game controller connected to a computer. By default all methods update the game controller state immediately. If `initAutoSendState` is set to `false`, the `Joystick.sendState` method must be called to update the game controller state.
+Starts emulating a game controller connected to a computer. By default, all methods update the game controller state immediately. If `initAutoSendState` is set to `false`, the `Joystick.sendState` method must be called to update the game controller state.
 
 ### Joystick.end()
 Stops the game controller emulation to a connected computer.
@@ -201,18 +201,8 @@ I have tested with 0, 1, and 2 hat switches.
 
 I have tested this library using the following Arduino IDE Versions:
 
-- 1.6.6
-- 1.6.7
-- 1.6.8
-- 1.6.9
-- 1.6.10
-- 1.6.11
-- 1.6.12
-- 1.6.13
-- 1.8.0
-- 1.8.1
-- 1.8.2
-- 1.8.3
+- 1.6.6 through 1.6.13
+- 1.8.0 through 1.8.3
 
 I have tested this library with the following boards:
 
@@ -224,10 +214,16 @@ Others have tested this library with the following boards:
 - [SparkFun Pro Micro](https://www.sparkfun.com/products/12640)
 - [RobotDyn Micro ATmega32U4-MU](http://robotdyn.com/catalog/boards/micro_atmega32u4_mu/) by [@Sylverzerom](https://github.com/Sylverzerom)
 
+Boards that should work, but I have not personally tested:
+
+- [Arduino Leonardo ETH](https://store.arduino.cc/usa/arduino-leonardo-eth)
+- [Arduino Industrial 101](https://store.arduino.cc/usa/arduino-industrial-101)
+- [Arduino Yún](https://store.arduino.cc/usa/arduino-yun)
+
 Other board notes:
 - [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) - NOT Supported - I have been told that the old Arduino IDE 1.6.5 (and below) version of this library (see [Add USB Game Controller to Arduino Leonardo or Micro](http://mheironimus.blogspot.com/2015/03/add-usb-game-controller-to-arduino.html))
 works with the Arduino Due. I have also been told Version 1.x of the the Arduino Joystick Library will work with the Arduino Duo. However, Version 2.x of the Arduino Joystick Library does not work with Arduino Due at this time.
 - [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 - [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 
-(as of 2017-07-09)
+(as of 2017-08-19)
