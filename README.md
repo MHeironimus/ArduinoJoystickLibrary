@@ -202,7 +202,7 @@ I have tested with 0, 1, and 2 hat switches.
 I have tested this library using the following Arduino IDE Versions:
 
 - 1.6.6 through 1.6.13
-- 1.8.0 through 1.8.3
+- 1.8.0 through 1.8.4
 
 I have tested this library with the following boards:
 
@@ -226,4 +226,4 @@ works with the Arduino Due. I have also been told Version 1.x of the the Arduino
 - [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 - [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 
-(as of 2017-08-19)
+(as of 2017-08-21)
