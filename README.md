@@ -1,5 +1,5 @@
 # Arduino Joystick Library
-#### Version 2.0.3
+#### Version 2.0.4
 This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
 
 ## Features
@@ -226,4 +226,4 @@ works with the Arduino Due. I have also been told Version 1.x of the the Arduino
 - [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 - [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 
-(as of 2017-08-21)
+(as of 2017-09-02)
