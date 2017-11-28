@@ -4,6 +4,14 @@
 //
 // Each joystick has a unique configuration.
 //
+// This probably requires boot parameter modification on Linux
+// as explained here: http://mheironimus.blogspot.com/2015/09/linux-support-for-arduino-leonardo.html
+// In a nutshell, just add the following to your /etc/default/grub or equivalent:
+//
+// Leonardo: usbhid.quirks=0x2341:0x8036:0x040
+// Micro:    usbhid.quirks=0x2341:0x8037:0x040
+// 
+//
 // Matthew Heironimus
 // 2016-05-13
 //------------------------------------------------------------
