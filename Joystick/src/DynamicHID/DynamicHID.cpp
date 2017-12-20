@@ -23,6 +23,11 @@
 
 #if defined(USBCON)
 
+#ifdef _VARIANT_ARDUINO_DUE_X_
+#define USB_SendControl USBD_SendControl
+#define USB_Send USBD_Send
+#endif
+
 DynamicHID_& DynamicHID()
 {
 	static DynamicHID_ obj;

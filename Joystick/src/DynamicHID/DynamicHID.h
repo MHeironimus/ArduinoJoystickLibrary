@@ -24,7 +24,18 @@
 
 #include <stdint.h>
 #include <Arduino.h>
-#include "PluggableUSB.h"
+
+#ifdef _VARIANT_ARDUINO_DUE_X_
+  // The following values are the same as AVR's USBAPI.h
+  // Reproduced here because SAM doesn't have these in
+  // its own USBAPI.H
+  #define USB_EP_SIZE 64
+  #define TRANSFER_PGM 0x80
+
+  #include "USB/PluggableUSB.h"
+#else
+  #include "PluggableUSB.h"
+#endif
 
 #if defined(USBCON)
 
@@ -108,7 +119,11 @@ protected:
   uint8_t getShortName(char* name);
 
 private:
+  #ifdef _VARIANT_ARDUINO_DUE_X_
+  uint32_t epType[1];
+  #else
   uint8_t epType[1];
+  #endif
 
   DynamicHIDSubDescriptor* rootNode;
   uint16_t descriptorSize;
