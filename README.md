@@ -213,7 +213,7 @@ Others have tested this library with the following boards:
 
 - [SparkFun Pro Micro](https://www.sparkfun.com/products/12640)
 - [RobotDyn Micro ATmega32U4-MU](http://robotdyn.com/catalog/boards/micro_atmega32u4_mu/) by [@Sylverzerom](https://github.com/Sylverzerom)
-- [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue)
+- [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) by [@Palakis](https://github.com/Palakis)
 
 Boards that should work, but I have not personally tested:
 
