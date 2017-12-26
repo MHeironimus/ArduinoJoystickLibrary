@@ -1,5 +1,5 @@
 # Arduino Joystick Library
-#### Version 2.0.4
+#### Version 2.0.5
 This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
 
 ## Features
@@ -213,6 +213,7 @@ Others have tested this library with the following boards:
 
 - [SparkFun Pro Micro](https://www.sparkfun.com/products/12640)
 - [RobotDyn Micro ATmega32U4-MU](http://robotdyn.com/catalog/boards/micro_atmega32u4_mu/) by [@Sylverzerom](https://github.com/Sylverzerom)
+- [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) by [@Palakis](https://github.com/Palakis)
 
 Boards that should work, but I have not personally tested:
 
@@ -221,8 +222,6 @@ Boards that should work, but I have not personally tested:
 - [Arduino Yún](https://store.arduino.cc/usa/arduino-yun)
 
 Other board notes:
-- [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) - NOT Supported - I have been told that the old Arduino IDE 1.6.5 (and below) version of this library (see [Add USB Game Controller to Arduino Leonardo or Micro](http://mheironimus.blogspot.com/2015/03/add-usb-game-controller-to-arduino.html))
-works with the Arduino Due. I have also been told Version 1.x of the the Arduino Joystick Library will work with the Arduino Duo. However, Version 2.x of the Arduino Joystick Library does not work with Arduino Due at this time.
 - [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 - [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
 
