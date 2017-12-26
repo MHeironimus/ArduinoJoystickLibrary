@@ -1,6 +1,6 @@
 # Arduino Joystick Library
 #### Version 2.0.5
-This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
+This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This library will also work with the [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue), thanks to [@Palakis](https://github.com/Palakis). A complete list of supported boards can be found in the [Wiki](https://github.com/MHeironimus/ArduinoJoystickLibrary/wiki/Boards). This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
 
 ## Features
 The joystick or gamepad can have the following features:
@@ -185,44 +185,4 @@ Sets the value of the specified hat switch. The hatSwitch is 0-based (i.e. hat s
 ### Joystick.sendState()
 Sends the updated joystick state to the host computer. Only needs to be called if `AutoSendState` is `false` (see `Joystick.begin` for more details).
 
-## Testing Details
-I have used this library to make an Arduino appear as the following:
-
-- 1 joystick / gamepad
-- 2 joysticks / gamepads
-- 3 joysticks / gamepads
-- 4 joysticks / gamepads
-
-I have tested with 1 - 32 buttons using the standard Microsoft Windows Game Controller Test dialog. 
-I have also tested this with 1 - 64 buttons. 
-To test a joystick with over 32 buttons, a third-party testing tool will need to be used (e.g. http://www.planetpointy.co.uk/joystick-test-application/).
-
-I have tested with 0, 1, and 2 hat switches.
-
-I have tested this library using the following Arduino IDE Versions:
-
-- 1.6.6 through 1.6.13
-- 1.8.0 through 1.8.4
-
-I have tested this library with the following boards:
-
-- [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo)
-- [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro)
-
-Others have tested this library with the following boards:
-
-- [SparkFun Pro Micro](https://www.sparkfun.com/products/12640)
-- [RobotDyn Micro ATmega32U4-MU](http://robotdyn.com/catalog/boards/micro_atmega32u4_mu/) by [@Sylverzerom](https://github.com/Sylverzerom)
-- [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue) by [@Palakis](https://github.com/Palakis)
-
-Boards that should work, but I have not personally tested:
-
-- [Arduino Leonardo ETH](https://store.arduino.cc/usa/arduino-leonardo-eth)
-- [Arduino Industrial 101](https://store.arduino.cc/usa/arduino-industrial-101)
-- [Arduino Yún](https://store.arduino.cc/usa/arduino-yun)
-
-Other board notes:
-- [Arduino UNO](https://www.arduino.cc/en/Main/ArduinoBoardUno) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
-- [Arduino MEGA](https://www.arduino.cc/en/Main/ArduinoBoardMega2560) - NOT Supported - However, it might work with the [NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2) library, but I have not had a chance to try this out yet.
-
-(as of 2017-09-02)
+See the [Wiki](https://github.com/MHeironimus/ArduinoJoystickLibrary/wiki) for more details on things like FAQ, supported boards, testing, etc.
