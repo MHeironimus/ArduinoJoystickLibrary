@@ -23,6 +23,11 @@
 
 #if defined(USBCON)
 
+#ifdef _VARIANT_ARDUINO_DUE_X_
+#define USB_SendControl USBD_SendControl
+#define USB_Send USBD_Send
+#endif
+
 DynamicHID_& DynamicHID()
 {
 	static DynamicHID_ obj;
@@ -91,11 +96,10 @@ void DynamicHID_::AppendDescriptor(DynamicHIDSubDescriptor *node)
 
 int DynamicHID_::SendReport(uint8_t id, const void* data, int len)
 {
-	auto ret = USB_Send(pluggedEndpoint, &id, 1);
-	if (ret < 0) return ret;
-	auto ret2 = USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, len);
-	if (ret2 < 0) return ret2;
-	return ret + ret2;
+	uint8_t p[len + 1];
+	p[0] = id;
+	memcpy(&p[1], data, len);
+	return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, p, len + 1);
 }
 
 bool DynamicHID_::setup(USBSetup& setup)
