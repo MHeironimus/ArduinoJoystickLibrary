@@ -25,6 +25,8 @@
 #include <stdint.h>
 #include <Arduino.h>
 
+#if !defined(ARDUINO_SAMD_VARIANT_COMPLIANCE)
+
 #ifdef _VARIANT_ARDUINO_DUE_X_
   // The following values are the same as AVR's USBAPI.h
   // Reproduced here because SAM doesn't have these in
@@ -142,3 +144,5 @@ DynamicHID_& DynamicHID();
 #endif // USBCON
 
 #endif // DYNAMIC_HID_h
+
+#endif // !defined(ARDUINO_SAMD_VARIANT_COMPLIANCE)
