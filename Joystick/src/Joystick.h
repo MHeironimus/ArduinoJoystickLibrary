@@ -211,7 +211,7 @@ public:
 
 	void setHatSwitch(int8_t hatSwitch, int16_t value);
 
-	void sendState();
+	int sendState();
 };
 
 #endif // !defined(_USING_DYNAMIC_HID)
