@@ -26,6 +26,10 @@
 #ifdef _VARIANT_ARDUINO_DUE_X_
 #define USB_SendControl USBD_SendControl
 #define USB_Send USBD_Send
+#elif defined(ARDUINO_ARCH_SAMD)
+#define USB_SendControl(flags, d, len) USBDevice.sendControl(d, len)
+#define USB_Send USBDevice.send
+#define TRANSFER_RELEASE	0x00
 #endif
 
 DynamicHID_& DynamicHID()
@@ -122,7 +126,12 @@ bool DynamicHID_::setup(USBSetup& setup)
 			return true;
 		}
 		if (request == DYNAMIC_HID_GET_IDLE) {
+#ifdef ARDUINO_ARCH_SAMD
+			USBDevice.armSend(0, &idle, 1);
+			return true;
+#else
 			// TODO: Send8(idle);
+#endif
 		}
 	}
 
@@ -157,7 +166,11 @@ DynamicHID_::DynamicHID_(void) : PluggableUSBModule(1, 1, epType),
                    rootNode(NULL), descriptorSize(0),
                    protocol(DYNAMIC_HID_REPORT_PROTOCOL), idle(1)
 {
+#ifdef ARDUINO_ARCH_SAMD
+	epType[0] = USB_ENDPOINT_TYPE_INTERRUPT | USB_ENDPOINT_IN(0);
+#else
 	epType[0] = EP_TYPE_INTERRUPT_IN;
+#endif
 	PluggableUSB().plug(this);
 }
 
