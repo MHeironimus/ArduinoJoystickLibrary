@@ -1,0 +1,91 @@
+##################################################
+# Syntax Coloring Map For Arduino Joystick Library
+##################################################
+
+##################################################
+# Datatypes (KEYWORD1)
+##################################################
+
+# Library
+Joystick	KEYWORD1
+
+# Typical Instance
+Joystick	KEYWORD1
+
+##################################################
+# Methods and Functions (KEYWORD2)
+##################################################
+
+# Setup Functions
+begin	KEYWORD2
+end	KEYWORD2
+
+# Axis Range Functions
+setXAxisRange	KEYWORD2
+setYAxisRange	KEYWORD2
+setZAxisRange	KEYWORD2
+setRxAxisRange	KEYWORD2
+setRyAxisRange	KEYWORD2
+setRzAxisRange	KEYWORD2
+
+# Simulation Range Functions
+setRudderRange	KEYWORD2
+setThrottleRange	KEYWORD2
+setAcceleratorRange	KEYWORD2
+setBrakeRange	KEYWORD2
+setSteeringRange	KEYWORD2
+
+# Set Axis Functions
+setXAxis	KEYWORD2
+setYAxis	KEYWORD2
+setZAxis	KEYWORD2
+setRxAxis	KEYWORD2
+setRyAxis	KEYWORD2
+setRzAxis	KEYWORD2
+
+# Set Simulation Functions
+setRudder	KEYWORD2
+setThrottle	KEYWORD2
+setAccelerator	KEYWORD2
+setBrake	KEYWORD2
+setSteering	KEYWORD2
+
+# Set Button Functions
+setButton	KEYWORD2
+pressButton	KEYWORD2
+releaseButton	KEYWORD2
+
+# Set Hat Switch Function
+setHatSwitch	KEYWORD2
+
+# Comm Functions
+sendState	KEYWORD2
+
+##################################################
+# Instances (KEYWORD2)
+##################################################
+
+# Class
+Joystick_	KEYWORD2
+
+##################################################
+# Constants (LITERAL1)
+##################################################
+
+# Default Defines
+JOYSTICK_DEFAULT_REPORT_ID	LITERAL1
+JOYSTICK_DEFAULT_BUTTON_COUNT	LITERAL1
+JOYSTICK_DEFAULT_AXIS_MINIMUM	LITERAL1
+JOYSTICK_DEFAULT_AXIS_MAXIMUM	LITERAL1
+JOYSTICK_DEFAULT_SIMULATOR_MINIMUM	LITERAL1
+JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM	LITERAL1
+JOYSTICK_DEFAULT_HATSWITCH_COUNT	LITERAL1
+
+# Hatswitch Defines
+JOYSTICK_HATSWITCH_COUNT_MAXIMUM	LITERAL1
+JOYSTICK_HATSWITCH_RELEASE	LITERAL1
+
+# Type Defines
+JOYSTICK_TYPE_JOYSTICK	LITERAL1
+JOYSTICK_TYPE_GAMEPAD	LITERAL1
+JOYSTICK_TYPE_MULTI_AXIS	LITERAL1
