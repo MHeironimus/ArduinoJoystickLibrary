@@ -21,7 +21,11 @@
 #ifndef JOYSTICK_h
 #define JOYSTICK_h
 
+#ifdef USE_TINYUSB
+#include <Adafruit_TinyUSB.h>
+#else
 #include <DynamicHID/DynamicHID.h>
+#endif
 
 #if ARDUINO < 10606
 #error The Joystick library requires Arduino IDE 1.6.6 or greater. Please update your IDE.
@@ -107,6 +111,10 @@ private:
 	uint8_t                  _hidReportId;
 	uint8_t                  _hidReportSize; 
 
+#ifdef USE_TINYUSB
+	Adafruit_USBD_HID				 _usb_hid;
+#endif
+
 protected:
 	int buildAndSet16BitValue(bool includeValue, int16_t value, int16_t valueMinimum, int16_t valueMaximum, int16_t actualMinimum, int16_t actualMaximum, uint8_t dataLocation[]);
 	int buildAndSetAxisValue(bool includeAxis, int16_t axisValue, int16_t axisMinimum, int16_t axisMaximum, uint8_t dataLocation[]);
@@ -130,7 +138,7 @@ public:
 		bool includeBrake = true,
 		bool includeSteering = true);
 
-	void begin(bool initAutoSendState = true);
+	void begin(bool initAutoSendState = true, uint8_t interval_ms = 2);
 	void end();
 	
 	// Set Range Functions
