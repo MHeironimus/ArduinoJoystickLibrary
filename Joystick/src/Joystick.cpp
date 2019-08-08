@@ -482,7 +482,7 @@ Joystick_::Joystick_(
 void Joystick_::begin(bool initAutoSendState, uint8_t intervalMs)
 {
 #ifdef USE_TINYUSB
-	_usb_hid.setPollInterval(2);
+	_usb_hid.setPollInterval(intervalMs);
   _usb_hid.begin();
 
   while(!USBDevice.mounted()) delay(1);
