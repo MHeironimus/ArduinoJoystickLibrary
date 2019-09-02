@@ -1,0 +1,7 @@
+{
+  "name": "ArduinoJoystickLibrary",
+  "description": "Arduino library that allows an Arduino Leonardo, Arduino Micro, or Arudino Due to appear as a Joystick or Gamepad.",
+  "repository": "https://github.com/nsamala/ArduinoJoystickLibrary.git",
+  "srcDir": "src",
+  "includeDir": "src"
+}

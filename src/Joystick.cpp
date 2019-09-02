@@ -435,8 +435,12 @@ Joystick_::Joystick_(
 	memcpy(customHidReportDescriptor, tempHidReportDescriptor, hidReportDescriptorSize);
 	
 	// Register HID Report Description
+#ifdef USE_TINYUSB
+	_usb_hid.setReportDescriptor(customHidReportDescriptor, hidReportDescriptorSize);
+#else
 	DynamicHIDSubDescriptor *node = new DynamicHIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize, false);
 	DynamicHID().AppendDescriptor(node);
+#endif
 	
     // Setup Joystick State
 	if (buttonCount > 0) {
@@ -475,8 +479,15 @@ Joystick_::Joystick_(
     }
 }
 
-void Joystick_::begin(bool initAutoSendState)
+void Joystick_::begin(bool initAutoSendState, uint8_t intervalMs)
 {
+#ifdef USE_TINYUSB
+	_usb_hid.setPollInterval(intervalMs);
+  _usb_hid.begin();
+
+  while(!USBDevice.mounted()) delay(1);
+#endif
+
 	_autoSendState = initAutoSendState;
 	sendState();
 }
@@ -674,7 +685,16 @@ void Joystick_::sendState()
 	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_BRAKE, _brake, _brakeMinimum, _brakeMaximum, &(data[index]));
 	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_STEERING, _steering, _steeringMinimum, _steeringMaximum, &(data[index]));
 
+#ifdef USE_TINYUSB
+	if (_usb_hid.ready()) {
+    _usb_hid.sendReport(_hidReportId, data, _hidReportSize);
+  }
+
+  if (USBDevice.suspended())
+    USBDevice.remoteWakeup();
+#else
 	DynamicHID().SendReport(_hidReportId, data, _hidReportSize);
+#endif
 }
 
 #endif

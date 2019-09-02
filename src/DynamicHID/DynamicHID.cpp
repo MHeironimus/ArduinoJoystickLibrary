@@ -23,7 +23,7 @@
 
 #if defined(USBCON)
 
-#ifdef _VARIANT_ARDUINO_DUE_X_
+#if defined(_VARIANT_ARDUINO_DUE_X_) || defined(_VARIANT_MACCHINA_M2_)
 #define USB_SendControl USBD_SendControl
 #define USB_Send USBD_Send
 #endif
