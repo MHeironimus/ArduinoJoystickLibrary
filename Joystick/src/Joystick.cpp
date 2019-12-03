@@ -34,6 +34,8 @@
 #define JOYSTICK_INCLUDE_RX_AXIS B00001000
 #define JOYSTICK_INCLUDE_RY_AXIS B00010000
 #define JOYSTICK_INCLUDE_RZ_AXIS B00100000
+#define JOYSTICK_INCLUDE_SLIDER_AXIS B01000000
+#define JOYSTICK_INCLUDE_DIAL_AXIS B10000000
 
 #define JOYSTICK_INCLUDE_RUDDER      B00000001
 #define JOYSTICK_INCLUDE_THROTTLE    B00000010
@@ -52,6 +54,8 @@ Joystick_::Joystick_(
 	bool includeRxAxis,
 	bool includeRyAxis,
 	bool includeRzAxis,
+	bool includeSliderAxis,
+	bool includeDialAxis,
 	bool includeRudder,
 	bool includeThrottle,
 	bool includeAccelerator,
@@ -71,6 +75,8 @@ Joystick_::Joystick_(
 	_includeAxisFlags |= (includeRxAxis ? JOYSTICK_INCLUDE_RX_AXIS : 0);
 	_includeAxisFlags |= (includeRyAxis ? JOYSTICK_INCLUDE_RY_AXIS : 0);
 	_includeAxisFlags |= (includeRzAxis ? JOYSTICK_INCLUDE_RZ_AXIS : 0);
+	_includeAxisFlags |= (includeSliderAxis ? JOYSTICK_INCLUDE_SLIDER_AXIS : 0);
+	_includeAxisFlags |= (includeDialAxis ? JOYSTICK_INCLUDE_DIAL_AXIS : 0);
 	_includeSimulatorFlags = 0;
 	_includeSimulatorFlags |= (includeRudder ? JOYSTICK_INCLUDE_RUDDER : 0);
 	_includeSimulatorFlags |= (includeThrottle ? JOYSTICK_INCLUDE_THROTTLE : 0);
@@ -94,7 +100,9 @@ Joystick_::Joystick_(
 		+  (includeZAxis == true)
 		+  (includeRxAxis == true)
 		+  (includeRyAxis == true)
-		+  (includeRzAxis == true);
+		+  (includeRzAxis == true)
+		+  (includeSliderAxis == true)
+		+  (includeDialAxis == true);
 		
 	uint8_t simulationCount = (includeRudder == true)
 		+ (includeThrottle == true)
@@ -351,6 +359,18 @@ Joystick_::Joystick_(
 			tempHidReportDescriptor[hidReportDescriptorSize++] = 0x35;
 		}
 		
+		if (includeSliderAxis == true) {
+			// USAGE (Slider)
+			tempHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+			tempHidReportDescriptor[hidReportDescriptorSize++] = 0x36;
+		}
+		
+		if (includeDialAxis == true) {
+			// USAGE (Dial)
+			tempHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+			tempHidReportDescriptor[hidReportDescriptorSize++] = 0x37;
+		}
+		
 		// INPUT (Data,Var,Abs)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x81;
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x02;
@@ -460,6 +480,8 @@ Joystick_::Joystick_(
 	_xAxisRotation = 0;
 	_yAxisRotation = 0;
 	_zAxisRotation = 0;
+	_sliderAxis = 0;
+	_dialAxis = 0;
 	_throttle = 0;
 	_rudder = 0;
 	_accelerator = 0;
@@ -546,6 +568,17 @@ void Joystick_::setRyAxis(int16_t value)
 void Joystick_::setRzAxis(int16_t value)
 {
 	_zAxisRotation = value;
+	if (_autoSendState) sendState();
+}
+
+void Joystick_::setSliderAxis(int16_t value)
+{
+	_sliderAxis = value;
+	if (_autoSendState) sendState();
+}
+void Joystick_::setDialAxis(int16_t value)
+{
+	_dialAxis = value;
 	if (_autoSendState) sendState();
 }
 
@@ -666,7 +699,9 @@ void Joystick_::sendState()
 	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_RX_AXIS, _xAxisRotation, _rxAxisMinimum, _rxAxisMaximum, &(data[index]));
 	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_RY_AXIS, _yAxisRotation, _ryAxisMinimum, _ryAxisMaximum, &(data[index]));
 	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_RZ_AXIS, _zAxisRotation, _rzAxisMinimum, _rzAxisMaximum, &(data[index]));
-	
+	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_SLIDER_AXIS, _sliderAxis, _sliderAxisMinimum, _sliderAxisMaximum, &(data[index]));
+	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_DIAL_AXIS, _dialAxis, _dialAxisMinimum, _dialAxisMaximum, &(data[index]));
+
 	// Set Simulation Values
 	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_RUDDER, _rudder, _rudderMinimum, _rudderMaximum, &(data[index]));
 	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_THROTTLE, _throttle, _throttleMinimum, _throttleMaximum, &(data[index]));
