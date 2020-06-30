@@ -19,15 +19,10 @@ The joystick or gamepad can have the following features:
 
 ## Installation Instructions
 
-Copy the `Joystick` folder to the Arduino libraries folder. Once the folder has been copied, the Joystick library should appear in the Arduino IDE list of libraries. The examples should also appear in the examples menu in the Arduino IDE.
+The following instructions can be used to install the latest version of the library in the Arduino IDE (thanks to [@per1234](https://github.com/per1234) for this update):
 
-### Microsoft Windows
-
-On Microsoft Windows machines, this is typically `%userprofile%\Documents\Arduino\libraries`. The `deploy.bat` file can be executed to install the Joystick folder on Microsoft Windows machines (assuming a default Arduino installation).
-
-### Linux
-
-On Linux machines, this is typically `$HOME/Arduino/libraries`. The `deploy.sh` file can be executed to install the Joystick folder on Linux machines (assuming a default Arduino installation). [Thanks to @Nihlus (Jarl Gullberg) for his help with this.]
+1. Download https://github.com/MHeironimus/ArduinoJoystickLibrary/archive/master.zip
+2. In the Arduino IDE, select `Sketch` > `Include Library` > `Add .ZIP Library...`.  Browse to where the downloaded ZIP file is located and click `Open`. The Joystick library's examples will now appear under `File` > `Examples` > `Joystick`.
 
 ## Examples
 
