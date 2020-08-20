@@ -125,7 +125,7 @@ void setup() {
   }
   
   pinMode(A0, INPUT_PULLUP);
-  pinMode(13, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
@@ -134,12 +134,12 @@ void loop() {
   if (digitalRead(A0) != 0)
   {
     // Turn indicator light off.
-    digitalWrite(13, 0);
+    digitalWrite(LED_BUILTIN, 0);
     return;
   }
 
   // Turn indicator light on.
-  digitalWrite(13, 1);
+  digitalWrite(LED_BUILTIN, 1);
   
   if (millis() >= gNextTime)
   {
