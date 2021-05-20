@@ -44,12 +44,13 @@
 
 #define JOYSTICK_DEFAULT_REPORT_ID         0x03
 #define JOYSTICK_DEFAULT_BUTTON_COUNT        32
+#define JOYSTICK_MAX_BUTTON_COUNT			128
 #define JOYSTICK_DEFAULT_AXIS_MINIMUM         0
 #define JOYSTICK_DEFAULT_AXIS_MAXIMUM      1023
 #define JOYSTICK_DEFAULT_SIMULATOR_MINIMUM    0
 #define JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM 1023
 #define JOYSTICK_DEFAULT_HATSWITCH_COUNT      2
-#define JOYSTICK_HATSWITCH_COUNT_MAXIMUM      2
+#define JOYSTICK_HATSWITCH_COUNT_MAXIMUM      4
 #define JOYSTICK_HATSWITCH_RELEASE           -1
 #define JOYSTICK_TYPE_JOYSTICK             0x04
 #define JOYSTICK_TYPE_GAMEPAD              0x05
@@ -59,25 +60,27 @@ class Joystick_
 {
 private:
 
-    // Joystick State
+	// Joystick State
 	int16_t	                 _xAxis;
 	int16_t	                 _yAxis;
 	int16_t	                 _zAxis;
 	int16_t	                 _xAxisRotation;
 	int16_t	                 _yAxisRotation;
 	int16_t	                 _zAxisRotation;
+	int16_t	                 _sliderAxis;
+	int16_t	                 _dialAxis;
 	int16_t                  _throttle;
 	int16_t                  _rudder;
 	int16_t					 _accelerator;
 	int16_t					 _brake;
 	int16_t					 _steering;
 	int16_t	                 _hatSwitchValues[JOYSTICK_HATSWITCH_COUNT_MAXIMUM];
-    uint8_t                 *_buttonValues = NULL;
+	uint8_t* _buttonValues = NULL;
 
-    // Joystick Settings
-    bool                     _autoSendState;
-    uint8_t                  _buttonCount;
-    uint8_t                  _buttonValuesArraySize = 0;
+	// Joystick Settings
+	bool                     _autoSendState;
+	uint8_t                  _buttonCount;
+	uint8_t                  _buttonValuesArraySize = 0;
 	uint8_t					 _hatSwitchCount;
 	uint8_t					 _includeAxisFlags;
 	uint8_t					 _includeSimulatorFlags;
@@ -93,6 +96,10 @@ private:
 	int16_t                  _ryAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
 	int16_t                  _rzAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
 	int16_t                  _rzAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+	int16_t                  _sliderAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+	int16_t                  _sliderAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+	int16_t                  _dialAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+	int16_t                  _dialAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
 	int16_t                  _rudderMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
 	int16_t                  _rudderMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
 	int16_t                  _throttleMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
@@ -105,7 +112,7 @@ private:
 	int16_t                  _steeringMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
 
 	uint8_t                  _hidReportId;
-	uint8_t                  _hidReportSize; 
+	uint8_t                  _hidReportSize;
 
 protected:
 	int buildAndSet16BitValue(bool includeValue, int16_t value, int16_t valueMinimum, int16_t valueMaximum, int16_t actualMinimum, int16_t actualMaximum, uint8_t dataLocation[]);
@@ -116,7 +123,7 @@ public:
 	Joystick_(
 		uint8_t hidReportId = JOYSTICK_DEFAULT_REPORT_ID,
 		uint8_t joystickType = JOYSTICK_TYPE_JOYSTICK,
-        uint8_t buttonCount = JOYSTICK_DEFAULT_BUTTON_COUNT,
+		uint8_t buttonCount = JOYSTICK_DEFAULT_BUTTON_COUNT,
 		uint8_t hatSwitchCount = JOYSTICK_DEFAULT_HATSWITCH_COUNT,
 		bool includeXAxis = true,
 		bool includeYAxis = true,
@@ -124,6 +131,8 @@ public:
 		bool includeRxAxis = true,
 		bool includeRyAxis = true,
 		bool includeRzAxis = true,
+		bool includeSliderAxis = true,
+		bool includeDialAxis = true,
 		bool includeRudder = true,
 		bool includeThrottle = true,
 		bool includeAccelerator = true,
@@ -132,7 +141,7 @@ public:
 
 	void begin(bool initAutoSendState = true);
 	void end();
-	
+
 	// Set Range Functions
 	inline void setXAxisRange(int16_t minimum, int16_t maximum)
 	{
@@ -163,6 +172,16 @@ public:
 	{
 		_rzAxisMinimum = minimum;
 		_rzAxisMaximum = maximum;
+	}
+	inline void setSliderAxisRange(int16_t minimum, int16_t maximum)
+	{
+		_sliderAxisMinimum = minimum;
+		_sliderAxisMaximum = maximum;
+	}
+	inline void setDialAxisRange(int16_t minimum, int16_t maximum)
+	{
+		_dialAxisMinimum = minimum;
+		_dialAxisMaximum = maximum;
 	}
 	inline void setRudderRange(int16_t minimum, int16_t maximum)
 	{
@@ -197,6 +216,10 @@ public:
 	void setRxAxis(int16_t value);
 	void setRyAxis(int16_t value);
 	void setRzAxis(int16_t value);
+
+	// Set Slider Values
+	void setSliderAxis(int16_t value);
+	void setDialAxis(int16_t value);
 
 	// Set Simuation Values
 	void setRudder(int16_t value);
