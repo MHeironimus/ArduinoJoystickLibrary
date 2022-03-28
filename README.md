@@ -36,7 +36,7 @@ The following example Arduino sketch files are included in this library:
 - `DrivingControllerTest` - Creates a Driving Controller and tests 4 buttons, the Steering, Brake, and Accelerator when pin A0 is grounded.
 - `FlightControllerTest` - Creates a Flight Controller and tests 32 buttons, the X and Y axis, the Throttle, and the Rudder when pin A0 is grounded.
 - `HatSwitchTest` - Creates a joystick with two hat switches. Grounding pins 4 - 11 cause the hat switches to change position.
-- `ArcadeStickExample` - Simple arcade stick example that demonstrates how to read twelve Arduino digital pins and map them to the library (thanks to [@nebhead](https://github.com/nebhead) for this example). 
+- `ArcadeStickExample` - Simple arcade stick example that demonstrates how to read twelve Arduino Pro Micro digital pins and map them to the library (thanks to [@nebhead](https://github.com/nebhead) for this example). NOTE: This sketch is for the Arduino Pro Micro only.
 
 ### Simple example
 

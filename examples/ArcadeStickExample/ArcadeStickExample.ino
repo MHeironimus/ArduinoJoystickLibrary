@@ -1,5 +1,6 @@
-// Simple arcade stick example that demonstrates how to read twelve Arduino
-// digital pins and map them to the Arduino Joystick library.
+// Simple arcade stick example that demonstrates how to read twelve
+// Arduino Pro Micro digital pins and map them to the
+// Arduino Joystick library.
 //
 
 // The digital pins 2 - 20 are grounded when they are pressed.
@@ -23,8 +24,7 @@
 // Pin 18, A0 = Other Button
 // Pin 21, A3 = Other Button
 
-// NOTE: This sketch file is for use with Arduino Leonardo and
-//       Arduino Micro only.
+// NOTE: This sketch file is for use with Arduino Pro Micro only.
 //
 // Original gamepad example by Matthew Heironimus
 // 2016-11-24
