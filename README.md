@@ -1,6 +1,6 @@
 # Arduino Joystick Library
 
-#### Version 2.0.7
+#### Version 2.0.8
 
 This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This library will also work with the [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue), thanks to [@Palakis](https://github.com/Palakis). A complete list of supported boards can be found in the [Wiki](https://github.com/MHeironimus/ArduinoJoystickLibrary/wiki/Supported-Boards). This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
 
@@ -33,9 +33,10 @@ The following example Arduino sketch files are included in this library:
 - `JoystickButton` - Creates a Joystick and maps pin 9 to button 0 of the joystick, pin 10 to button 1, pin 11 to button 2, and pin 12 to button 3.
 - `JoystickKeyboard` - Creates a Joystick and a Keyboard. Maps pin 9 to Joystick Button 0, pin 10 to Joystick Button 1, pin 11 to Keyboard key 1, and pin 12 to Keyboard key 2.
 - `GamepadExample` - Creates a simple Gamepad with an Up, Down, Left, Right, and Fire button.
-- `DrivingControllerTest` - Creates a Driving Controller and tests 4 buttons, the Steering, Brake, and Accelerator when pin A0 is grounded.  
+- `DrivingControllerTest` - Creates a Driving Controller and tests 4 buttons, the Steering, Brake, and Accelerator when pin A0 is grounded.
 - `FlightControllerTest` - Creates a Flight Controller and tests 32 buttons, the X and Y axis, the Throttle, and the Rudder when pin A0 is grounded.
-- `HatSwitchTest` - Creates a joystick with two hat switches. Grounding pins 4 - 11 cause the hat switches to change position.  
+- `HatSwitchTest` - Creates a joystick with two hat switches. Grounding pins 4 - 11 cause the hat switches to change position.
+- `ArcadeStickExample` - Simple arcade stick example that demonstrates how to read twelve Arduino Pro Micro digital pins and map them to the library (thanks to [@nebhead](https://github.com/nebhead) for this example). NOTE: This sketch is for the Arduino Pro Micro only.
 
 ### Simple example
 
