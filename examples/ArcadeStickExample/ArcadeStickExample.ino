@@ -1,4 +1,4 @@
-// Simple arcade stick example that demonstraits how to read twelve Arduino
+// Simple arcade stick example that demonstrates how to read twelve Arduino
 // digital pins and map them to the Arduino Joystick library.
 //
 
