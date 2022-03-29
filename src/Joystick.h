@@ -60,12 +60,12 @@ class Joystick_
 private:
 
     // Joystick State
-    uint16_t   _xAxis;
-    uint16_t   _yAxis;
-    uint16_t   _zAxis;
-    uint16_t   _xAxisRotation;
-    uint16_t   _yAxisRotation;
-    uint16_t   _zAxisRotation;
+    int32_t   _xAxis;
+    int32_t   _yAxis;
+    int32_t   _zAxis;
+    int32_t   _xAxisRotation;
+    int32_t   _yAxisRotation;
+    int32_t   _zAxisRotation;
     uint16_t   _throttle;
     uint16_t   _rudder;
     uint16_t   _accelerator;
@@ -81,18 +81,18 @@ private:
     uint8_t   _hatSwitchCount;
     uint8_t   _includeAxisFlags;
     uint8_t   _includeSimulatorFlags;
-    uint16_t  _xAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
-    uint16_t  _xAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
-    uint16_t  _yAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
-    uint16_t  _yAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
-    uint16_t  _zAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
-    uint16_t  _zAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
-    uint16_t  _rxAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
-    uint16_t  _rxAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
-    uint16_t  _ryAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
-    uint16_t  _ryAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
-    uint16_t  _rzAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
-    uint16_t  _rzAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+    int32_t  _xAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+    int32_t  _xAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+    int32_t  _yAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+    int32_t  _yAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+    int32_t  _zAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+    int32_t  _zAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+    int32_t  _rxAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+    int32_t  _rxAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+    int32_t  _ryAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+    int32_t  _ryAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+    int32_t  _rzAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+    int32_t  _rzAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
     uint16_t  _rudderMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
     uint16_t  _rudderMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
     uint16_t  _throttleMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
@@ -108,7 +108,7 @@ private:
     uint8_t   _hidReportSize; 
 
 protected:
-    int buildAndSet16BitValue(bool includeValue, uint16_t value, uint16_t valueMinimum, uint16_t valueMaximum, uint16_t actualMinimum, uint16_t actualMaximum, uint8_t dataLocation[]);
+    int buildAndSet16BitValue(bool includeValue, int32_t value, int32_t valueMinimum, int32_t valueMaximum, int32_t actualMinimum, int32_t actualMaximum, uint8_t dataLocation[]);
     int buildAndSetAxisValue(bool includeAxis, uint16_t axisValue, uint16_t axisMinimum, uint16_t axisMaximum, uint8_t dataLocation[]);
     int buildAndSetSimulationValue(bool includeValue, uint16_t value, uint16_t valueMinimum, uint16_t valueMaximum, uint8_t dataLocation[]);
 
@@ -134,32 +134,32 @@ public:
     void end();
     
     // Set Range Functions
-    inline void setXAxisRange(uint16_t minimum, uint16_t maximum)
+    inline void setXAxisRange(int32_t minimum, int32_t maximum)
     {
         _xAxisMinimum = minimum;
         _xAxisMaximum = maximum;
     }
-    inline void setYAxisRange(uint16_t minimum, uint16_t maximum)
+    inline void setYAxisRange(int32_t minimum, int32_t maximum)
     {
         _yAxisMinimum = minimum;
         _yAxisMaximum = maximum;
     }
-    inline void setZAxisRange(uint16_t minimum, uint16_t maximum)
+    inline void setZAxisRange(int32_t minimum, int32_t maximum)
     {
         _zAxisMinimum = minimum;
         _zAxisMaximum = maximum;
     }
-    inline void setRxAxisRange(uint16_t minimum, uint16_t maximum)
+    inline void setRxAxisRange(int32_t minimum, int32_t maximum)
     {
         _rxAxisMinimum = minimum;
         _rxAxisMaximum = maximum;
     }
-    inline void setRyAxisRange(uint16_t minimum, uint16_t maximum)
+    inline void setRyAxisRange(int32_t minimum, int32_t maximum)
     {
         _ryAxisMinimum = minimum;
         _ryAxisMaximum = maximum;
     }
-    inline void setRzAxisRange(uint16_t minimum, uint16_t maximum)
+    inline void setRzAxisRange(int32_t minimum, int32_t maximum)
     {
         _rzAxisMinimum = minimum;
         _rzAxisMaximum = maximum;
@@ -191,12 +191,12 @@ public:
     }
 
     // Set Axis Values
-    void setXAxis(uint16_t value);
-    void setYAxis(uint16_t value);
-    void setZAxis(uint16_t value);
-    void setRxAxis(uint16_t value);
-    void setRyAxis(uint16_t value);
-    void setRzAxis(uint16_t value);
+    void setXAxis(int32_t value);
+    void setYAxis(int32_t value);
+    void setZAxis(int32_t value);
+    void setRxAxis(int32_t value);
+    void setRyAxis(int32_t value);
+    void setRzAxis(int32_t value);
 
     // Set Simulation Values
     void setRudder(uint16_t value);

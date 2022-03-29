@@ -519,33 +519,33 @@ void Joystick_::releaseButton(uint8_t button)
 	if (_autoSendState) sendState();
 }
 
-void Joystick_::setXAxis(uint16_t value)
+void Joystick_::setXAxis(int32_t value)
 {
 	_xAxis = value;
 	if (_autoSendState) sendState();
 }
-void Joystick_::setYAxis(uint16_t value)
+void Joystick_::setYAxis(int32_t value)
 {
 	_yAxis = value;
 	if (_autoSendState) sendState();
 }
-void Joystick_::setZAxis(uint16_t value)
+void Joystick_::setZAxis(int32_t value)
 {
 	_zAxis = value;
 	if (_autoSendState) sendState();
 }
 
-void Joystick_::setRxAxis(uint16_t value)
+void Joystick_::setRxAxis(int32_t value)
 {
 	_xAxisRotation = value;
 	if (_autoSendState) sendState();
 }
-void Joystick_::setRyAxis(uint16_t value)
+void Joystick_::setRyAxis(int32_t value)
 {
 	_yAxisRotation = value;
 	if (_autoSendState) sendState();
 }
-void Joystick_::setRzAxis(uint16_t value)
+void Joystick_::setRzAxis(int32_t value)
 {
 	_zAxisRotation = value;
 	if (_autoSendState) sendState();
@@ -585,13 +585,13 @@ void Joystick_::setHatSwitch(int8_t hatSwitchIndex, uint16_t value)
 	if (_autoSendState) sendState();
 }
 
-int Joystick_::buildAndSet16BitValue(bool includeValue, uint16_t value, uint16_t valueMinimum, uint16_t valueMaximum, uint16_t actualMinimum, uint16_t actualMaximum, uint8_t dataLocation[]) 
+int Joystick_::buildAndSet16BitValue(bool includeValue, int32_t value, int32_t valueMinimum, int32_t valueMaximum, int32_t actualMinimum, int32_t actualMaximum, uint8_t dataLocation[]) 
 {
-	uint16_t convertedValue;
+	int32_t convertedValue;
 	uint8_t highByte;
 	uint8_t lowByte;
-	uint16_t realMinimum = min(valueMinimum, valueMaximum);
-	uint16_t realMaximum = max(valueMinimum, valueMaximum);
+	int32_t realMinimum = min(valueMinimum, valueMaximum);
+	int32_t realMaximum = max(valueMinimum, valueMaximum);
 
 	if (includeValue == false) return 0;
 
