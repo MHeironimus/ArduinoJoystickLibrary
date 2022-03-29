@@ -455,7 +455,7 @@ Joystick_::Joystick_(
 	_hidReportSize += (axisCount * 2);
 	_hidReportSize += (simulationCount * 2);
 	
-	// Initalize Joystick State
+	// Initialize Joystick State
 	_xAxis = 0;
 	_yAxis = 0;
 	_zAxis = 0;
@@ -551,27 +551,27 @@ void Joystick_::setRzAxis(int32_t value)
 	if (_autoSendState) sendState();
 }
 
-void Joystick_::setRudder(uint16_t value)
+void Joystick_::setRudder(int32_t value)
 {
 	_rudder = value;
 	if (_autoSendState) sendState();
 }
-void Joystick_::setThrottle(uint16_t value)
+void Joystick_::setThrottle(int32_t value)
 {
 	_throttle = value;
 	if (_autoSendState) sendState();
 }
-void Joystick_::setAccelerator(uint16_t value)
+void Joystick_::setAccelerator(int32_t value)
 {
 	_accelerator = value;
 	if (_autoSendState) sendState();
 }
-void Joystick_::setBrake(uint16_t value)
+void Joystick_::setBrake(int32_t value)
 {
 	_brake = value;
 	if (_autoSendState) sendState();
 }
-void Joystick_::setSteering(uint16_t value)
+void Joystick_::setSteering(int32_t value)
 {
 	_steering = value;
 	if (_autoSendState) sendState();
@@ -623,7 +623,7 @@ int Joystick_::buildAndSetAxisValue(bool includeAxis, int32_t axisValue, int32_t
 	return buildAndSet16BitValue(includeAxis, axisValue, axisMinimum, axisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM, dataLocation);
 }
 
-int Joystick_::buildAndSetSimulationValue(bool includeValue, uint16_t value, uint16_t valueMinimum, uint16_t valueMaximum, uint8_t dataLocation[]) 
+int Joystick_::buildAndSetSimulationValue(bool includeValue, int32_t value, int32_t valueMinimum, int32_t valueMaximum, uint8_t dataLocation[]) 
 {
 	return buildAndSet16BitValue(includeValue, value, valueMinimum, valueMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM, dataLocation);
 }
