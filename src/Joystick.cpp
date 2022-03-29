@@ -577,7 +577,7 @@ void Joystick_::setSteering(uint16_t value)
 	if (_autoSendState) sendState();
 }
 
-void Joystick_::setHatSwitch(int8_t hatSwitchIndex, uint16_t value)
+void Joystick_::setHatSwitch(int8_t hatSwitchIndex, int16_t value)
 {
 	if (hatSwitchIndex >= _hatSwitchCount) return;
 	

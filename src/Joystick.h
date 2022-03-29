@@ -209,7 +209,7 @@ public:
     void pressButton(uint8_t button);
     void releaseButton(uint8_t button);
 
-    void setHatSwitch(int8_t hatSwitch, uint16_t value);
+    void setHatSwitch(int8_t hatSwitch, int16_t value);
 
     void sendState();
 };
