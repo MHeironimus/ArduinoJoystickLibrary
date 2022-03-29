@@ -71,7 +71,7 @@ private:
     uint16_t   _accelerator;
     uint16_t   _brake;
     uint16_t   _steering;
-    uint16_t   _hatSwitchValues[JOYSTICK_HATSWITCH_COUNT_MAXIMUM];
+    int16_t    _hatSwitchValues[JOYSTICK_HATSWITCH_COUNT_MAXIMUM];
     uint8_t   *_buttonValues = NULL;
 
     // Joystick Settings
