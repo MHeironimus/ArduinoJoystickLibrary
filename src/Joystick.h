@@ -109,7 +109,7 @@ private:
 
 protected:
     int buildAndSet16BitValue(bool includeValue, int32_t value, int32_t valueMinimum, int32_t valueMaximum, int32_t actualMinimum, int32_t actualMaximum, uint8_t dataLocation[]);
-    int buildAndSetAxisValue(bool includeAxis, uint16_t axisValue, uint16_t axisMinimum, uint16_t axisMaximum, uint8_t dataLocation[]);
+    int buildAndSetAxisValue(bool includeAxis, int32_t axisValue, int32_t axisMinimum, int32_t axisMaximum, uint8_t dataLocation[];
     int buildAndSetSimulationValue(bool includeValue, uint16_t value, uint16_t valueMinimum, uint16_t valueMaximum, uint8_t dataLocation[]);
 
 public:

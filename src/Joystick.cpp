@@ -618,7 +618,7 @@ int Joystick_::buildAndSet16BitValue(bool includeValue, int32_t value, int32_t v
 	return 2;
 }
 
-int Joystick_::buildAndSetAxisValue(bool includeAxis, uint16_t axisValue, uint16_t axisMinimum, uint16_t axisMaximum, uint8_t dataLocation[]) 
+int Joystick_::buildAndSetAxisValue(bool includeAxis, int32_t axisValue, int32_t axisMinimum, int32_t axisMaximum, uint8_t dataLocation[]) 
 {
 	return buildAndSet16BitValue(includeAxis, axisValue, axisMinimum, axisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM, dataLocation);
 }
