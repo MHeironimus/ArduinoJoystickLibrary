@@ -1,8 +1,8 @@
 # Arduino Joystick Library
 
-#### Version 2.0.8
+#### Version 2.1.0
 
-This library can be used with Arduino IDE 1.6.6 (or above) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This library will also work with the [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue), thanks to [@Palakis](https://github.com/Palakis). A complete list of supported boards can be found in the [Wiki](https://github.com/MHeironimus/ArduinoJoystickLibrary/wiki/Supported-Boards). This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
+This library can be used with Arduino IDE 1.6.6 or above (see [Wiki - Testing Details](https://github.com/MHeironimus/ArduinoJoystickLibrary/wiki/Testing-Details) for more information) to add one or more joysticks (or gamepads) to the list of HID devices an [Arduino Leonardo](https://www.arduino.cc/en/Main/ArduinoBoardLeonardo) or [Arduino Micro](https://www.arduino.cc/en/Main/ArduinoBoardMicro) (or any Arduino clone that is based on the ATmega32u4) can support. This library will also work with the [Arduino Due](https://www.arduino.cc/en/Main/ArduinoBoardDue), thanks to [@Palakis](https://github.com/Palakis). A complete list of supported boards can be found in the [Wiki - Supported Boards](https://github.com/MHeironimus/ArduinoJoystickLibrary/wiki/Supported-Boards). This will not work with Arduino IDE 1.6.5 (or below) or with non-32u4 based Arduino devices (e.g. Arduino UNO, Arduino MEGA, etc.).
 
 ## Features
 
@@ -25,18 +25,6 @@ The following instructions can be used to install the latest version of the libr
 2. In the Arduino IDE, select `Sketch` > `Include Library` > `Add .ZIP Library...`.  Browse to where the downloaded ZIP file is located and click `Open`. The Joystick library's examples will now appear under `File` > `Examples` > `Joystick`.
 
 ## Examples
-
-The following example Arduino sketch files are included in this library:
-
-- `JoystickTest` - Simple test of the Joystick library. It exercises many of the Joystick library’s functions when pin A0 is grounded.
-- `MultipleJoystickTest` - Creates 4 Joysticks using the library and exercises the first 16 buttons, the X axis, and the Y axis of each joystick when pin A0 is grounded.
-- `JoystickButton` - Creates a Joystick and maps pin 9 to button 0 of the joystick, pin 10 to button 1, pin 11 to button 2, and pin 12 to button 3.
-- `JoystickKeyboard` - Creates a Joystick and a Keyboard. Maps pin 9 to Joystick Button 0, pin 10 to Joystick Button 1, pin 11 to Keyboard key 1, and pin 12 to Keyboard key 2.
-- `GamepadExample` - Creates a simple Gamepad with an Up, Down, Left, Right, and Fire button.
-- `DrivingControllerTest` - Creates a Driving Controller and tests 4 buttons, the Steering, Brake, and Accelerator when pin A0 is grounded.
-- `FlightControllerTest` - Creates a Flight Controller and tests 32 buttons, the X and Y axis, the Throttle, and the Rudder when pin A0 is grounded.
-- `HatSwitchTest` - Creates a joystick with two hat switches. Grounding pins 4 - 11 cause the hat switches to change position.
-- `ArcadeStickExample` - Simple arcade stick example that demonstrates how to read twelve Arduino Pro Micro digital pins and map them to the library (thanks to [@nebhead](https://github.com/nebhead) for this example). NOTE: This sketch is for the Arduino Pro Micro only.
 
 ### Simple example
 
@@ -73,6 +61,25 @@ void loop() {
 	delay(50);
 }
 ```
+
+### Included Examples
+
+The following example Arduino sketch files are included in this library:
+
+#### Simple Samples
+
+- `JoystickButton` - Creates a Joystick and maps pin 9 to button 0 of the joystick, pin 10 to button 1, pin 11 to button 2, and pin 12 to button 3.
+- `JoystickKeyboard` - Creates a Joystick and a Keyboard. Maps pin 9 to Joystick Button 0, pin 10 to Joystick Button 1, pin 11 to Keyboard key 1, and pin 12 to Keyboard key 2.
+- `GamepadExample` - Creates a simple Gamepad with an Up, Down, Left, Right, and Fire button.
+- `ArcadeStickExample` - Simple arcade stick example that demonstrates how to read twelve Arduino Pro Micro digital pins and map them to the library (thanks to [@nebhead](https://github.com/nebhead) for this example). NOTE: This sketch is for the Arduino Pro Micro only.
+
+#### Used for Testing
+
+- `JoystickTest` - Simple test of the Joystick library. It exercises many of the Joystick library’s functions when pin A0 is grounded.
+- `MultipleJoystickTest` - Creates 4 Joysticks using the library (each with a slightly different configuration) and exercises the first 16 buttons (if present), the X axis, and the Y axis of each joystick when pin A0 is grounded.
+- `FlightControllerTest` - Creates a Flight Controller and tests 32 buttons, the X and Y axis, the Throttle, and the Rudder when pin A0 is grounded.
+- `HatSwitchTest` - Creates a joystick with two hat switches. Grounding pins 4 - 11 cause the hat switches to change position.
+- `DrivingControllerTest` - Creates a Driving Controller and tests 4 buttons, the Steering, Brake, and Accelerator when pin A0 is grounded.
 
 ## Joystick Library API
 
@@ -113,93 +120,93 @@ Starts emulating a game controller connected to a computer. By default, all meth
 
 ### Joystick.end()
 
-Stops the game controller emulation to a connected computer.
+Stops the game controller emulation to a connected computer (Note: just like the Arduino `Keyboard.h` and `Mouse.h` libraries, the `end()` function does not actually do anything).
 
-### Joystick.setXAxisRange(int16_t minimum, int16_t maximum)
+### Joystick.setXAxisRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the X axis. Default: `0` to `1023`
 
-### Joystick.setXAxis(int16_t value)
+### Joystick.setXAxis(int32_t value)
 
 Sets the X axis value. See `setXAxisRange` for the range.
 
-### Joystick.setYAxisRange(int16_t minimum, int16_t maximum)
+### Joystick.setYAxisRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the Y axis. Default: `0` to `1023`
 
-### Joystick.setYAxis(int16_t value)
+### Joystick.setYAxis(int32_t value)
 
 Sets the Y axis value. See `setYAxisRange` for the range.
 
-### Joystick.setZAxisRange(int16_t minimum, int16_t maximum)
+### Joystick.setZAxisRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the Z axis. Default: `0` to `1023`
 
-### Joystick.setZAxis(int16_t value)
+### Joystick.setZAxis(int32_t value)
 
 Sets the Z axis value. See `setZAxisRange` for the range.
 
-### Joystick.setRxAxisRange(int16_t minimum, int16_t maximum)
+### Joystick.setRxAxisRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the X axis rotation. Default: `0` to `1023`
 
-### Joystick.setRxAxis(int16_t value)
+### Joystick.setRxAxis(int32_t value)
 
 Sets the X axis rotation value. See `setRxAxisRange` for the range.
 
-### Joystick.setRyAxisRange(int16_t minimum, int16_t maximum)
+### Joystick.setRyAxisRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the Y axis rotation. Default: `0` to `1023`
 
-### Joystick.setRyAxis(int16_t value)
+### Joystick.setRyAxis(int32_t value)
 
 Sets the Y axis rotation value. See `setRyAxisRange` for the range.
 
-### Joystick.setRzAxisRange(int16_t minimum, int16_t maximum)
+### Joystick.setRzAxisRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the Z axis rotation. Default: `0` to `1023`
 
-### Joystick.setRzAxis(int16_t value)
+### Joystick.setRzAxis(int32_t value)
 
 Sets the Z axis rotation value. See `setRzAxisRange` for the range.
 
-### Joystick.setRudderRange(int16_t minimum, int16_t maximum)
+### Joystick.setRudderRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the Rudder. Default: `0` to `1023`
 
-### Joystick.setRudder(int16_t value)
+### Joystick.setRudder(int32_t value)
 
 Sets the Rudder value. See `setRudderRange` for the range.
 
-### Joystick.setThrottleRange(int16_t minimum, int16_t maximum)
+### Joystick.setThrottleRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the Throttle. Default: `0` to `1023`
 
-### Joystick.setThrottle(int16_t value)
+### Joystick.setThrottle(int32_t value)
 
 Sets the Throttle value. See `setThrottleRange` for the range.
 
-### Joystick.setAcceleratorRange(int16_t minimum, int16_t maximum)
+### Joystick.setAcceleratorRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the Accelerator. Default: `0` to `1023`
 
-### Joystick.setAccelerator(int16_t value)
+### Joystick.setAccelerator(int32_t value)
 
 Sets the Accelerator value. See `setAcceleratorRange` for the range.
 
-### Joystick.setBrakeRange(int16_t minimum, int16_t maximum)
+### Joystick.setBrakeRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the Brake. Default: `0` to `1023`
 
-### Joystick.setBrake(int16_t value)
+### Joystick.setBrake(int32_t value)
 
 Sets the Brake value. See `setBrakeRange` for the range.
 
-### Joystick.setSteeringRange(int16_t minimum, int16_t maximum)
+### Joystick.setSteeringRange(int32_t minimum, int32_t maximum)
 
 Sets the range of values that will be used for the Steering. Default: `0` to `1023`
 
-### Joystick.setSteering(int16_t value)
+### Joystick.setSteering(int32_t value)
 
 Sets the Steering value. See `setSteeringRange` for the range.
 

@@ -8,6 +8,8 @@
 //              above.
 // 2016-05-13   Updated to use new dynamic Joystick library
 //              that can be customized.
+// 2022-03-29   Updated to work with version 2.1.0 of the
+//              Joystick library.
 //------------------------------------------------------------
 
 #include "Joystick.h"
@@ -105,18 +107,22 @@ void testXYAxis(unsigned int currentStep)
 
 void testZAxis(unsigned int currentStep)
 {
+  int z;
+
   if (currentStep < 128)
   {
-    Joystick.setZAxis(-currentStep);
+    z = -currentStep;
   } 
   else if (currentStep < 256 + 128)
   {
-    Joystick.setZAxis(currentStep - 128 - 127);
+    z = currentStep - 128 - 127;
   } 
   else if (currentStep < 256 + 128 + 127)
   {
-    Joystick.setZAxis(127 - (currentStep - 383));
+    z = 127 - (currentStep - 383);
   } 
+  
+  Joystick.setZAxis(z);
 }
 
 void testHatSwitch(unsigned int currentStep)

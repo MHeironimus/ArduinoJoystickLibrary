@@ -5,17 +5,18 @@
 // Each joystick has a unique configuration.
 //
 // Matthew Heironimus
-// 2016-05-13
+// 2016-05-13 - Original Version
+// 2022-03-29 - Updated to work with Joystick Library v2.1.0
 //------------------------------------------------------------
 #include <Joystick.h>
 
 #define JOYSTICK_COUNT 4
 
 Joystick_ Joystick[JOYSTICK_COUNT] = {
-  Joystick_(0x03, JOYSTICK_TYPE_GAMEPAD, 4, 2, true, true, false, false, false, false, false, false, false, false, false),
-  Joystick_(0x04, JOYSTICK_TYPE_JOYSTICK, 8, 1, true, true, true, true, false, false, false, false, false, false, false),
-  Joystick_(0x05, JOYSTICK_TYPE_MULTI_AXIS, 16, 0, false, true, false, true, false, false, true, true, false, false, false),
-  Joystick_(0x06, JOYSTICK_TYPE_MULTI_AXIS, 32, 1, true, true, false, true, true, false, false, false, true, true, true)
+  Joystick_(0x03, JOYSTICK_TYPE_JOYSTICK,  4, 2,  true, true, false, false, false, false, false, false, false, false, false),
+  Joystick_(0x04, JOYSTICK_TYPE_JOYSTICK,  8, 1,  true, true,  true,  true, false, false, false, false, false, false, false),
+  Joystick_(0x05, JOYSTICK_TYPE_JOYSTICK, 16, 0, false, true, false,  true, false, false,  true,  true, false, false, false),
+  Joystick_(0x06, JOYSTICK_TYPE_JOYSTICK, 32, 1,  true, true, false,  true,  true, false, false, false, false, false, false)
 };
 
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.
@@ -74,28 +75,37 @@ void testMultiButtonPush(int joystickId, unsigned int currentStep)
 
 void testXYAxis(int joystickId, unsigned int currentStep)
 {
+  int x;
+  int y;
+
   if (currentStep < 255)
   {
-    Joystick[joystickId].setXAxis(currentStep - 127);
-    Joystick[joystickId].setYAxis(-127);
+    x = currentStep - 127;
+    y = -127;
   } 
   else if (currentStep < 510)
   {
-    Joystick[joystickId].setYAxis(currentStep - 255 - 127);
+    x = 127;
+    y = currentStep - 255 - 127;
   }
   else if (currentStep < 765)
   {
-    Joystick[joystickId].setXAxis(127 - (currentStep - 510));
+    x = 127 - (currentStep - 510);
+    y = 127;
   }
   else if (currentStep < 1020)
   {
-    Joystick[joystickId].setYAxis(127 - (currentStep - 765));
+    x = -127;
+    y = 127 - (currentStep - 765);
   }
   else if (currentStep <= 1020 + 127)
   {
-    Joystick[joystickId].setXAxis(currentStep - 1020 - 127);
-    Joystick[joystickId].setYAxis(currentStep - 1020 - 127);
+    x = currentStep - 1020 - 127;
+    y = currentStep - 1020 - 127;
   }
+
+  Joystick[joystickId].setXAxis(x);
+  Joystick[joystickId].setYAxis(y);
 }
 
 void setup() {
