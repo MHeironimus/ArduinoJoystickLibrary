@@ -1,3 +1,6 @@
+// Based on code from : https://github.com/Dak0r/Chinese-SimRacing-14Bit-Handbrake-Custom-Firmware-Arduino-Sketch
+// Using : https://github.com/MHeironimus/ArduinoJoystickLibrary
+
 #define DEBUG 0 // uncomment for debug output
 
 #define AXIS_RESOLUTION   256 //8 Bits axis resolution
