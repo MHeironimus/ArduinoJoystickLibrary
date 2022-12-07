@@ -51,6 +51,8 @@
 #define JOYSTICK_DEFAULT_HATSWITCH_COUNT      2
 #define JOYSTICK_HATSWITCH_COUNT_MAXIMUM      2
 #define JOYSTICK_HATSWITCH_RELEASE           -1
+#define JOYSTICK_DEFAULT_THROTTLE_COUNT       1
+#define JOYSTICK_THROTTLE_COUNT_MAXIMUM       2
 #define JOYSTICK_TYPE_JOYSTICK             0x04
 #define JOYSTICK_TYPE_GAMEPAD              0x05
 #define JOYSTICK_TYPE_MULTI_AXIS           0x08
@@ -66,7 +68,7 @@ private:
     int32_t   _xAxisRotation;
     int32_t   _yAxisRotation;
     int32_t   _zAxisRotation;
-    int32_t   _throttle;
+    int32_t   _throttle[JOYSTICK_THROTTLE_COUNT_MAXIMUM];
     int32_t   _rudder;
     int32_t   _accelerator;
     int32_t   _brake;
@@ -79,6 +81,7 @@ private:
     uint8_t  _buttonCount;
     uint8_t  _buttonValuesArraySize = 0;
     uint8_t  _hatSwitchCount;
+    uint8_t  _throttleCount;
     uint8_t  _includeAxisFlags;
     uint8_t  _includeSimulatorFlags;
     int32_t  _xAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
@@ -118,6 +121,7 @@ public:
         uint8_t joystickType = JOYSTICK_TYPE_JOYSTICK,
         uint8_t buttonCount = JOYSTICK_DEFAULT_BUTTON_COUNT,
         uint8_t hatSwitchCount = JOYSTICK_DEFAULT_HATSWITCH_COUNT,
+        uint8_t throttleCount = JOYSTICK_DEFAULT_THROTTLE_COUNT,
         bool includeXAxis = true,
         bool includeYAxis = true,
         bool includeZAxis = true,
@@ -125,7 +129,7 @@ public:
         bool includeRyAxis = true,
         bool includeRzAxis = true,
         bool includeRudder = true,
-        bool includeThrottle = true,
+        //bool includeThrottle = true,
         bool includeAccelerator = true,
         bool includeBrake = true,
         bool includeSteering = true);
@@ -200,7 +204,7 @@ public:
 
     // Set Simulation Values
     void setRudder(int32_t value);
-    void setThrottle(int32_t value);
+    void setThrottle(int8_t throttle, int32_t value);
     void setAccelerator(int32_t value);
     void setBrake(int32_t value);
     void setSteering(int32_t value);

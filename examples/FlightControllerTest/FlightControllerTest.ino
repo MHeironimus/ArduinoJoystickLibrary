@@ -8,10 +8,12 @@
 
 #include "Joystick.h"
 
-Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID, 
-  JOYSTICK_TYPE_MULTI_AXIS, 32, 0,
-  true, true, false, false, false, false,
-  true, true, false, false, false);
+Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,JOYSTICK_TYPE_MULTI_AXIS,
+  32, 0, 1,              // Button Count, Hat Switch Count, Throttle Count
+  true, true, false,     // X and Y, but no Z Axis
+  false, false, false,   // No Rx, Ry, or Rz
+  true,                  // rudder 
+  false, false, false);  // No accelerator, brake, or steering
 
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.
 //const bool testAutoSendMode = true;
@@ -103,7 +105,7 @@ void testXYAxis(unsigned int currentStep)
 
 void testThrottleRudder(unsigned int value)
 {
-  Joystick.setThrottle(value);
+  Joystick.setThrottle(0, value);
   Joystick.setRudder(255 - value);
 }
 
