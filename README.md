@@ -97,6 +97,7 @@ Constructor used to initialize and setup the Joystick. The following optional pa
   - `JOYSTICK_TYPE_MULTI_AXIS` or `0x08` - Multi-axis Controller 
 - `uint8_t buttonCount` - Default: `32` - Indicates how many buttons will be available on the joystick.
 - `uint8_t hatSwitchCount` - Default: `2` - Indicates how many hat switches will be available on the joystick. Range: `0` - `2`
+- `uint8_t throttleCount` - Default: `1` - Indicates how many hat throttles will be available on the joystick. Range: `0` - `2`
 - `bool includeXAxis` - Default: `true` - Indicates if the X Axis is available on the joystick.
 - `bool includeYAxis` - Default: `true` - Indicates if the Y Axis is available on the joystick.
 - `bool includeZAxis` - Default: `true` - Indicates if the Z Axis (in some situations this is the right X Axis) is available on the joystick.
@@ -104,7 +105,6 @@ Constructor used to initialize and setup the Joystick. The following optional pa
 - `bool includeRyAxis` - Default: `true` - Indicates if the Y Axis Rotation is available on the joystick.
 - `bool includeRzAxis` - Default: `true` - Indicates if the Z Axis Rotation is available on the joystick.
 - `bool includeRudder` - Default: `true` - Indicates if the Rudder is available on the joystick.
-- `bool includeThrottle` - Default: `true` - Indicates if the Throttle is available on the joystick.
 - `bool includeAccelerator` - Default: `true` - Indicates if the Accelerator is available on the joystick.
 - `bool includeBrake` - Default: `true` - Indicates if the Brake is available on the joystick.
 - `bool includeSteering` - Default: `true` - Indicates if the Steering is available on the joystick.
@@ -114,6 +114,7 @@ The following constants define the default values for the constructor parameters
 - `JOYSTICK_DEFAULT_REPORT_ID` is set to `0x03`
 - `JOYSTICK_DEFAULT_BUTTON_COUNT` is set to `32`
 - `JOYSTICK_DEFAULT_HATSWITCH_COUNT` is set to `2`
+- `JOYSTICK_DEFAULT_THROTTLE_COUNT` is set to `1`
 
 ### Joystick.begin(bool initAutoSendState)
 
@@ -183,9 +184,9 @@ Sets the Rudder value. See `setRudderRange` for the range.
 
 Sets the range of values that will be used for the Throttle. Default: `0` to `1023`
 
-### Joystick.setThrottle(int32_t value)
+### Joystick.setThrottle(int8_t throttle, int32_t value)
 
-Sets the Throttle value. See `setThrottleRange` for the range.
+Sets the value of the specified throttle. See `setThrottleRange` for the range.
 
 ### Joystick.setAcceleratorRange(int32_t minimum, int32_t maximum)
 
