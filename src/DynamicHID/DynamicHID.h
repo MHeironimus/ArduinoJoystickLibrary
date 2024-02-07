@@ -191,6 +191,7 @@ public:
   int begin(void);
   int SendReport(uint8_t id, const void* data, int len);
   void AppendDescriptor(DynamicHIDSubDescriptor* node);
+  void setShortName(char* name);
 
 protected:
   // Implementation of the PluggableUSBModule
@@ -207,6 +208,7 @@ private:
 
   uint8_t protocol;
   uint8_t idle;
+  char serialname[ISERIAL_MAX_LEN];
 };
 
 // Replacement for global singleton.

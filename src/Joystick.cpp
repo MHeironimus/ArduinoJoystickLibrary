@@ -438,6 +438,9 @@ Joystick_::Joystick_(
 	
 	// Register HID Report Description
 	DynamicHIDSubDescriptor *node = new DynamicHIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize, false);
+	char name[] = "JOYSTICK_0";
+	name[strlen(name)-1] = '0' + (hidReportId-2);
+	DynamicHID().setShortName(name);
 	DynamicHID().AppendDescriptor(node);
 	
     // Setup Joystick State
