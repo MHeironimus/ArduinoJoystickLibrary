@@ -4,7 +4,7 @@
 
 * **Check to see if the bug has already reported** by searching on GitHub under [Issues](https://github.com/MHeironimus/ArduinoJoystickLibrary/issues).
 
-* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/MHeironimus/ArduinoJoystickLibrary/issues/new). Be sure to include a **title and clear description**, as much relevant information as possible (e.g. host OS, Arduino IDE version, etc.), any important hardware information (e.g. name of Arduino board being used, specific pin wirings if they are relavant, etc.), and a **sample sketch** file demonstrating the issue.
+* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/MHeironimus/ArduinoJoystickLibrary/issues/new). Be sure to include a **title and clear description**, as much relevant information as possible (e.g. host OS, Arduino IDE version, etc.), any important hardware information (e.g. name of Arduino board being used, specific pin wirings if they are relevant, etc.), and a **sample sketch** file demonstrating the issue.
 
 ### Fix a bug
 
