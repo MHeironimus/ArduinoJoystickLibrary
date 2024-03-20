@@ -55,6 +55,21 @@
 #define JOYSTICK_TYPE_GAMEPAD              0x05
 #define JOYSTICK_TYPE_MULTI_AXIS           0x08
 
+#define JOYSTICK_INCLUDE_X_AXIS  B00000001
+#define JOYSTICK_INCLUDE_Y_AXIS  B00000010
+#define JOYSTICK_INCLUDE_Z_AXIS  B00000100
+#define JOYSTICK_INCLUDE_RX_AXIS B00001000
+#define JOYSTICK_INCLUDE_RY_AXIS B00010000
+#define JOYSTICK_INCLUDE_RZ_AXIS B00100000
+
+#define JOYSTICK_INCLUDE_RUDDER      B00000001
+#define JOYSTICK_INCLUDE_THROTTLE    B00000010
+#define JOYSTICK_INCLUDE_ACCELERATOR B00000100
+#define JOYSTICK_INCLUDE_BRAKE       B00001000
+#define JOYSTICK_INCLUDE_STEERING    B00010000
+
+#define JOYSTICK_INCLUDE_NONE 0
+
 class Joystick_
 {
 private:
@@ -118,17 +133,8 @@ public:
         uint8_t joystickType = JOYSTICK_TYPE_JOYSTICK,
         uint8_t buttonCount = JOYSTICK_DEFAULT_BUTTON_COUNT,
         uint8_t hatSwitchCount = JOYSTICK_DEFAULT_HATSWITCH_COUNT,
-        bool includeXAxis = true,
-        bool includeYAxis = true,
-        bool includeZAxis = true,
-        bool includeRxAxis = true,
-        bool includeRyAxis = true,
-        bool includeRzAxis = true,
-        bool includeRudder = true,
-        bool includeThrottle = true,
-        bool includeAccelerator = true,
-        bool includeBrake = true,
-        bool includeSteering = true);
+        uint8_t includeAxisFlags = 255,
+        uint8_t includeSimulatorFlags = 255);
 
     void begin(bool initAutoSendState = true);
     void end();
