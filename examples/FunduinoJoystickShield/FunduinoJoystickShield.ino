@@ -1,11 +1,15 @@
 #include <Joystick.h>
 
 const uint8_t buttonCount = 7;
-Joystick_ controller(JOYSTICK_DEFAULT_REPORT_ID, JOYSTICK_TYPE_GAMEPAD, buttonCount,
-                     0, true, true, false,
-                     false, false, false,
-                     false, false, false,
-                     false, false);
+
+Joystick_ controller(JOYSTICK_DEFAULT_REPORT_ID,JOYSTICK_TYPE_GAMEPAD,
+  buttonCount, 0, 0,     // Button Count, Hat Switch Count, Throttle Count
+  true, true, false,     // X and Y, but no Z Axis
+  false, false, false,   // No Rx, Ry, or Rz
+  false,                 // rudder 
+  false, false, false);  // No accelerator, brake, or steering
+
+
 
 int const BTN_A_PIN = 2;
 int const BTN_B_PIN = 3;

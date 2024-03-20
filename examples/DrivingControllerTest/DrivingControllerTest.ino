@@ -13,6 +13,13 @@ Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,
   false, false, false, false, false, false,
   false, false, true, true, true);
 
+Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,JOYSTICK_TYPE_MULTI_AXIS,
+  4, 0, 0,               // Button Count, Hat Switch Count, Throttle Count
+  false, false, false,   // X and Y, but no Z Axis
+  false, false, false,   // No Rx, Ry, or Rz
+  false,                 // No rudder
+  true, true, true);     // No accelerator, brake, or steering
+
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.
 //const bool testAutoSendMode = true;
 const bool testAutoSendMode = false;
