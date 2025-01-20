@@ -1,9 +1,7 @@
 // Program used to test the USB Joystick object on the 
-// Arduino Leonardo or Arduino Micro.
+// Arduino Leonardo, Arduino Micro, or Arduino UNO R4.
 //
 // Matthew Heironimus
-// 2015-03-28
-// Updated on 2015-11-18 to use the new Joystick library written for version 1.6.6.
 //------------------------------------------------------------
 
 #include "Joystick.h"

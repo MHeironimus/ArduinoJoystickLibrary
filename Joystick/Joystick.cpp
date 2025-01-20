@@ -1,7 +1,7 @@
 /*
   Joystick.cpp
 
-  Copyright (c) 2015, Matthew Heironimus
+  Copyright (c) 2015-2025 Matthew Heironimus
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -104,7 +104,7 @@ Joystick_::Joystick_()
 	static HIDSubDescriptor node(_hidReportDescriptor, sizeof(_hidReportDescriptor));
 	HID().AppendDescriptor(&node);
 	
-	// Initalize State
+	// Initialize State
 	xAxis = 0;
 	yAxis = 0;
 	zAxis = 0;
@@ -120,7 +120,15 @@ Joystick_::Joystick_()
 
 void Joystick_::begin(bool initAutoSendState)
 {
-	autoSendState = initAutoSendState;
+  autoSendState = initAutoSendState;
+
+  #if defined(ARDUINO_UNOR4_WIFI) || defined(ARDUINO_UNOR4_MINIMA)
+  // Delay added for the UNO R4 boards. Not sure why this delay is required, 
+  // but the library will sometimes hang on the first call to sendState
+  // without it.
+  delay(2000);
+  #endif
+  
 	sendState();
 }
 
