@@ -1,7 +1,7 @@
 /*
   Joystick2.h
 
-  Copyright (c) 2015, Matthew Heironimus
+  Copyright (c) 2015-2025 Matthew Heironimus
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -21,51 +21,46 @@
 #ifndef JOYSTICK_h
 #define JOYSTICK_h
 
+#if ARDUINO <= 10606
+#error The Joystick library requires Arduino IDE 1.6.7 or greater. Please update your IDE.
+#endif
+
 #include "HID.h"
 
-#if ARDUINO < 10606
-#error The Joystick2 library requires Arduino IDE 1.6.6 or greater. Please update your IDE.
-#endif
-
-#if ARDUINO > 10606
-#if !defined(USBCON)
-#error The Joystick2 library can only be used with a USB MCU (e.g. Arduino Leonardo, Arduino Micro, etc.).
-#endif
+#if !(defined(USBCON) || defined(ARDUINO_UNOR4_WIFI) || defined(ARDUINO_UNOR4_MINIMA))
+#error The Joystick library can only be used with a USB MCU (e.g. Arduino Leonardo, Arduino Micro, Arduino UNO R4, etc.).
 #endif
 
 #if !defined(_USING_HID)
-
 #warning "Using legacy HID core (non pluggable)"
-
 #else
 
-//================================================================================
 //================================================================================
 //  Joystick (Gamepad)
 
 class Joystick_
 {
 private:
-	uint8_t  joystickId;
-	bool     autoSendState;
-	int8_t	 xAxis;
-	int8_t	 yAxis;
-	uint16_t buttons;
+  uint8_t  joystickId;
+  bool     autoSendState;
+  int8_t   xAxis;
+  int8_t   yAxis;
+  uint16_t buttons;
 
 public:
-	Joystick_(uint8_t initJoystickId);
+  Joystick_(uint8_t initJoystickId);
 
-	void begin(bool initAutoSendState = true);
-	void end();
+  void begin(bool initAutoSendState = true);
+  void end();
 
-	void setXAxis(int8_t value);
-	void setYAxis(int8_t value);
+  void setXAxis(int8_t value);
+  void setYAxis(int8_t value);
 
-	void setButton(uint8_t button, uint8_t value);
-	void pressButton(uint8_t button);
-	void releaseButton(uint8_t button);
+  void setButton(uint8_t button, uint8_t value);
+  void pressButton(uint8_t button);
+  void releaseButton(uint8_t button);
 
-	void sendState();
+  void sendState();
 };
 extern Joystick_ Joystick[2];
 

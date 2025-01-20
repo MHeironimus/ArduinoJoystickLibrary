@@ -1,9 +1,10 @@
 // Program used to test the Tri Simple USB Joystick object 
-// on the Arduino Leonardo or Arduino Micro.
+// on the Arduino Leonardo, Arduino Micro, or
+// Arduino UNO R4.
 //
 // Matthew Heironimus
-// 2015-04-24
 //------------------------------------------------------------
+
 #include <Joystick3.h>
 
 // Set to true to test "Auto Send" mode or false to test "Manual Send" mode.
@@ -153,4 +154,3 @@ void loop() {
     }
   }
 }
-

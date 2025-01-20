@@ -1,8 +1,8 @@
 // Program used to test the Dual Simple USB Joystick object 
-// on the Arduino Leonardo or Arduino Micro.
+// on the Arduino Leonardo, Arduino Micro, or
+// Arduino UNO R4.
 //
 // Matthew Heironimus
-// 2015-04-05
 //------------------------------------------------------------
 
 #include "Joystick2.h"
@@ -149,4 +149,3 @@ void loop() {
     }
   }
 }
-
