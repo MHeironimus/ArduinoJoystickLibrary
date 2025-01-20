@@ -3,11 +3,10 @@
 //
 // The digital pins 9, 10, 11, and 12 are grounded when they are pressed.
 //
-// NOTE: This sketch file is for use with Arduino Leonardo and
-//       Arduino Micro only.
+// NOTE: This sketch file is for use with the Arduino Leonardo,
+//       Arduino Micro, or Arduino UNO R4.
 //
 // by Matthew Heironimus
-// 2015-11-20
 //--------------------------------------------------------------------
 
 #include <Joystick.h>
@@ -23,7 +22,7 @@ void setup() {
   Joystick.begin();
 }
 
-// Constant that maps the phyical pin to the joystick button.
+// Constant that maps the phyiscal pin to the joystick button.
 const int pinToButtonMap = 9;
 
 // Last state of the button
