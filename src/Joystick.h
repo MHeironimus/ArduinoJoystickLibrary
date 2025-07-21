@@ -21,23 +21,29 @@
 #ifndef JOYSTICK_h
 #define JOYSTICK_h
 
-#include "DynamicHID/DynamicHID.h"
+#include <Arduino.h>
+
+#if defined(ARDUINO_SAMD_VARIANT_COMPLIANCE) || defined(ARDUINO_ARCH_RENESAS)
+  #include <HID.h>
+#else
+  #include <DynamicHID/DynamicHID.h>
+#endif // defined(ARDUINO_SAMD_VARIANT_COMPLIANCE) || defined(ARDUINO_ARCH_RENESAS)
 
 #if ARDUINO < 10606
 #error The Joystick library requires Arduino IDE 1.6.6 or greater. Please update your IDE.
 #endif // ARDUINO < 10606
 
 #if ARDUINO > 10606
-#if !defined(USBCON)
-#error The Joystick library can only be used with a USB MCU (e.g. Arduino Leonardo, Arduino Micro, etc.).
-#endif // !defined(USBCON)
+  #if !defined(USBCON) && !defined(_USING_HID)
+    #error The Joystick library can only be used with a USB MCU (e.g. Arduino Leonardo, Arduino Micro, etc.).
+  #endif // !defined(USBCON)
 #endif // ARDUINO > 10606
 
-#if !defined(_USING_DYNAMIC_HID)
+#if !defined(_USING_DYNAMIC_HID) && !defined(_USING_HID)
 
 #warning "Using legacy HID core (non pluggable)"
 
-#else // !defined(_USING_DYNAMIC_HID)
+#else // !defined(_USING_DYNAMIC_HID) && !defined(_USING_HID)
 
 //================================================================================
 //  Joystick (Gamepad)
@@ -214,5 +220,6 @@ public:
     void sendState();
 };
 
-#endif // !defined(_USING_DYNAMIC_HID)
+#endif // !defined(_USING_DYNAMIC_HID) && !defined(_USING_HID)
+
 #endif // JOYSTICK_h

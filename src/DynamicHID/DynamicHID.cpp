@@ -21,6 +21,8 @@
 
 #include "DynamicHID.h"
 
+#if !defined(ARDUINO_SAMD_VARIANT_COMPLIANCE)
+
 #if defined(USBCON)
 
 #ifdef _VARIANT_ARDUINO_DUE_X_
@@ -70,14 +72,23 @@ int DynamicHID_::getDescriptor(USBSetup& setup)
 	return total;
 }
 
+void DynamicHID_::setShortName(char* name) {
+  strlcpy(serialname, name, ISERIAL_MAX_LEN);
+}
+
 uint8_t DynamicHID_::getShortName(char *name)
 {
+	// Up to 20 char (null char included)
+	// Example from Arduino:
+	/*
 	name[0] = 'H';
 	name[1] = 'I';
 	name[2] = 'D';
 	name[3] = 'A' + (descriptorSize & 0x0F);
 	name[4] = 'A' + ((descriptorSize >> 4) & 0x0F);
-	return 5;
+	*/
+    int len = strlcpy(name, serialname, ISERIAL_MAX_LEN);
+	return len;
 }
 
 void DynamicHID_::AppendDescriptor(DynamicHIDSubDescriptor *node)
@@ -163,7 +174,15 @@ DynamicHID_::DynamicHID_(void) : PluggableUSBModule(1, 1, epType),
 
 int DynamicHID_::begin(void)
 {
+	serialname[0] = 'H';
+	serialname[1] = 'I';
+	serialname[2] = 'D';
+	serialname[3] = 'A' + (descriptorSize & 0x0F);
+	serialname[4] = 'A' + ((descriptorSize >> 4) & 0x0F);
+	serialname[5] = '\0';
 	return 0;
 }
 
 #endif /* if defined(USBCON) */
+
+#endif // !defined(!defined(ARDUINO_SAMD_VARIANT_COMPLIANCE))

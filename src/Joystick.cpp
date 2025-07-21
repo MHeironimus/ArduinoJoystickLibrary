@@ -20,7 +20,7 @@
 
 #include "Joystick.h"
 
-#if defined(_USING_DYNAMIC_HID)
+#if defined(_USING_DYNAMIC_HID) || defined(_USING_HID)
 
 #define JOYSTICK_REPORT_ID_INDEX 7
 #define JOYSTICK_AXIS_MINIMUM 0
@@ -28,18 +28,18 @@
 #define JOYSTICK_SIMULATOR_MINIMUM 0
 #define JOYSTICK_SIMULATOR_MAXIMUM 65535
 
-#define JOYSTICK_INCLUDE_X_AXIS  B00000001
-#define JOYSTICK_INCLUDE_Y_AXIS  B00000010
-#define JOYSTICK_INCLUDE_Z_AXIS  B00000100
-#define JOYSTICK_INCLUDE_RX_AXIS B00001000
-#define JOYSTICK_INCLUDE_RY_AXIS B00010000
-#define JOYSTICK_INCLUDE_RZ_AXIS B00100000
+#define JOYSTICK_INCLUDE_X_AXIS  0b00000001
+#define JOYSTICK_INCLUDE_Y_AXIS  0b00000010
+#define JOYSTICK_INCLUDE_Z_AXIS  0b00000100
+#define JOYSTICK_INCLUDE_RX_AXIS 0b00001000
+#define JOYSTICK_INCLUDE_RY_AXIS 0b00010000
+#define JOYSTICK_INCLUDE_RZ_AXIS 0b00100000
 
-#define JOYSTICK_INCLUDE_RUDDER      B00000001
-#define JOYSTICK_INCLUDE_THROTTLE    B00000010
-#define JOYSTICK_INCLUDE_ACCELERATOR B00000100
-#define JOYSTICK_INCLUDE_BRAKE       B00001000
-#define JOYSTICK_INCLUDE_STEERING    B00010000
+#define JOYSTICK_INCLUDE_RUDDER      0b00000001
+#define JOYSTICK_INCLUDE_THROTTLE    0b00000010
+#define JOYSTICK_INCLUDE_ACCELERATOR 0b00000100
+#define JOYSTICK_INCLUDE_BRAKE       0b00001000
+#define JOYSTICK_INCLUDE_STEERING    0b00010000
 
 Joystick_::Joystick_(
 	uint8_t hidReportId,
@@ -437,8 +437,16 @@ Joystick_::Joystick_(
 	memcpy(customHidReportDescriptor, tempHidReportDescriptor, hidReportDescriptorSize);
 	
 	// Register HID Report Description
+	#if defined(_USING_DYNAMIC_HID)
 	DynamicHIDSubDescriptor *node = new DynamicHIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize, false);
 	DynamicHID().AppendDescriptor(node);
+	char name[] = "JOYSTICK_0";
+	name[strlen(name)-1] = '0' + (hidReportId-2);
+	DynamicHID().setShortName(name);
+    #else
+	HIDSubDescriptor *node = new HIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize);
+	HID().AppendDescriptor(node);
+    #endif
 	
     // Setup Joystick State
 	if (buttonCount > 0) {
@@ -480,7 +488,8 @@ Joystick_::Joystick_(
 void Joystick_::begin(bool initAutoSendState)
 {
 	_autoSendState = initAutoSendState;
-	sendState();
+	// Do not start to send state, maybe board's USB stack is not yet initialized (case of R4 minima)
+	//sendState();
 }
 
 void Joystick_::end()
@@ -657,7 +666,7 @@ void Joystick_::sendState()
 		}
 
 		// Pack hat-switch states into a single byte
-		data[index++] = (convertedHatSwitch[1] << 4) | (B00001111 & convertedHatSwitch[0]);
+		data[index++] = (convertedHatSwitch[1] << 4) | (0b00001111 & convertedHatSwitch[0]);
 	
 	} // Hat Switches
 
@@ -676,7 +685,11 @@ void Joystick_::sendState()
 	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_BRAKE, _brake, _brakeMinimum, _brakeMaximum, &(data[index]));
 	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_STEERING, _steering, _steeringMinimum, _steeringMaximum, &(data[index]));
 
+	#if defined(_USING_DYNAMIC_HID)
 	DynamicHID().SendReport(_hidReportId, data, _hidReportSize);
+	#else
+	HID().SendReport(_hidReportId, data, _hidReportSize);
+	#endif
 }
 
 #endif

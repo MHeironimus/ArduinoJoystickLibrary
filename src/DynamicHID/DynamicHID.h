@@ -25,15 +25,19 @@
 #include <stdint.h>
 #include <Arduino.h>
 
+
+#if !defined(ARDUINO_SAMD_VARIANT_COMPLIANCE) && !defined(ARDUINO_ARCH_RENESAS)
+
 #ifdef _VARIANT_ARDUINO_DUE_X_
   // The following values are the same as AVR's USBAPI.h
   // Reproduced here because SAM doesn't have these in
   // its own USBAPI.H
   #define USB_EP_SIZE 64
   #define TRANSFER_PGM 0x80
-
+  #define EPTYPE_DESCRIPTOR_SIZE      uint32_t
   #include "USB/PluggableUSB.h"
 #else
+  #define EPTYPE_DESCRIPTOR_SIZE      uint8_t
   #include "PluggableUSB.h"
 #endif
 
@@ -110,6 +114,7 @@ public:
   int begin(void);
   int SendReport(uint8_t id, const void* data, int len);
   void AppendDescriptor(DynamicHIDSubDescriptor* node);
+  void setShortName(char* name);
 
 protected:
   // Implementation of the PluggableUSBModule
@@ -119,17 +124,14 @@ protected:
   uint8_t getShortName(char* name);
 
 private:
-  #ifdef _VARIANT_ARDUINO_DUE_X_
-  uint32_t epType[1];
-  #else
-  uint8_t epType[1];
-  #endif
+  EPTYPE_DESCRIPTOR_SIZE epType[1];
 
   DynamicHIDSubDescriptor* rootNode;
   uint16_t descriptorSize;
 
   uint8_t protocol;
   uint8_t idle;
+  char serialname[ISERIAL_MAX_LEN];
 };
 
 // Replacement for global singleton.
@@ -142,3 +144,5 @@ DynamicHID_& DynamicHID();
 #endif // USBCON
 
 #endif // DYNAMIC_HID_h
+
+#endif // !defined(ARDUINO_SAMD_VARIANT_COMPLIANCE) && !defined(ARDUINO_ARCH_RENESAS)
