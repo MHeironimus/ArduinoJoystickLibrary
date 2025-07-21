@@ -179,6 +179,7 @@ int DynamicHID_::begin(void)
 	serialname[2] = 'D';
 	serialname[3] = 'A' + (descriptorSize & 0x0F);
 	serialname[4] = 'A' + ((descriptorSize >> 4) & 0x0F);
+	serialname[5] = '\0';
 	return 0;
 }
 

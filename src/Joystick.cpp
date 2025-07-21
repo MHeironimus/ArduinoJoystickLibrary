@@ -488,7 +488,8 @@ Joystick_::Joystick_(
 void Joystick_::begin(bool initAutoSendState)
 {
 	_autoSendState = initAutoSendState;
-	sendState();
+	// Do not start to send state, maybe board's USB stack is not yet initialized (case of R4 minima)
+	//sendState();
 }
 
 void Joystick_::end()
