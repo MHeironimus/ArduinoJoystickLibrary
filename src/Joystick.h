@@ -55,6 +55,27 @@
 #define JOYSTICK_TYPE_GAMEPAD              0x05
 #define JOYSTICK_TYPE_MULTI_AXIS           0x08
 
+#define JOYSTICK_INCLUDE_X_AXIS  0b000000000001
+#define JOYSTICK_INCLUDE_Y_AXIS  0b000000000010
+#define JOYSTICK_INCLUDE_Z_AXIS  0b000000000100
+#define JOYSTICK_INCLUDE_RX_AXIS 0b000000001000
+#define JOYSTICK_INCLUDE_RY_AXIS 0b000000010000
+#define JOYSTICK_INCLUDE_RZ_AXIS 0b000000100000
+#define JOYSTICK_INCLUDE_SLIDER  0b000001000000
+#define JOYSTICK_INCLUDE_DIAL    0b000010000000
+#define JOYSTICK_INCLUDE_WHEEL   0b000100000000
+
+#define JOYSTICK_INCLUDE_RUDDER       0b000000000001
+#define JOYSTICK_INCLUDE_THROTTLE     0b000000000010
+#define JOYSTICK_INCLUDE_ACCELERATOR  0b000000000100
+#define JOYSTICK_INCLUDE_BRAKE        0b000000001000
+#define JOYSTICK_INCLUDE_STEERING     0b000000010000
+#define JOYSTICK_INCLUDE_AILERON      0b000000100000
+#define JOYSTICK_INCLUDE_ELEVATOR     0b000001000000
+#define JOYSTICK_INCLUDE_THROTTLE_ALT 0b000010000000
+
+#define JOYSTICK_INCLUDE_NONE 0
+
 class Joystick_
 {
 private:
@@ -66,11 +87,17 @@ private:
     int32_t   _xAxisRotation;
     int32_t   _yAxisRotation;
     int32_t   _zAxisRotation;
+    int32_t   _slider;
+    int32_t   _dial;
+    int32_t   _wheel;
     int32_t   _throttle;
     int32_t   _rudder;
     int32_t   _accelerator;
     int32_t   _brake;
     int32_t   _steering;
+    int32_t   _aileron;
+    int32_t   _elevator;
+    int32_t   _throttleAlt;
     int16_t    _hatSwitchValues[JOYSTICK_HATSWITCH_COUNT_MAXIMUM];
     uint8_t   *_buttonValues = NULL;
 
@@ -79,8 +106,8 @@ private:
     uint8_t  _buttonCount;
     uint8_t  _buttonValuesArraySize = 0;
     uint8_t  _hatSwitchCount;
-    uint8_t  _includeAxisFlags;
-    uint8_t  _includeSimulatorFlags;
+    uint16_t  _includeAxisFlags;
+    uint16_t  _includeSimulatorFlags;
     int32_t  _xAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
     int32_t  _xAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
     int32_t  _yAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
@@ -93,6 +120,12 @@ private:
     int32_t  _ryAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
     int32_t  _rzAxisMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
     int32_t  _rzAxisMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+    int32_t  _sliderMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+    int32_t  _sliderMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+    int32_t  _dialMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+    int32_t  _dialMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
+    int32_t  _wheelMinimum = JOYSTICK_DEFAULT_AXIS_MINIMUM;
+    int32_t  _wheelMaximum = JOYSTICK_DEFAULT_AXIS_MAXIMUM;
     int32_t  _rudderMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
     int32_t  _rudderMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
     int32_t  _throttleMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
@@ -103,6 +136,12 @@ private:
     int32_t  _brakeMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
     int32_t  _steeringMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
     int32_t  _steeringMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
+    int32_t  _aileronMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
+    int32_t  _aileronMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
+    int32_t  _elevatorMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
+    int32_t  _elevatorMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
+    int32_t  _throttleAltMinimum = JOYSTICK_DEFAULT_SIMULATOR_MINIMUM;
+    int32_t  _throttleAltMaximum = JOYSTICK_DEFAULT_SIMULATOR_MAXIMUM;
 
     uint8_t   _hidReportId;
     uint8_t   _hidReportSize; 
@@ -118,17 +157,8 @@ public:
         uint8_t joystickType = JOYSTICK_TYPE_JOYSTICK,
         uint8_t buttonCount = JOYSTICK_DEFAULT_BUTTON_COUNT,
         uint8_t hatSwitchCount = JOYSTICK_DEFAULT_HATSWITCH_COUNT,
-        bool includeXAxis = true,
-        bool includeYAxis = true,
-        bool includeZAxis = true,
-        bool includeRxAxis = true,
-        bool includeRyAxis = true,
-        bool includeRzAxis = true,
-        bool includeRudder = true,
-        bool includeThrottle = true,
-        bool includeAccelerator = true,
-        bool includeBrake = true,
-        bool includeSteering = true);
+        uint16_t includeAxis = 0x3ff,
+        uint16_t includeSimulation = 0xff);
 
     void begin(bool initAutoSendState = true);
     void end();
@@ -164,6 +194,21 @@ public:
         _rzAxisMinimum = minimum;
         _rzAxisMaximum = maximum;
     }
+    inline void setSliderRange(int32_t minimum, int32_t maximum)
+    {
+        _sliderMinimum = minimum;
+        _sliderMaximum = maximum;
+    }
+    inline void setDialRange(int32_t minimum, int32_t maximum)
+    {
+        _dialMinimum = minimum;
+        _dialMaximum = maximum;
+    }
+    inline void setWheelRange(int32_t minimum, int32_t maximum)
+    {
+        _wheelMinimum = minimum;
+        _wheelMaximum = maximum;
+    }
     inline void setRudderRange(int32_t minimum, int32_t maximum)
     {
         _rudderMinimum = minimum;
@@ -189,6 +234,21 @@ public:
         _steeringMinimum = minimum;
         _steeringMaximum = maximum;
     }
+    inline void setAileronRange(int32_t minimum, int32_t maximum)
+    {
+        _aileronMinimum = minimum;
+        _aileronMaximum = maximum;
+    }
+    inline void setElevatorRange(int32_t minimum, int32_t maximum)
+    {
+        _elevatorMinimum = minimum;
+        _elevatorMaximum = maximum;
+    }
+    inline void setAltThrottleRange(int32_t minimum, int32_t maximum)
+    {
+        _throttleAltMinimum = minimum;
+        _throttleAltMaximum = maximum;
+    }
 
     // Set Axis Values
     void setXAxis(int32_t value);
@@ -197,6 +257,9 @@ public:
     void setRxAxis(int32_t value);
     void setRyAxis(int32_t value);
     void setRzAxis(int32_t value);
+    void setSlider(int32_t value);
+    void setDial(int32_t value);
+    void setWheel(int32_t value);
 
     // Set Simulation Values
     void setRudder(int32_t value);
@@ -204,6 +267,9 @@ public:
     void setAccelerator(int32_t value);
     void setBrake(int32_t value);
     void setSteering(int32_t value);
+    void setAileron(int32_t value);
+    void setElevator(int32_t value);
+    void setAltThrottle(int32_t value);
 
     void setButton(uint8_t button, uint8_t value);
     void pressButton(uint8_t button);
